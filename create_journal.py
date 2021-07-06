@@ -4,14 +4,12 @@
 from datetime import datetime as Datetime
 import datetime
 from copy import deepcopy
-import html
 import json
 from json import JSONDecodeError
 from os import path
 import re  # regex
 import ssl
 from socket import timeout
-import sys
 from typing import List
 import urllib.request
 from urllib.error import HTTPError, URLError
@@ -27,7 +25,7 @@ from lxml import html as lhtml
 try:
     import Python_Resources.tables as tables
 except ModuleNotFoundError:
-    from . import tables  # mypy: ignore
+    from . import tables  # type: ignore
 
 CONTEXT = ssl._create_unverified_context()
 
@@ -45,8 +43,7 @@ ns2 = 'http://www.w3.org/2001/XMLSchema-instance'
 # ns1 = 'http://www.w3.org/2001/XMLSchema'
 
 # Text before the following should get the speaker style
-chair_titles = ('SPEAKER', 'CHAIRMAN OF WAYS AND MEANS',
-                'SPEAKER ELECT', 'FIRST DEPUTY CHAIRMAN OF WAYS AND MEANS')
+chair_titles = ('SPEAKER', 'CHAIRMAN OF WAYS AND MEANS', 'SPEAKER ELECT')
 
 def main():
     sitting_dates = get_sitting_dates_in_range(Datetime(2019, 10, 14), Datetime(2019, 11, 14))
@@ -57,13 +54,14 @@ def main():
 
     output_root = Element('root', nsmap=NS_ADOBE)
 
-    for dates in sitting_dates:
+    for date in sitting_dates:
         # parse and build up a tree for the input file
 
-        file_name = f'{dates.strftime("%Y-%m-%d")}.xml'
+        file_name = f'{date.strftime("%Y-%m-%d")}.xml'
         input_root = etree.parse(file_name).getroot()  # LXML element object for the root
 
-        temp_output_root = Element('day', nsmap=NS_ADOBE)
+        temp_output_root = Element('day', nsmap=NS_ADOBE, attrib={'date': date.strftime('%Y-%m-%d')})
+
         # get all the VoteItemViewModel elements
         VoteItems = input_root.xpath('.//VoteItemViewModel')
 
@@ -71,13 +69,29 @@ def main():
         # e.g. <root VnPNumber="No. 184">
         # input_root.find finds the first match. (The number is always first)
         first_VoteEntry = input_root.find('VoteItemViewModel/VoteEntry')
-        if iselement(first_VoteEntry) and first_VoteEntry.text:
+        if first_VoteEntry is not None and first_VoteEntry.text:
             # case insensitive search
             m = re.search(r'No\. ?[0-9]+', first_VoteEntry.text, flags=re.I)
             if m:
                 temp_output_root.set('VnPNumber', m.group(0))
+
+                DayLine = SubElement(temp_output_root, 'DayLine')
+                DayLine.tail = '\n'
+
                 # delete this element so it wont go into the usual InDesign flow
-                first_VoteEntry.getparent().remove(first_VoteEntry)
+                # first_VoteEntry.getparent().remove(first_VoteEntry)
+                # actually keep it
+                first_VoteEntry.text = f'[{m.group(0)}]'
+                first_VoteEntry.tag = 'NormalCentred'
+                first_VoteEntry.tail = '\n'
+                temp_output_root.append(first_VoteEntry)
+
+            # insert date element
+            date_ele = SubElement(temp_output_root, 'VotesDate')
+            date_ele.text = date.strftime("%A") + ' '
+            date_for_header = SubElement(date_ele, 'DateForHeader')
+            date_for_header.text = date.strftime("%d %B %Y").lstrip("0")
+            date_ele.tail = '\n'
 
         # variable to contain the section
         last_section = 'CHAMBER'
@@ -137,9 +151,21 @@ def main():
                 # if the element is an html tabe...
                 if item.tag == 'table':
                     # temp_output_root.append(convert_table(item))
-                    indesign_table = tables.html_table_to_indesign(item, tablestyle='StandardTable',
-                                                                   max_table_width=420)
-                    temp_output_root.append(indesign_table)
+                    indesign_table = tables.html_table_to_indesign(item, tablestyle='Table Style 2',
+                                                                   max_table_width=540)
+                    TableContainerPara = SubElement(temp_output_root, 'TableContainerPara')
+                    TableContainerPara.append(indesign_table)
+                    # if a tables first row has all cell have the <em> element then promote to header
+                    try:
+                        cols = int(indesign_table.get(QName(AID, 'tcols')))
+
+                        cells_that_should_be_headers = indesign_table.xpath(f'Cell[position() <= {cols}][em]')
+                        if len(cells_that_should_be_headers) == cols:
+                            for cell in cells_that_should_be_headers:
+                                cell.set(QName(AID, 'theader'), '')
+                    except ValueError:
+                        pass
+
                     continue
 
                 # get the style attribute if it exists
@@ -159,13 +185,17 @@ def main():
 
                 # apply the special style to the speaker or chairs name
                 elif item_style == 'text-align: right' and next_item_text.upper() in chair_titles:
-                    item.tag = 'SpeakerName'
+                    continue
+                    # item.getparent().remove(item)
+                    # item.tag = 'SpeakerName'
 
                 # some elements are headings and take particular styles
                 elif iselement(vote_entry_type) and vote_entry_type.text == 'Heading':
                     item.tag = 'OPHeading2'
                     if item_text.upper() in chair_titles:
-                        item.tag = 'RightAlign'
+                        continue
+                        # item.getparent().remove(item)
+                        # item.tag = 'RightAlign'
                     # put The House met at in the center
                     if re.search(r'^The House met at', item_text) is not None:
                         item.tag = 'NormalCentred'
@@ -185,13 +215,13 @@ def main():
 
             output_root.append(temp_output_root)
 
-        # write out the file
-        filename = 'for_inDesign_Journal_XML'
+    # write out the file
+    filename = 'for_inDesign_Journal_XML'
 
-        et = etree.ElementTree(output_root)
+    et = etree.ElementTree(output_root)
 
-        et.write(filename + FILEEXTENSION, encoding='utf-8', xml_declaration=True)  # ,pretty_print=True
-        print('\nTransformed XML (for InDesign) is at:\n{}'.format(path.abspath(filename + FILEEXTENSION)))
+    et.write(filename + FILEEXTENSION, encoding='utf-8', xml_declaration=True)  # ,pretty_print=True
+    print('\nTransformed XML (for InDesign) is at:\n{}'.format(path.abspath(filename + FILEEXTENSION)))
 
 def json_from_uri(uri: str, default=None, showerror=True):
     headers = {'Content-Type': 'application/json'}
@@ -208,7 +238,7 @@ def json_from_uri(uri: str, default=None, showerror=True):
 
 
 def get_sitting_dates_in_range(from_date: Datetime, to_date: Datetime) -> List[Datetime]:
-    """get return a list of sitting day"""
+    """get return a list of sitting days"""
 
     # date
     cal_api_url_template = 'http://service.calendar.parliament.uk/calendar/proceduraldates/commons/nextsittingdate.json?dateToCheck={}'
@@ -233,6 +263,7 @@ def get_sitting_dates_in_range(from_date: Datetime, to_date: Datetime) -> List[D
         sitting_dates.append(next_sitting_date)
 
     return sitting_dates
+
 
 if __name__ == '__main__':
     main()
