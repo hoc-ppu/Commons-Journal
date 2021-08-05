@@ -270,3 +270,4 @@ dist
 .yarn/install-state.gz
 .pnp.*
 workspace.code-workspace
+venv-cj/
