@@ -1,0 +1,896 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfVoteItemViewModel xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>45192</VoteItemId>
+    <VoteEntry>&lt;p&gt;No. 15&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Heading</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>45193</VoteItemId>
+    <VoteEntry>&lt;p style="text-align: center;"&gt;The House met at 11.30 am.&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Heading</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>45194</VoteItemId>
+    <VoteEntry>&lt;p&gt;Prayers&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Heading</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>45197</VoteItemId>
+    <VoteEntry>&lt;p&gt;Questions to the Secretary of State for Foreign and Commonwealth Affairs&lt;/p&gt;</VoteEntry>
+    <Number>1</Number>
+    <FormattedNumber>1</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>45199</VoteItemId>
+    <VoteEntry>&lt;p&gt;Urgent Question: Intelligence and Security Committee report on Russia (Christopher Pincher)&lt;/p&gt;</VoteEntry>
+    <Number>2</Number>
+    <FormattedNumber>2</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>45200</VoteItemId>
+    <VoteEntry>&lt;p&gt;Statement: Thomas Cook customers (Secretary Andrea Leadsom)&lt;/p&gt;</VoteEntry>
+    <Number>3</Number>
+    <FormattedNumber>3</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>45234</VoteItemId>
+    <VoteEntry>&lt;p&gt;Historical Institutional Abuse (Northern Ireland) Bill [Lords]: Second Reading&lt;/p&gt;
+&lt;p&gt;Bill read a second time.&lt;/p&gt;
+&lt;p&gt;Motion made and Question put forthwith (Standing Order No. 63(2)), That the Bill be committed to a Committee of the whole House.&amp;mdash;(&lt;em&gt;Maggie Throup.&lt;/em&gt;)&lt;/p&gt;
+&lt;p&gt;Question agreed to.&lt;/p&gt;
+&lt;p&gt;Committee today.&lt;/p&gt;</VoteEntry>
+    <Number>4</Number>
+    <FormattedNumber>4</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>45235</VoteItemId>
+    <VoteEntry>&lt;p&gt;Historical Institutional Abuse (Northern Ireland) Bill [Lords]: Committee of the whole House&lt;/p&gt;
+&lt;p&gt;The House accordingly resolved itself into a Committee.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p style="text-align: center;"&gt;(In the Committee)&lt;/p&gt;
+&lt;p style="text-align: left;"&gt;Clauses 1 to 34 agreed to.&lt;/p&gt;
+&lt;p style="text-align: left;"&gt;Schedules 1 and 2 agreed to.&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;Bill to be reported, without amendment.&lt;/p&gt;
+&lt;p style="text-align: center;"&gt;________________&lt;/p&gt;
+&lt;p&gt;The Deputy Speaker resumed the Chair.&lt;/p&gt;
+&lt;p&gt;Maggie Throup reported, That the Committee had gone through the Bill and made no amendment.&lt;/p&gt;</VoteEntry>
+    <Number>5</Number>
+    <FormattedNumber>5</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>45236</VoteItemId>
+    <VoteEntry>&lt;p&gt;Historical Institutional Abuse (Northern Ireland) Bill [Lords]: Third Reading&lt;/p&gt;
+&lt;p&gt;Bill read the third time and passed, without amendment.&lt;/p&gt;</VoteEntry>
+    <Number>6</Number>
+    <FormattedNumber>6</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>45201</VoteItemId>
+    <VoteEntry>&lt;p&gt;Business of the House (Today)&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Ordered&lt;/em&gt;,&amp;nbsp;That, at this day&amp;rsquo;s sitting, the Speaker shall not adjourn the House until he has reported the Royal Assent to any Act agreed upon by both Houses.&amp;mdash;(&lt;em&gt;Maggie Throup.&lt;/em&gt;)&lt;/p&gt;</VoteEntry>
+    <Number>7</Number>
+    <FormattedNumber>7</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>45203</VoteItemId>
+    <VoteEntry>&lt;p&gt;Valedictory debate&lt;/p&gt;
+&lt;p&gt;Motion made and Question proposed, That this House has considered matters to be raised before the forthcoming Dissolution.&amp;mdash;(&lt;em&gt;Maggie Throup&lt;/em&gt;.)&lt;/p&gt;
+&lt;p&gt;The Deputy Speaker announced a time limit on backbench speeches (Standing Order No. 47(1)).&lt;/p&gt;
+&lt;p&gt;Question again proposed.&lt;/p&gt;</VoteEntry>
+    <Number>8</Number>
+    <FormattedNumber>8</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>45303</VoteItemId>
+    <VoteEntry>&lt;p&gt;Royal Assent&lt;/p&gt;
+&lt;p&gt;The Deputy Speaker reported that the Queen had signified Royal Assent to the following Act under the Royal Assent Act 1967:&lt;/p&gt;
+&lt;p&gt;Historical Institutional Abuse (Northern Ireland) Act 2019&lt;/p&gt;</VoteEntry>
+    <Number>9</Number>
+    <FormattedNumber>9</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>45304</VoteItemId>
+    <VoteEntry>&lt;p&gt;Valedictory debate (resumed)&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Resolved&lt;/em&gt;,&amp;nbsp;That this House has considered matters to be raised before the forthcoming Dissolution.&lt;/p&gt;</VoteEntry>
+    <Number>10</Number>
+    <FormattedNumber>10</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>45205</VoteItemId>
+    <VoteEntry>&lt;p&gt;Public petitions&lt;/p&gt;
+&lt;p&gt;(1) A public petition from residents of the United Kingdom relating to human rights in Kashmir was presented and read by Holly Lynch.&lt;/p&gt;</VoteEntry>
+    <Number>11</Number>
+    <FormattedNumber>11</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>45206</VoteItemId>
+    <VoteEntry>&lt;p&gt;(2) A public petition from residents of Congleton relating to works outstanding to the Loachbrook estate, Congleton was presented and read by Fiona Bruce.&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>45207</VoteItemId>
+    <VoteEntry>&lt;p&gt;(3) A public petition from residents of Truro and Falmouth relating to the naming of a Type 31e frigate as HMS Cornwall was presented and read by Sarah Newton.&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>45208</VoteItemId>
+    <VoteEntry>&lt;p&gt;(4) A public petition from residents of York relating to climate change was presented and read by Rachael Maskell.&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>45209</VoteItemId>
+    <VoteEntry>&lt;p&gt;(5) A public petition from residents of Walthamstow relating to the dispute in Kashmir was presented and read by Stella Creasy.&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>45210</VoteItemId>
+    <VoteEntry>&lt;p&gt;Adjournment&lt;/p&gt;
+&lt;p&gt;Subject: Provision for special educational needs and disabilities in Suffolk&amp;nbsp;(Sandy Martin)&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Resolved&lt;/em&gt;, That this House do now adjourn.&amp;mdash;(&lt;em&gt;Leo Docherty&lt;/em&gt;.)&amp;nbsp;&lt;/p&gt;
+&lt;p style="text-align: right;"&gt;Adjourned at 7.35 pm.&lt;/p&gt;</VoteEntry>
+    <Number>12</Number>
+    <FormattedNumber>12</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Other Proceedings</Section>
+    <VoteItemId>45190</VoteItemId>
+    <VoteEntry>&lt;p style="text-align: center;"&gt;&lt;em&gt;Disqualification of a Member&lt;/em&gt;&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Heading</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Other Proceedings</Section>
+    <VoteItemId>45191</VoteItemId>
+    <VoteEntry>&lt;p&gt;Notification, laid upon the Table by the Speaker, That Mr Chancellor of the Exchequer had&amp;nbsp;today appointed the Right Honourable John Simon Bercow, Member for Buckingham, to be Steward and Bailiff of&amp;nbsp;Her Majesty&amp;rsquo;s Manor of Northstead in the county of York.&lt;/p&gt;</VoteEntry>
+    <Number>1</Number>
+    <FormattedNumber>1</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Other Proceedings</Section>
+    <VoteItemId>45251</VoteItemId>
+    <VoteEntry>&lt;p style="text-align: center;"&gt;&lt;em&gt;Public petitions&lt;/em&gt;&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Heading</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Other Proceedings</Section>
+    <VoteItemId>45305</VoteItemId>
+    <VoteEntry>&lt;p&gt;Public petitions&lt;/p&gt;
+&lt;p&gt;(1) A public petition from residents of Erewash relating to Hillcrest Care Home was presented by Maggie Throup.&lt;/p&gt;</VoteEntry>
+    <Number>2</Number>
+    <FormattedNumber>2</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Other Proceedings</Section>
+    <VoteItemId>45252</VoteItemId>
+    <VoteEntry>&lt;p&gt;(2) A public petition from Kath Jones and Gwen Kingsley relating to the George Bryan Centre, Tamworth was presented.&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Other Proceedings</Section>
+    <VoteItemId>45254</VoteItemId>
+    <VoteEntry>&lt;p style="text-align: center;"&gt;&lt;em&gt;Standing Orders (Public Business)&lt;/em&gt;&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Other Proceedings</Section>
+    <VoteItemId>45256</VoteItemId>
+    <VoteEntry>&lt;p&gt;Standing Orders (Public Business)&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Ordered&lt;/em&gt;, That the Standing Orders relating to Public Business be printed (HC 314).&lt;/p&gt;</VoteEntry>
+    <Number>3</Number>
+    <FormattedNumber>3</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Other Proceedings</Section>
+    <VoteItemId>45241</VoteItemId>
+    <VoteEntry>&lt;p style="text-align: center;"&gt;&lt;em&gt;Reports from Select Committees&lt;/em&gt;&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Heading</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Other Proceedings</Section>
+    <VoteItemId>45267</VoteItemId>
+    <VoteEntry>&lt;p&gt;Business, Energy and Industrial Strategy Committee&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Thomas Cook&lt;/em&gt;: Written evidence, to be published (HC 39) (Rachel Reeves).&lt;/p&gt;</VoteEntry>
+    <Number>4</Number>
+    <FormattedNumber>4</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Other Proceedings</Section>
+    <VoteItemId>45266</VoteItemId>
+    <VoteEntry>&lt;p&gt;Digital, Culture, Media and Sport Committee&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;(1) &lt;em&gt;The future of English cricket&lt;/em&gt;: Written evidence, to be published (HC 73);&lt;/p&gt;
+&lt;p&gt;(2) &lt;em&gt;The work of the Department for Digital, Culture, Media and Sport&lt;/em&gt;: Written evidence, to be published (HC 71)&lt;/p&gt;
+&lt;p&gt;(Damian Collins).&lt;/p&gt;</VoteEntry>
+    <Number>5</Number>
+    <FormattedNumber>5</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Other Proceedings</Section>
+    <VoteItemId>45258</VoteItemId>
+    <VoteEntry>&lt;p&gt;Environment, Food and Rural Affairs Committee&lt;/p&gt;
+&lt;p&gt;(1) &lt;em&gt;Beef prices&lt;/em&gt;: Written evidence, to be published (HC 53);&lt;/p&gt;
+&lt;p&gt;(2)&lt;em&gt; Environment Bill&lt;/em&gt;: Written evidence, to be published (HC 172);&lt;/p&gt;
+&lt;p&gt;(3) &lt;em&gt;Puppy smuggling&lt;/em&gt;: Written evidence, to be published (HC 54)&lt;/p&gt;
+&lt;p&gt;(Neil Parish).&lt;/p&gt;</VoteEntry>
+    <Number>6</Number>
+    <FormattedNumber>6</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Other Proceedings</Section>
+    <VoteItemId>45263</VoteItemId>
+    <VoteEntry>&lt;p&gt;Environmental Audit Committee&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Net zero government&lt;/em&gt;: Written evidence, to be published (HC 89) (Mary Creagh).&lt;/p&gt;</VoteEntry>
+    <Number>7</Number>
+    <FormattedNumber>7</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Other Proceedings</Section>
+    <VoteItemId>45262</VoteItemId>
+    <VoteEntry>&lt;p&gt;European Statutory Instruments Committee&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Ministerial correspondence&lt;/em&gt;: Written evidence, to be published (Sir Patrick McLoughlin).&lt;/p&gt;</VoteEntry>
+    <Number>8</Number>
+    <FormattedNumber>8</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Other Proceedings</Section>
+    <VoteItemId>45268</VoteItemId>
+    <VoteEntry>&lt;p&gt;Foreign Affairs Committee&lt;/p&gt;
+&lt;p&gt;(1)&lt;em&gt; Freedom of religion and belief, and human rights defenders&lt;/em&gt;: Written evidence, to be published (HC 176);&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;span style="display: inline !important; float: none; background-color: transparent; color: #000000; font-size: 11px; font-style: normal; font-variant: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-decoration: none; text-indent: 0px; text-transform: none; -webkit-text-stroke-width: 0px; white-space: normal; word-spacing: 0px;"&gt;(2)&lt;/span&gt; The UK and Iran&amp;rsquo;s regional role&lt;/em&gt;: Written evidence, to be published (HC 177)&lt;/p&gt;
+&lt;p&gt;(Tom Tugendhat).&lt;/p&gt;</VoteEntry>
+    <Number>9</Number>
+    <FormattedNumber>9</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Other Proceedings</Section>
+    <VoteItemId>45249</VoteItemId>
+    <VoteEntry>&lt;p&gt;Home Affairs Committee&lt;/p&gt;
+&lt;p&gt;(1) &lt;em&gt;Correspondence from the Home Secretary&lt;/em&gt;: Written evidence, to be published;&lt;/p&gt;
+&lt;p&gt;(2) &lt;em&gt;Serious youth violence&lt;/em&gt;: Written evidence, to be published (HC 265)&lt;/p&gt;
+&lt;p&gt;(Yvette Cooper).&lt;/p&gt;</VoteEntry>
+    <Number>10</Number>
+    <FormattedNumber>10</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Other Proceedings</Section>
+    <VoteItemId>45261</VoteItemId>
+    <VoteEntry>&lt;p&gt;Human Rights (Joint Committee on)&lt;/p&gt;
+&lt;p&gt;(1) &lt;em&gt;Correspondence from the Secretary of State for Foreign and Commonwealth Affairs relating to vulnerable British children in internally displaced persons camps in Syria and Iraq&lt;/em&gt;: Written evidence, to be published;&lt;/p&gt;
+&lt;p&gt;(2) &lt;em&gt;Democracy, freedom of expression and freedom of association: threats to MPs&lt;/em&gt;: Written evidence, to be published (HC 37);&lt;/p&gt;
+&lt;p&gt;(3) &lt;em&gt;Human Rights Act 1998 (Remedial Order) &amp;ndash; Second Report&lt;/em&gt;: Written evidence, to be published (HC 211)&lt;/p&gt;
+&lt;p&gt;(Ms Harriet Harman).&lt;/p&gt;</VoteEntry>
+    <Number>11</Number>
+    <FormattedNumber>11</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Other Proceedings</Section>
+    <VoteItemId>45264</VoteItemId>
+    <VoteEntry>&lt;p&gt;International Trade Committee&lt;/p&gt;
+&lt;p&gt;(1) &lt;em&gt;Correspondence from the Minister of State for Environment, Food and Rural Affairs relating to EU border inspection posts&lt;/em&gt;: Written evidence, to be published;&lt;/p&gt;
+&lt;p&gt;(2) &lt;em&gt;Correspondence with the Minister of State for Trade Policy relating to UK trade in services&lt;/em&gt;: Written evidence, to be published;&lt;/p&gt;
+&lt;p&gt;(3) &lt;em&gt;Memorandum on the work of the International Trade Committee&lt;/em&gt;: Written evidence, to be published;&lt;/p&gt;
+&lt;p&gt;(4)&amp;nbsp;&lt;em&gt;UK&amp;nbsp;trade with China&lt;/em&gt;: Written evidence, to be published (HC 125)&lt;/p&gt;
+&lt;p&gt;(Angus Brendan MacNeil).&lt;/p&gt;</VoteEntry>
+    <Number>12</Number>
+    <FormattedNumber>12</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Other Proceedings</Section>
+    <VoteItemId>45260</VoteItemId>
+    <VoteEntry>&lt;p&gt;National Security Strategy (Joint Committee on)&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Biosecurity and human health: preparing for emerging infectious diseases and bioweapons&lt;/em&gt;: Written evidence, to be published (HC 18) (Margaret Beckett).&lt;/p&gt;</VoteEntry>
+    <Number>13</Number>
+    <FormattedNumber>13</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Other Proceedings</Section>
+    <VoteItemId>45247</VoteItemId>
+    <VoteEntry>&lt;p&gt;Procedure Committee&lt;/p&gt;
+&lt;p&gt;(1) &lt;em&gt;Allocation of business in long sessions&lt;/em&gt;: Written evidence, to be published;&lt;/p&gt;
+&lt;p&gt;(2) &lt;em&gt;Exiting the European Union: scrutiny of delegated legislation&lt;/em&gt;: Written evidence, to be published (HC 195);&lt;/p&gt;
+&lt;p&gt;(3) &lt;em&gt;Proxy voting: review of pilot arrangements&lt;/em&gt;: Written evidence, to be published (HC 134);&lt;/p&gt;
+&lt;p&gt;(4) &lt;em&gt;Should there be a Commons Budget Committee?&lt;/em&gt;: Written evidence, to be published (HC 315);&lt;/p&gt;
+&lt;p&gt;(5) &lt;em&gt;The work of the Procedure Committee in the 2017 Parliament&lt;/em&gt;: Written evidence, to be published&lt;/p&gt;
+&lt;p&gt;(Sir Charles Walker).&lt;/p&gt;</VoteEntry>
+    <Number>14</Number>
+    <FormattedNumber>14</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Other Proceedings</Section>
+    <VoteItemId>45269</VoteItemId>
+    <VoteEntry>&lt;p&gt;Public Accounts (Committee of)&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Correspondence from the Second Permanent Secretary, Home Office relating to the Accounting Officer Memorandum on the Asylum Accommodation and Support Transformation full business case&lt;/em&gt;: Written evidence, to be published (Meg Hillier).&lt;/p&gt;</VoteEntry>
+    <Number>15</Number>
+    <FormattedNumber>15</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Other Proceedings</Section>
+    <VoteItemId>45242</VoteItemId>
+    <VoteEntry>&lt;p&gt;Public Administration and Constitutional Affairs Committee&lt;/p&gt;
+&lt;p&gt;(1)&lt;em&gt; Government financial report review&lt;/em&gt;: Oral evidence, to be published (HC 252);&lt;/p&gt;
+&lt;p&gt;(2) &lt;em&gt;Correspondence from the Deputy National Statistician and Director General for Population and Public Policy, Office for National Statistics relating to the 2021 Census&lt;/em&gt;: Written evidence, to be published;&lt;/p&gt;
+&lt;p&gt;(3) &lt;em&gt;Correspondence with the Cabinet Secretary relating to contracts for special advisers&lt;/em&gt;: Written evidence, to be published&lt;/p&gt;
+&lt;p&gt;(Sir Bernard Jenkin).&amp;nbsp;&lt;/p&gt;</VoteEntry>
+    <Number>16</Number>
+    <FormattedNumber>16</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Other Proceedings</Section>
+    <VoteItemId>45257</VoteItemId>
+    <VoteEntry>&lt;p&gt;Science and Technology Committee&lt;/p&gt;
+&lt;p&gt;(1) &lt;em&gt;Clinical trials transparency: follow-up&lt;/em&gt;:&amp;nbsp;Written evidence, to be published (HC 139); &lt;/p&gt;
+&lt;p&gt;(2) &lt;em&gt;Correspondence from the Minister of State for Universities, Science, Research and Innovation relating to the Sir Adrian Smith Review&lt;/em&gt;: Written evidence, to be published;&lt;/p&gt;
+&lt;p&gt;(3) &lt;em&gt;Correspondence relating to digital government&lt;/em&gt;: Written evidence, to be published&lt;/p&gt;
+&lt;p&gt;(Norman Lamb).&lt;/p&gt;</VoteEntry>
+    <Number>17</Number>
+    <FormattedNumber>17</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Other Proceedings</Section>
+    <VoteItemId>45265</VoteItemId>
+    <VoteEntry>&lt;p&gt;Welsh Affairs Committee&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Correspondence with the Chair of the Procedure Committee relating to &lt;/em&gt;&lt;em&gt;the use of the Welsh language in House of Commons proceedings&lt;/em&gt;: Written evidence, to be published (David T C Davies)&lt;em&gt;.&lt;/em&gt;&lt;/p&gt;</VoteEntry>
+    <Number>18</Number>
+    <FormattedNumber>18</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Other Proceedings</Section>
+    <VoteItemId>45259</VoteItemId>
+    <VoteEntry>&lt;p&gt;Work and Pensions Committee&lt;/p&gt;
+&lt;p&gt;(1) &lt;em&gt;Correspondence with Benefit Advice Centre Ltd relating to benefit application advice services&lt;/em&gt;: Written evidence, to be published;&lt;/p&gt;
+&lt;p&gt;(2) &lt;em&gt;Correspondence with the Minister for Disabled People, Health and Work relating to Royal National Institute of Blind People and Jobcentre Plus&lt;/em&gt;: Written evidence, to be published;&lt;/p&gt;
+&lt;p&gt;(3) &lt;em&gt;Correspondence with the Minister for Work and Pensions relating to Kofax software&lt;/em&gt;: Written evidence, to be published;&lt;/p&gt;
+&lt;p&gt;(4) &lt;em&gt;Correspondence with the Secretary of State relating to support for former employees of Thomas Cook&lt;/em&gt;: Written evidence, to be published;&lt;/p&gt;
+&lt;p&gt;(5) &lt;em&gt;Defined benefit pension schemes&lt;/em&gt;: Written evidence, to be published (HC 78);&lt;/p&gt;
+&lt;p&gt;(6) &lt;em&gt;Pension Schemes Bill&lt;/em&gt;: Written evidence, to be published (HC 256);&lt;/p&gt;
+&lt;p&gt;(7) &lt;em&gt;Two-child limit&lt;/em&gt;: Written evidence, to be published (HC 51);&lt;/p&gt;
+&lt;p&gt;(8) &lt;em&gt;Universal Credit&lt;/em&gt;: Written evidence, to be published (HC 81);&lt;/p&gt;
+&lt;p&gt;(9) &lt;em&gt;Welfare policy in Northern Ireland&lt;/em&gt;: Written evidence, to be published&lt;/p&gt;
+&lt;p&gt;(Frank Field).&lt;/p&gt;</VoteEntry>
+    <Number>19</Number>
+    <FormattedNumber>19</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Other Proceedings</Section>
+    <VoteItemId>45311</VoteItemId>
+    <VoteEntry>&lt;p style="text-align: right;"&gt;Lindsay Hoyle&lt;/p&gt;
+&lt;p style="text-align: right;"&gt;Speaker&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Heading</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Westminster Hall</Section>
+    <VoteItemId>45211</VoteItemId>
+    <VoteEntry>&lt;p style="text-align: center;"&gt;The sitting began at 9.30 am.&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Heading</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Westminster Hall</Section>
+    <VoteItemId>45237</VoteItemId>
+    <VoteEntry>&lt;p&gt;Business appointed by the First Deputy Chairman of Ways and Means (Standing Order No. 2 and No. 10(6))&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Westminster Hall</Section>
+    <VoteItemId>45212</VoteItemId>
+    <VoteEntry>&lt;p&gt;Prevention of retail crime&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Resolved&lt;/em&gt;, That this House has considered the matter of the prevention of retail crime.&amp;mdash;(&lt;em&gt;David Hanson&lt;/em&gt;.)&lt;/p&gt;</VoteEntry>
+    <Number>1</Number>
+    <FormattedNumber>1</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Westminster Hall</Section>
+    <VoteItemId>45213</VoteItemId>
+    <VoteEntry>&lt;p&gt;Princess Royal Hospital, Telford&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Resolved&lt;/em&gt;,&amp;nbsp;That this House has considered the Princess Royal Hospital, Telford.&amp;mdash;(&lt;em&gt;Lucy Allan.&lt;/em&gt;)&lt;/p&gt;</VoteEntry>
+    <Number>2</Number>
+    <FormattedNumber>2</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Westminster Hall</Section>
+    <VoteItemId>45240</VoteItemId>
+    <VoteEntry>&lt;p&gt;&lt;em&gt;The sitting was suspended between 11.26 am and 2.30 pm (Standing Order No. 10(1)(b)).&lt;/em&gt;&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Westminster Hall</Section>
+    <VoteItemId>45214</VoteItemId>
+    <VoteEntry>&lt;p&gt;School uniform costs&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Resolved&lt;/em&gt;, That this House has considered school uniform costs.&amp;mdash;(&lt;em&gt;Emma Hardy&lt;/em&gt;.)&lt;/p&gt;</VoteEntry>
+    <Number>3</Number>
+    <FormattedNumber>3</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Westminster Hall</Section>
+    <VoteItemId>45308</VoteItemId>
+    <VoteEntry>&lt;p&gt;&lt;em&gt;The sitting was suspended between 3.28 pm and 4.00 pm.&lt;/em&gt;&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Westminster Hall</Section>
+    <VoteItemId>45215</VoteItemId>
+    <VoteEntry>&lt;p&gt;Recommendations of the Renaissance of East Anglian Fisheries study&lt;/p&gt;
+&lt;p&gt;Motion made and Question proposed, That this House has considered the recommendations of the Renaissance of East Anglian Fisheries study.&amp;mdash;(&lt;em&gt;Peter Aldous&lt;/em&gt;.)&lt;/p&gt;
+&lt;p&gt;At 4.30 pm, the Motion lapsed (Standing Order No. 10(14)).&lt;/p&gt;</VoteEntry>
+    <Number>4</Number>
+    <FormattedNumber>4</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Westminster Hall</Section>
+    <VoteItemId>45239</VoteItemId>
+    <VoteEntry>&lt;p&gt;Sitting adjourned without Question put (Standing Order No. 10(14)).&lt;/p&gt;
+&lt;p style="text-align: right;"&gt;Adjourned at 4.30 pm.&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Westminster Hall</Section>
+    <VoteItemId>45238</VoteItemId>
+    <VoteEntry>&lt;p style="text-align: right;"&gt;Eleanor Laing&lt;/p&gt;
+&lt;p style="text-align: right;"&gt;First Deputy Chairman of Ways and Means&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>45286</VoteItemId>
+    <VoteEntry>&lt;p&gt;Papers subject to Negative Resolution&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Heading</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>45287</VoteItemId>
+    <VoteEntry>&lt;p&gt;Landlord and Tenant&lt;/p&gt;
+&lt;p&gt;Agricultural Holdings (Units of Production) (England) (No. 2) Order 2019&amp;nbsp;(S.I., 2019, No. 1453),&amp;nbsp;dated 4 November 2019 (by Act),&amp;nbsp;with an Explanatory Memorandum (by Command) (Secretary Theresa Villiers)&lt;/p&gt;</VoteEntry>
+    <Number>1</Number>
+    <FormattedNumber>1</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>45289</VoteItemId>
+    <VoteEntry>&lt;p&gt;Miscellaneous Series No. 34 (2019)&lt;/p&gt;
+&lt;p&gt;Economic Partnership Agreement, done at London on 9 October 2019, between the United Kingdom of Great Britain and Northern Ireland, of the one part, and the Southern African Customs Union Member States and Mozambique, of the other part (by Command) (CP 193),&amp;nbsp;with an Explanatory Memorandum (by Act) and an accompanying report (by Command) (Secretary Dominic Raab)&lt;/p&gt;</VoteEntry>
+    <Number>2</Number>
+    <FormattedNumber>2</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>45294</VoteItemId>
+    <VoteEntry>&lt;p&gt;Public Service Pensions&lt;/p&gt;
+&lt;p&gt;Local Government Pension Scheme (Amendment) Regulations 2019&amp;nbsp;(S.I., 2019, No. 1449),&amp;nbsp;dated 4 November 2019 (by Act),&amp;nbsp;with an Explanatory Memorandum (by Command) (Luke Hall)&lt;/p&gt;</VoteEntry>
+    <Number>3</Number>
+    <FormattedNumber>3</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>45302</VoteItemId>
+    <VoteEntry>&lt;p&gt;Water Resources&lt;/p&gt;
+&lt;p&gt;Water Abstraction (Transitional Provisions) (Amendment) (England) Regulations 2019&amp;nbsp;(S.I., 2019, No. 1455),&amp;nbsp;dated 5 November 2019 (by Act),&amp;nbsp;with an Explanatory Memorandum (by Command) (Secretary Theresa Villiers)&lt;/p&gt;</VoteEntry>
+    <Number>4</Number>
+    <FormattedNumber>4</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>45272</VoteItemId>
+    <VoteEntry>&lt;p&gt;Other papers&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Heading</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>45273</VoteItemId>
+    <VoteEntry>&lt;p&gt;Animal Health&lt;/p&gt;
+&lt;p&gt;Contingency Plan for Exotic Notifiable Diseases of Animals in England (by&amp;nbsp;Act) (Secretary Theresa Villiers)&lt;/p&gt;</VoteEntry>
+    <Number>5</Number>
+    <FormattedNumber>5</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>45275</VoteItemId>
+    <VoteEntry>&lt;p&gt;Chemical Weapons&lt;/p&gt;
+&lt;p&gt;Report by the Secretary of State for Business, Energy and Industrial Strategy on the Operation of the Chemical Weapons Act 1996 for&amp;nbsp;2018, with the Report of the Comptroller and Auditor General (by Act), to be printed (HC&amp;nbsp;264) (Secretary Andrea Leadsom)&lt;/p&gt;</VoteEntry>
+    <Number>6</Number>
+    <FormattedNumber>6</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>45277</VoteItemId>
+    <VoteEntry>&lt;p&gt;Constitutional Reform&lt;/p&gt;
+&lt;p&gt;Lord Chief Justice's Report for 2019 (by&amp;nbsp;Act) (Clerk of the House)&lt;/p&gt;</VoteEntry>
+    <Number>7</Number>
+    <FormattedNumber>7</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>45279</VoteItemId>
+    <VoteEntry>&lt;p&gt;Government Resources and Accounts&lt;/p&gt;
+&lt;p&gt;(1) Report and Accounts of BPDTS Ltd for&amp;nbsp;2018&amp;ndash;19, with the Report of the Comptroller and Auditor General (by Act), to be printed (HC&amp;nbsp;239) (Secretary Th&amp;eacute;r&amp;egrave;se Coffey)&lt;/p&gt;</VoteEntry>
+    <Number>8</Number>
+    <FormattedNumber>8</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>45280</VoteItemId>
+    <VoteEntry>&lt;p&gt;(2) Report and Accounts of The Geffrye Museum Trust for&amp;nbsp;2018&amp;ndash;19, with the Report of the Comptroller and Auditor General (by Statutory Instrument), to be printed (HC&amp;nbsp;241) (Secretary Nicky Morgan)&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>45282</VoteItemId>
+    <VoteEntry>&lt;p&gt;Human Fertilisation and Embryology&lt;/p&gt;
+&lt;p&gt;Human Fertilisation and Embryology Authority Code of Practice: Ninth Edition, revised November 2019 (by&amp;nbsp;Act) (Caroline Dinenage)&lt;/p&gt;</VoteEntry>
+    <Number>9</Number>
+    <FormattedNumber>9</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>45284</VoteItemId>
+    <VoteEntry>&lt;p&gt;Justice&lt;/p&gt;
+&lt;p&gt;Government Response to the Twenty-second Report from the Joint Committee on Human Rights, Session 2017&amp;ndash;19, on the right to family life: children whose mothers are in prison (by&amp;nbsp;Command) (CP&amp;nbsp;197) (Secretary Robert Buckland)&lt;/p&gt;</VoteEntry>
+    <Number>10</Number>
+    <FormattedNumber>10</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>45291</VoteItemId>
+    <VoteEntry>&lt;p&gt;National Lottery&lt;/p&gt;
+&lt;p&gt;(1) Report and Accounts of Creative Scotland National Lottery Distribution Fund for&amp;nbsp;2018&amp;ndash;19 (by Act), to be printed (HC&amp;nbsp;304) (Secretary Alister Jack)&lt;/p&gt;</VoteEntry>
+    <Number>11</Number>
+    <FormattedNumber>11</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>45292</VoteItemId>
+    <VoteEntry>&lt;p&gt;(2) Report and Accounts of sportscotland National Lottery Distribution Fund for&amp;nbsp;2018&amp;ndash;19 (by Act), to be printed (HC&amp;nbsp;106) (Secretary Alister Jack)&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>45296</VoteItemId>
+    <VoteEntry>&lt;p&gt;Small Business, Enterprise and Employment&lt;/p&gt;
+&lt;p&gt;Business Impact Target &amp;ndash; Interim Final Report for the 2017&amp;ndash;19 Parliament (by Act), to be printed (HC&amp;nbsp;105) (Secretary Andrea Leadsom)&lt;/p&gt;</VoteEntry>
+    <Number>12</Number>
+    <FormattedNumber>12</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>45298</VoteItemId>
+    <VoteEntry>&lt;p&gt;Small Business, Enterprise and Employment&lt;/p&gt;
+&lt;p&gt;Report on Better Regulation: Government's Annual Report for&amp;nbsp;2018&amp;ndash;19 (by Act), to be printed (HC&amp;nbsp;36) (Secretary Andrea Leadsom)&lt;/p&gt;</VoteEntry>
+    <Number>13</Number>
+    <FormattedNumber>13</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>45300</VoteItemId>
+    <VoteEntry>&lt;p&gt;Transport&lt;/p&gt;
+&lt;p&gt;Department for Transport Minute, dated 5 November, concerning a contingent liability relating to the Northern Powerhouse Rail programme (by&amp;nbsp;Command) (Secretary Grant Shapps)&lt;/p&gt;</VoteEntry>
+    <Number>14</Number>
+    <FormattedNumber>14</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Certificates and corrections</Section>
+    <VoteItemId>45310</VoteItemId>
+    <VoteEntry />
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>FullLine</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Certificates and corrections</Section>
+    <VoteItemId>45246</VoteItemId>
+    <VoteEntry>&lt;p style="text-align: center;"&gt;&lt;em&gt;Under sections 2(1) and 3(1) of the Fixed-term Parliaments Act 2011, as amended by the Electoral Registration and Administration Act 2013, and section&amp;nbsp;1 of the Early Parliamentary General Election Act 2019, the 57th Parliament of the United Kingdom of Great Britain and Northern Ireland is dissolved at the beginning of Wednesday 6 November 2019.&lt;/em&gt;&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Certificates and corrections</Section>
+    <VoteItemId>45245</VoteItemId>
+    <VoteEntry />
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>FullLine</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Certificates and corrections</Section>
+    <VoteItemId>45306</VoteItemId>
+    <VoteEntry>&lt;p style="text-align: center;"&gt;SPEAKER&amp;rsquo;S CERTIFICATE&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Heading</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Certificates and corrections</Section>
+    <VoteItemId>45307</VoteItemId>
+    <VoteEntry>&lt;p style="text-align: center;"&gt;Proxy Voting for Parental Absence&lt;/p&gt;
+&lt;p&gt;The Speaker has certified, under the terms of&amp;nbsp;the temporary Standing Order on voting by proxy for parental absence and the Resolution of the House of 28 January, that Stella Creasy is is eligible to have a proxy vote cast on her behalf, starting from 6 December 2019 and finishing on 6 June 2020.&amp;nbsp; The nominated proxy is Martin Whitfield.&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Certificates and corrections</Section>
+    <VoteItemId>45250</VoteItemId>
+    <VoteEntry>&lt;p style="text-align: center;"&gt;CORRECTION&lt;/p&gt;
+&lt;p style="text-align: left;"&gt;Monday 4 November 2019&lt;/p&gt;
+&lt;p style="text-align: left;"&gt;The following items should have appeared after item 7:&lt;/p&gt;
+&lt;p style="text-align: left;"&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p style="text-align: center;"&gt;&lt;em&gt;First Reading and Printing of Lords Bills&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Historical Institutional Abuse (Northern Ireland) Bill [Lords]&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Bill read the first time; to be read a second time tomorrow; and to be printed pursuant to Standing Order No. 57A (Bill 11) with Explanatory Notes (Bill 11&amp;ndash;EN).&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p style="text-align: center;"&gt;&lt;em&gt;Public petitions&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Public petitions&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;A public petition from residents of Burnley relating to the actions of India in the Jammu and Kashmir region was presented by Julie Cooper.&lt;/p&gt;
+&lt;p style="text-align: left;"&gt;&amp;nbsp;&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+</ArrayOfVoteItemViewModel>

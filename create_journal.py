@@ -57,7 +57,8 @@ def main():
     for date in sitting_dates:
         # parse and build up a tree for the input file
 
-        file_name = f'{date.strftime("%Y-%m-%d")}.xml'
+        file_name = f'datedJournalFragemnts/{date.strftime("%Y-%m-%d")}.xml'
+        print(file_name)
         input_root = etree.parse(file_name).getroot()  # LXML element object for the root
 
         temp_output_root = Element('day', nsmap=NS_ADOBE, attrib={'date': date.strftime('%Y-%m-%d')})

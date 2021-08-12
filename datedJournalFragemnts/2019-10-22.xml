@@ -1,0 +1,913 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfVoteItemViewModel xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>44258</VoteItemId>
+    <VoteEntry>&lt;p&gt;No. 7&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Heading</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>44259</VoteItemId>
+    <VoteEntry>&lt;p style="text-align: center;"&gt;The House met at 11.30 am.&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Heading</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>44260</VoteItemId>
+    <VoteEntry>&lt;p&gt;Prayers&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Heading</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>44266</VoteItemId>
+    <VoteEntry>&lt;p&gt;Speaker's Statements: (1) New Serjeant at Arms&lt;/p&gt;
+&lt;p style="padding-left: 30px;"&gt;&lt;strong&gt;(2) Arrangements for Private Members' Bill ballot&lt;/strong&gt;&lt;/p&gt;</VoteEntry>
+    <Number>1</Number>
+    <FormattedNumber>1</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>44263</VoteItemId>
+    <VoteEntry>&lt;p&gt;Questions to the Secretary of State for Business, Energy and Industrial Strategy&lt;/p&gt;</VoteEntry>
+    <Number>2</Number>
+    <FormattedNumber>2</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>44265</VoteItemId>
+    <VoteEntry>&lt;p&gt;Urgent Question: British children: Syria (Dr Andrew Murrison)&lt;/p&gt;</VoteEntry>
+    <Number>3</Number>
+    <FormattedNumber>3</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>44296</VoteItemId>
+    <VoteEntry>&lt;p&gt;European Union (Withdrawal Agreement) Bill: Second Reading&lt;/p&gt;
+&lt;p&gt;Motion made and Question proposed, That the European Union (Withdrawal Agreement) Bill be now read a second time.&lt;/p&gt;
+&lt;p&gt;The Speaker announced a time limit on backbench speeches (Standing Order No. 47(1)).&lt;/p&gt;
+&lt;p&gt;Question put.&lt;/p&gt;
+&lt;p&gt;The House divided.&lt;/p&gt;
+&lt;p&gt;Division No. 4&lt;/p&gt;
+&lt;p&gt;Ayes: 329 (Tellers: Stuart Andrew, Iain Stewart)&lt;/p&gt;
+&lt;p&gt;Noes: 299 (Tellers: Nic Dakin, Nick Smith)&lt;/p&gt;
+&lt;p&gt;Question accordingly agreed to and Bill read a second time.&lt;/p&gt;</VoteEntry>
+    <Number>4</Number>
+    <FormattedNumber>4</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>44267</VoteItemId>
+    <VoteEntry>&lt;p&gt;European Union (Withdrawal Agreement) Bill: Programme&lt;/p&gt;
+&lt;p&gt;Motion made and Question put forthwith (Standing Order No. 83A(7)),&amp;nbsp;That the following provisions shall apply to the European Union (Withdrawal Agreement) Bill:&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Committal&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;(1) The Bill shall be committed to a Committee of the whole House.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Proceedings in Committee &lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;(2) Proceedings in Committee of the whole House shall be completed in two days.&lt;/p&gt;
+&lt;p&gt;(3) The proceedings shall be taken on each of those days as shown in the first column of the following Table and in the order so shown.&lt;/p&gt;
+&lt;p&gt;(4) The proceedings shall (so far as not previously concluded) be brought to a conclusion at the times specified in the second column of the Table.&lt;/p&gt;
+&lt;p style="text-align: center;"&gt;TABLE&lt;/p&gt;
+&lt;table&gt;&lt;colgroup&gt;&lt;col /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;em&gt;Proceedings&lt;/em&gt;&lt;/td&gt;
+&lt;td&gt;&lt;em&gt;Time for conclusion of proceedings&lt;/em&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;At today&amp;rsquo;s sitting&lt;/td&gt;
+&lt;td&gt;&amp;nbsp;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Clauses 1 to 4; new Clauses relating to Part 1; new Schedules relating to Part 1&lt;/td&gt;
+&lt;td&gt;Three hours after the commencement of proceedings on the Motion for this Order.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Second day&lt;/td&gt;
+&lt;td&gt;&amp;nbsp;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Clauses 21 to 23; Schedule 3; Clause 24; Clauses 29 to 34; Schedule 4; Clauses 35 and 36; new Clauses relating to any of Clauses 21 to 23, Schedule 3, Clause 24, Clauses 29 to 34, Schedule 4, Clause 35 or Clause 36; new Schedules relating to any of Clauses 21 to 23, Schedule 3, Clause 24, Clauses 29 to 34, Schedule 4, Clause 35 or Clause 36&lt;/td&gt;
+&lt;td&gt;Three hours after the commencement of proceedings on the Bill on the second day.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Clauses 7 to 14; Schedule 1; Clause 15; Schedule 2; Clauses 16 and 17; new Clauses relating to Part 3; new Schedules relating to Part 3&lt;/td&gt;
+&lt;td&gt;Six hours after the commencement of proceedings on the Bill on the second day.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Clauses 18 to 20; Clauses 5 and 6; Clauses 25 to 28; Clauses 37 and 38; Schedule 5; Clause 39; Schedule 6; Clause 40; new Clauses relating to any of Clauses 18 to 20, Clauses 5 and 6, Clauses 25 to 28, Clauses 37 and 38, Schedule 5, Clause 39, Schedule 6 or Clause 40; new Schedules relating to any of Clauses 18 to 20, Clauses 5 and 6, Clauses 25 to 28, Clauses 37 and 38, Schedule 5, Clause 39, Schedule 6 or Clause 40&lt;/td&gt;
+&lt;td&gt;Nine hours after the commencement of proceedings on the Bill on the second day.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;New Clauses relating to a further referendum in connection with the United Kingdom&amp;rsquo;s membership of the European Union, new Schedules relating to a further referendum in connection with the United Kingdom&amp;rsquo;s membership of the European Union, remaining new Clauses, remaining new Schedules, remaining proceedings on the Bill&lt;/td&gt;
+&lt;td&gt;Twelve hours after the commencement of proceedings on the Bill on the second day.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;em&gt;Proceedings on Consideration and up to and including Third Reading &lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;(5) Any proceedings on Consideration, any proceedings in legislative grand committee and proceedings on Third Reading shall be taken in one day in accordance with the following provisions of this Order.&lt;/p&gt;
+&lt;p&gt;(6) Any proceedings on Consideration and any proceedings in legislative grand committee shall (so far as not previously concluded) be brought to a conclusion six hours after the commencement of proceedings on the Bill on that day.&lt;/p&gt;
+&lt;p&gt;(7) Proceedings on Third Reading shall (so far as not previously concluded) be brought to a conclusion eight hours after the commencement of proceedings on the Bill on that day.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Programming committee&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;(8) Standing Order No. 83B (Programming committees) shall not apply to proceedings in Committee of the whole House, to any proceedings on Consideration or to other proceedings up to and including Third Reading.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Consideration of Lords Amendments&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;(9) Proceedings on consideration of Lords Amendments shall (so far as not previously concluded) be brought to a conclusion one hour after their commencement.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Subsequent stages&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;(10) Any further Message from the Lords may be considered forthwith without any Question being put.&lt;/p&gt;
+&lt;p&gt;(11) The proceedings on any further Message from the Lords shall (so far as not previously concluded) be brought to a conclusion one hour after their commencement.&amp;mdash;(&lt;em&gt;Jeremy Quin&lt;/em&gt;.)&lt;/p&gt;
+&lt;p&gt;The House divided.&lt;/p&gt;
+&lt;p&gt;Division No. 5&lt;/p&gt;
+&lt;p&gt;Ayes: 308 (Tellers: Stuart Andrew, Iain Stewart)&lt;/p&gt;
+&lt;p&gt;Noes: 322 (Tellers: Nic Dakin, Nick Smith)&lt;/p&gt;
+&lt;p&gt;Question accordingly negatived.&lt;/p&gt;</VoteEntry>
+    <Number>5</Number>
+    <FormattedNumber>5</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>44271</VoteItemId>
+    <VoteEntry>&lt;p&gt;Statutory Instruments: Motions for Approval&lt;/p&gt;</VoteEntry>
+    <Number>6</Number>
+    <FormattedNumber>6</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Heading</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>44272</VoteItemId>
+    <VoteEntry>&lt;p&gt;(1) Motion made and Question put forthwith (Standing Order No. 118(6)), That the draft Gas&amp;nbsp;Tariffs Code (Amendment) (EU Exit) Regulations 2019, which were laid before this House on 10 July 2019, in the last Session of Parliament, be approved.&amp;mdash;(&lt;em&gt;Jeremy Quin&lt;/em&gt;.)&lt;/p&gt;
+&lt;p&gt;Question agreed to.&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>44273</VoteItemId>
+    <VoteEntry>&lt;p&gt;(2) Motion made and Question put forthwith (Standing Order No. 118(6)), That the draft Freedom&amp;nbsp;of Establishment and Free Movement of Services (EU Exit) Regulations 2019,&amp;nbsp;which were laid before this House on 11 July 2019, in the last Session of Parliament, be approved.&amp;mdash;(&lt;em&gt;Jeremy Quin&lt;/em&gt;.)&lt;/p&gt;
+&lt;p&gt;The Speaker&amp;rsquo;s opinion as to the decision of the Question was challenged.&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;Division deferred until tomorrow (Standing Order No. 41A).&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>44274</VoteItemId>
+    <VoteEntry>&lt;p&gt;(3) Motion made and Question put forthwith (Standing Order No. 118(6)), That the draft Statutory Auditors, Third Country Auditors and International Accounting Standards (Amendment) (EU Exit) Regulations 2019, which were laid before this House on 15 July 2019, in the last Session of Parliament, be approved.&amp;mdash;(&lt;em&gt;Jeremy Quin&lt;/em&gt;.)&lt;/p&gt;
+&lt;p&gt;The Speaker&amp;rsquo;s opinion as to the decision of the Question was challenged.&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;Division deferred until tomorrow (Standing Order No. 41A).&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>44275</VoteItemId>
+    <VoteEntry>&lt;p&gt;(4) Motion made and Question put forthwith (Standing Order No. 118(6)), That the draft Agriculture (Miscellaneous Amendments) (EU Exit) Regulations 2019, which were laid before this House on 25 July 2019, in the last Session of Parliament, be approved.&amp;mdash;(&lt;em&gt;Jeremy Quin&lt;/em&gt;.)&lt;/p&gt;
+&lt;p&gt;Question agreed to.&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>44276</VoteItemId>
+    <VoteEntry>&lt;p&gt;(5) Motion made and Question put forthwith (Standing Order No. 118(6)), That the Common Fisheries Policy and Animals (Amendment etc.) (EU Exit) Regulations 2019 (S.I., 2019, No. 1312), dated 7 October 2019, a copy of which was laid before this House on 7 October 2019, in the last Session of Parliament, be approved.&amp;mdash;(&lt;em&gt;Jeremy Quin&lt;/em&gt;&lt;em&gt;.&lt;/em&gt;)&lt;/p&gt;
+&lt;p&gt;Question agreed to.&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>44277</VoteItemId>
+    <VoteEntry>&lt;p&gt;(6) Motion made and Question put forthwith (Standing Order No. 118(6)), That the draft Common Organisation of the Markets in Agricultural Products and Common Agricultural Policy (Miscellaneous Amendments etc.) (EU Exit) (No. 2) Regulations 2019, which were laid before this House on 25 July 2019, in the last Session of Parliament, be approved.&amp;mdash;(&lt;em&gt;Jeremy Quin&lt;/em&gt;.)&lt;/p&gt;
+&lt;p&gt;Question agreed to.&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>44278</VoteItemId>
+    <VoteEntry>&lt;p&gt;(7) Motion made and Question put forthwith (Standing Order No. 118(6)), That the Railways (Safety, Access, Management and Interoperability) (Miscellaneous Amendments and Transitional Provision) (EU Exit) Regulations 2019 (S.I., 2019, No. 1310), dated 7 October 2019, a copy of which was laid before this House on 7 October 2019, in the last Session of Parliament, be approved.&amp;mdash;(&lt;em&gt;Jeremy Quin&lt;/em&gt;&lt;em&gt;.&lt;/em&gt;)&lt;/p&gt;
+&lt;p&gt;Question agreed to.&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>44279</VoteItemId>
+    <VoteEntry>&lt;p&gt;(8) Motion made and Question put forthwith (Standing Order No. 118(6)), That the draft Heavy Commercial Vehicles in Kent (No. 1) Order 2019, which was laid before this House on 4 September 2019, in the last Session of Parliament, be approved.&amp;mdash;(&lt;em&gt;Jeremy Quin&lt;/em&gt;.)&lt;/p&gt;
+&lt;p&gt;Question agreed to.&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>44280</VoteItemId>
+    <VoteEntry>&lt;p&gt;(9) Motion made and Question put forthwith (Standing Order No. 118(6)), That the Heavy Commercial Vehicles in Kent (No. 2) Order 2019, which was laid before this House on 4 September 2019, in the last Session of Parliament, be approved.&amp;mdash;(&lt;em&gt;Jeremy Quin&lt;/em&gt;&lt;em&gt;.&lt;/em&gt;)&lt;/p&gt;
+&lt;p&gt;Question agreed to.&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>44281</VoteItemId>
+    <VoteEntry>&lt;p&gt;(10) Motion made and Question put forthwith (Standing Order No. 118(6)), That the draft Passenger and Goods Vehicles (Tachographs) (Amendment etc.) Regulations 2019, which were laid before this House on 18 July 2019, in the last Session of Parliament, be approved.&amp;mdash;(&lt;em&gt;Jeremy Quin&lt;/em&gt;.)&lt;/p&gt;
+&lt;p&gt;Question agreed to.&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>44282</VoteItemId>
+    <VoteEntry>&lt;p&gt;(11) Motion made and Question put forthwith (Standing Order No. 118(6)), That the draft European Parliamentary Elections etc. (Repeal, Revocation, Amendment and Saving Provisions) (United Kingdom and Gibraltar) (EU Exit) (Amendment) Regulations 2019, which were laid before this House on 23 July 2019, in the last Session of Parliament, be approved.&amp;mdash;(&lt;em&gt;Jeremy Quin&lt;/em&gt;.)&lt;/p&gt;
+&lt;p&gt;Question agreed to.&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>44283</VoteItemId>
+    <VoteEntry>&lt;p&gt;(12) Motion made and Question put forthwith (Standing Order No. 118(6)), That the draft Small-scale Radio Multiplex and Community Digital Radio Order 2019, which was laid before this House on 20 June 2019, in the last Session of Parliament, be approved.&amp;mdash;(&lt;em&gt;Jeremy Quin&lt;/em&gt;.)&lt;/p&gt;
+&lt;p&gt;Question agreed to.&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>44284</VoteItemId>
+    <VoteEntry>&lt;p&gt;(13) Motion made and Question put forthwith (Standing Order No. 118(6)), That the draft Human Medicines and Medical Devices (Amendment etc.) (EU Exit) Regulations 2019, which were laid before this House on 24 July 2019, in the last Session of Parliament, be approved.&amp;mdash;(&lt;em&gt;Jeremy Quin&lt;/em&gt;.)&lt;/p&gt;
+&lt;p&gt;Question agreed to.&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>44285</VoteItemId>
+    <VoteEntry>&lt;p&gt;(14) Motion made and Question put forthwith (Standing Order No. 118(6)), That the draft Financial Services (Miscellaneous) (Amendment) (EU Exit) (No. 3) Regulations 2019, which were laid before this House on 15 July 2019, in the last Session of Parliament, be approved.&amp;mdash;(&lt;em&gt;Jeremy Quin&lt;/em&gt;.)&lt;/p&gt;
+&lt;p&gt;The Speaker&amp;rsquo;s opinion as to the decision of the Question was challenged.&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;Division deferred until tomorrow (Standing Order No. 41A).&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>44286</VoteItemId>
+    <VoteEntry>&lt;p&gt;(15) Motion made and Question put forthwith (Standing Order No. 118(6)), That the draft Legal Aid, Sentencing and Punishment of Offenders Act 2012 (Legal Aid for Separated Children) (Miscellaneous Amendments) Order 2019, which was laid before this House on 22 July 2019, in the last Session of Parliament, be approved.&amp;mdash;(&lt;em&gt;Jeremy Quin&lt;/em&gt;.)&lt;/p&gt;
+&lt;p&gt;Question agreed to.&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>44287</VoteItemId>
+    <VoteEntry>&lt;p&gt;Sittings in Westminster Hall&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Ordered&lt;/em&gt;,&amp;nbsp;That, for the remainder of the current Session, paragraph (2)(a) of Standing Order No. 10 (Sittings in Westminster Hall) shall not apply.&amp;mdash;(&lt;em&gt;Jeremy Quin.&lt;/em&gt;)&lt;/p&gt;</VoteEntry>
+    <Number>7</Number>
+    <FormattedNumber>7</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>44350</VoteItemId>
+    <VoteEntry>&lt;p&gt;Business Statement (Leader of the House)&lt;/p&gt;</VoteEntry>
+    <Number>8</Number>
+    <FormattedNumber>8</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>44288</VoteItemId>
+    <VoteEntry>&lt;p&gt;Public petitions&lt;/p&gt;</VoteEntry>
+    <Number>9</Number>
+    <FormattedNumber>9</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Heading</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>44289</VoteItemId>
+    <VoteEntry>&lt;p&gt;(1) A public petition from residents of the United Kingdom relating to Cavendish House in Dudley town centre was presented and read by Ian Austin.&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>44290</VoteItemId>
+    <VoteEntry>&lt;p&gt;(2) A public petition from registered members of the Wycombe Islamic Mission and Mosque Trust, High Wycombe relating to the Wycombe Islamic Mission and Mosque Trust elections was presented and read by Mr Steve Baker.&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>44298</VoteItemId>
+    <VoteEntry>&lt;p&gt;Adjournment&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Resolved&lt;/em&gt;, That this House do now adjourn.&amp;mdash;(&lt;em&gt;Maggie Throup&lt;/em&gt;.)&lt;/p&gt;
+&lt;p style="text-align: right;"&gt;Adjourned at 8.37 pm until tomorrow.&lt;/p&gt;</VoteEntry>
+    <Number>10</Number>
+    <FormattedNumber>10</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Other Proceedings</Section>
+    <VoteItemId>44299</VoteItemId>
+    <VoteEntry>&lt;p style="text-align: center;"&gt;&lt;em&gt;General Committees: Reports&lt;/em&gt;&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Heading</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Other Proceedings</Section>
+    <VoteItemId>44300</VoteItemId>
+    <VoteEntry>&lt;p&gt;Eighth Delegated Legislation Committee&lt;/p&gt;
+&lt;p&gt;Mark Pritchard (Chair) reported the draft Insolvency (Amendment) (EU Exit) (No. 2) Regulations 2019.&lt;/p&gt;</VoteEntry>
+    <Number>1</Number>
+    <FormattedNumber>1</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Other Proceedings</Section>
+    <VoteItemId>44301</VoteItemId>
+    <VoteEntry>&lt;p&gt;Ninth Delegated Legislation Committee&lt;/p&gt;
+&lt;p&gt;Mr Laurence Robertson (Chair) reported the draft Waste and Environmental Protection (Amendment) (Northern Ireland) (EU Exit) Regulations 2019.&lt;/p&gt;</VoteEntry>
+    <Number>2</Number>
+    <FormattedNumber>2</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Other Proceedings</Section>
+    <VoteItemId>44346</VoteItemId>
+    <VoteEntry>&lt;p style="text-align: center;"&gt;&lt;em&gt;General Committees: Appointments&lt;/em&gt;&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Heading</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Other Proceedings</Section>
+    <VoteItemId>44347</VoteItemId>
+    <VoteEntry>&lt;p style="text-align: center;"&gt;&lt;em&gt;The Speaker appoints the Chair of General Committees and members of Programming Sub-Committees, and allocates Statutory Instruments to Delegated Legislation Committees.&lt;/em&gt;&lt;/p&gt;
+&lt;p style="text-align: center;"&gt;&lt;em&gt;The Selection Committee&amp;nbsp;nominates Members to serve on General Committees (and certain Members to serve on Grand Committees).&lt;/em&gt;&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Other Proceedings</Section>
+    <VoteItemId>44348</VoteItemId>
+    <VoteEntry>&lt;p&gt;Eighth Delegated Legislation Committee (draft Insolvency (Amendment) (EU Exit) (No. 2) Regulations 2019)&lt;/p&gt;
+&lt;p&gt;Members: Andrew Bowie discharged and Giles Watling nominated in substitution.&lt;/p&gt;</VoteEntry>
+    <Number>3</Number>
+    <FormattedNumber>3</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Other Proceedings</Section>
+    <VoteItemId>44349</VoteItemId>
+    <VoteEntry>&lt;p&gt;Tenth Delegated Legislation Committee (draft Over the Counter Derivatives, Central Counterparties and Trade Repositories (Amendment, etc., and Transitional Provision) (EU Exit) (No. 2) Regulations 2019)&lt;/p&gt;
+&lt;p&gt;Members: Mr Jonathan Lord discharged and Martin Vickers nominated in substitution.&lt;/p&gt;</VoteEntry>
+    <Number>4</Number>
+    <FormattedNumber>4</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Other Proceedings</Section>
+    <VoteItemId>44302</VoteItemId>
+    <VoteEntry>&lt;p style="text-align: center;"&gt;&lt;em&gt;Reports from Select Committees&lt;/em&gt;&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Heading</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Other Proceedings</Section>
+    <VoteItemId>44303</VoteItemId>
+    <VoteEntry>&lt;p&gt;Business, Energy and Industrial Strategy Committee&lt;/p&gt;
+&lt;p&gt;(1)&lt;em&gt; The future of the Post Office Network&lt;/em&gt;: First Report, to be printed, with the formal minutes relating to the Report (HC 247);&lt;/p&gt;
+&lt;p&gt;(2) &lt;em&gt;Thomas Cook&lt;/em&gt;: Oral and written evidence, to be published (HC 39);&lt;/p&gt;
+&lt;p&gt;(3) &lt;em&gt;Correspondence with the Minister for Small Business, Consumers and Corporate Responsibility relating to tipping of workers&lt;/em&gt;: Written evidence, to be published;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;(4)&amp;nbsp;&lt;em&gt;Correspondence with the Minister of State for Business, Energy and Clean Growth relating to the Mineworkers&amp;rsquo; Pension Scheme&lt;/em&gt;: Written evidence, to be published&lt;/p&gt;
+&lt;p&gt;(Rachel Reeves).&lt;/p&gt;</VoteEntry>
+    <Number>5</Number>
+    <FormattedNumber>5</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Other Proceedings</Section>
+    <VoteItemId>44344</VoteItemId>
+    <VoteEntry>&lt;p&gt;Environmental Audit Committee&lt;/p&gt;
+&lt;p&gt;(1) &lt;em&gt;Scrutiny of the Draft Environment (Principles and Governance) Bill: Government Response to the Committee's Eighteenth Report of Session 2017&amp;ndash;19&lt;/em&gt;:&lt;/p&gt;
+&lt;p style="padding-left: 30px;"&gt;(i) First Special Report, to be printed &lt;span style="display: inline !important; float: none; background-color: transparent; color: #000000; font-size: 11px; font-style: normal; font-variant: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-decoration: none; text-indent: 0px; text-transform: none; -webkit-text-stroke-width: 0px; white-space: normal; word-spacing: 0px;"&gt;(HC 238)&lt;/span&gt;;&lt;/p&gt;
+&lt;p style="padding-left: 30px;"&gt;(ii) Written evidence, to be published (HC 238);&lt;/p&gt;
+&lt;p&gt;(2) &lt;em&gt;Net zero government&lt;/em&gt;: Written evidence, to be published (HC 89);&lt;/p&gt;
+&lt;p&gt;(3) &lt;em&gt;Sustainable tourism&lt;/em&gt;: Written evidence, to be published (HC 90)&lt;/p&gt;
+&lt;p&gt;(Mary Creagh).&lt;/p&gt;</VoteEntry>
+    <Number>6</Number>
+    <FormattedNumber>6</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Other Proceedings</Section>
+    <VoteItemId>44345</VoteItemId>
+    <VoteEntry>&lt;p&gt;Finance Committee&lt;/p&gt;
+&lt;p&gt;Record of the Committee&amp;rsquo;s decisions taken at its meetings in the 2017 Parliament to date, to be published (Chris Bryant).&lt;/p&gt;</VoteEntry>
+    <Number>7</Number>
+    <FormattedNumber>7</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Other Proceedings</Section>
+    <VoteItemId>44305</VoteItemId>
+    <VoteEntry>&lt;p&gt;Foreign Affairs Committee&lt;/p&gt;
+&lt;p&gt;(1) &lt;em&gt;Autocracies and UK foreign policy&lt;/em&gt;: Oral and written evidence, to be published (HC 109);&lt;/p&gt;
+&lt;p&gt;(2) &lt;em&gt;Beyond aid: The UK&amp;rsquo;s strategic engagement in Africa&lt;/em&gt;: Written evidence, to be published (HC 175);&lt;/p&gt;
+&lt;p&gt;(3) &lt;em&gt;Correspondence with the Foreign Secretary relating to UK-Irish relations and engagement of Ministers with their European counterparts&lt;/em&gt;: Written evidence, to be published;&lt;/p&gt;
+&lt;p&gt;(4) &lt;em&gt;The Caucasus&lt;/em&gt;: Written evidence, to be published (HC 108)&lt;/p&gt;
+&lt;p&gt;(Tom Tugendhat).&amp;nbsp;&lt;/p&gt;</VoteEntry>
+    <Number>8</Number>
+    <FormattedNumber>8</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Other Proceedings</Section>
+    <VoteItemId>44306</VoteItemId>
+    <VoteEntry>&lt;p&gt;Health and Social Care Committee&lt;/p&gt;
+&lt;p&gt;(1)&lt;em&gt; NHS capital&lt;/em&gt;: Oral evidence, to be published (HC 129);&lt;/p&gt;
+&lt;p&gt;(2)&amp;nbsp;&lt;em&gt;Childhood obesity:&lt;/em&gt; &lt;em&gt;follow-up 2019&lt;/em&gt;: Written evidence, to be published (HC 130);&lt;/p&gt;
+&lt;p&gt;(3) &lt;em&gt;Correspondence from the National Prison Health Care Board relating to the Committee&amp;rsquo;s Twelfth Report of Session 2017&amp;ndash;19&lt;/em&gt;: Written evidence, to be published;&lt;/p&gt;
+&lt;p&gt;(4) &lt;em&gt;Dentistry services&lt;/em&gt;: Written evidence, to be published (HC 254)&lt;/p&gt;
+&lt;p&gt;(Dr Sarah Wollaston).&lt;/p&gt;</VoteEntry>
+    <Number>9</Number>
+    <FormattedNumber>9</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Other Proceedings</Section>
+    <VoteItemId>44313</VoteItemId>
+    <VoteEntry>&lt;p&gt;Human Rights (Joint Committee on)&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Correspondence with the Minister for Prisons and Probation relating to the death of&amp;nbsp;an infant in HMP Bronzefield&lt;/em&gt;: Written evidence, to be published&amp;nbsp;(Ms Harriet Harman).&lt;/p&gt;</VoteEntry>
+    <Number>10</Number>
+    <FormattedNumber>10</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Other Proceedings</Section>
+    <VoteItemId>44307</VoteItemId>
+    <VoteEntry>&lt;p&gt;Justice Committee&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;(1) &lt;em&gt;Transforming rehabilitation: Follow-up: Government Response to the Committee's &lt;span style="display: inline !important; float: none; background-color: transparent; color: #000000; font-size: 11px; font-style: italic; font-variant: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-decoration: none; text-indent: 0px; text-transform: none; -webkit-text-stroke-width: 0px; white-space: normal; word-spacing: 0px;"&gt;Nineteenth Report of &lt;/span&gt;Session 2017&amp;ndash;19&lt;/em&gt;: First Special Report, to be printed (HC 189);&lt;/p&gt;
+&lt;p&gt;(2)&lt;em&gt; The work of the Prison Service&lt;/em&gt;: Oral evidence, to be published (HC 42);&lt;/p&gt;
+&lt;p&gt;(3)&lt;em&gt; Correspondence from the Lord Chancellor and Secretary of State for Justice&lt;/em&gt;: Written evidence, to be published&lt;/p&gt;
+&lt;p&gt;(Robert Neill).&lt;/p&gt;</VoteEntry>
+    <Number>11</Number>
+    <FormattedNumber>11</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Other Proceedings</Section>
+    <VoteItemId>44314</VoteItemId>
+    <VoteEntry>&lt;p&gt;Petitions Committee&lt;/p&gt;
+&lt;p&gt;(1) Record of the Committee&amp;rsquo;s decisions relating to e-petitions, to be published;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;(2)&amp;nbsp;List of closed e-petitions presented&amp;nbsp;to the House, to be published&lt;/p&gt;
+&lt;p&gt;(Helen Jones).&lt;/p&gt;</VoteEntry>
+    <Number>12</Number>
+    <FormattedNumber>12</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Other Proceedings</Section>
+    <VoteItemId>44304</VoteItemId>
+    <VoteEntry>&lt;p&gt;Privileges (Committee of)&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Select committees and contempts&lt;/em&gt;: Oral and written evidence, to be published (HC 173) (Kate Green).&lt;/p&gt;</VoteEntry>
+    <Number>13</Number>
+    <FormattedNumber>13</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Other Proceedings</Section>
+    <VoteItemId>44308</VoteItemId>
+    <VoteEntry>&lt;p&gt;Public Administration and Constitutional Affairs Committee&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;The Role of Parliament in the UK Constitution: the role of the Speaker&lt;/em&gt;: Oral evidence, to be published (HC 32)&amp;nbsp;(Sir Bernard Jenkin).&lt;/p&gt;</VoteEntry>
+    <Number>14</Number>
+    <FormattedNumber>14</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Other Proceedings</Section>
+    <VoteItemId>44309</VoteItemId>
+    <VoteEntry>&lt;p&gt;Science and Technology Committee&lt;/p&gt;
+&lt;p&gt;(1)&lt;em&gt; Work of the Science Minister&lt;/em&gt;: Oral and written evidence, to be published (HC 34);&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;(2) &lt;em&gt;Clinical trials transparency: follow-up&lt;/em&gt;:&amp;nbsp;Written evidence, to be published&amp;nbsp;(HC&amp;nbsp;139)&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;(Norman Lamb).&lt;/p&gt;</VoteEntry>
+    <Number>15</Number>
+    <FormattedNumber>15</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Other Proceedings</Section>
+    <VoteItemId>44310</VoteItemId>
+    <VoteEntry>&lt;p&gt;Treasury Committee&lt;/p&gt;
+&lt;p&gt;(1) &lt;em&gt;Impact of Business Rates on Business&lt;/em&gt;: First Report, to be printed, with the formal minutes relating to the Report (HC 222);&lt;/p&gt;
+&lt;p&gt;(2) &lt;em&gt;IT failures in the financial services sector&lt;/em&gt;: Second Report, to be printed, with the formal minutes relating to the Report (HC 224);&lt;/p&gt;
+&lt;p&gt;(3) &lt;em&gt;Economic Crime&lt;/em&gt;:&lt;/p&gt;
+&lt;p style="padding-left: 30px;"&gt;(i) Third Report, to be printed, with the formal minutes relating to the Report (HC 246);&lt;/p&gt;
+&lt;p style="padding-left: 30px;"&gt;(ii) Written evidence, to be published (HC 246);&lt;/p&gt;
+&lt;p&gt;(4) &lt;em&gt;HMRC Annual Report and Accounts&lt;/em&gt;: Oral evidence, to be published (HC 236);&lt;/p&gt;
+&lt;p&gt;(5) &lt;em&gt;Correspondence&amp;nbsp;between the Chair of the European Scrutiny Committee and the Chancellor of the Exchequer relating to UK contributions to the EU budget after 31 October 2019&lt;/em&gt;: Written evidence, to be published;&lt;/p&gt;
+&lt;p&gt;(6) &lt;em&gt;Correspondence from the Chancellor of the Exchequer relating to the Budget&lt;/em&gt;: Written evidence, to be published;&lt;/p&gt;
+&lt;p&gt;(7) &lt;em&gt;Correspondence&amp;nbsp;with the&amp;nbsp;Secretary of State for Work and Pensions relating to Barclays and the Post Office&lt;/em&gt;: Written evidence, to be published&lt;/p&gt;
+&lt;p&gt;(Catherine McKinnell).&lt;/p&gt;</VoteEntry>
+    <Number>16</Number>
+    <FormattedNumber>16</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Other Proceedings</Section>
+    <VoteItemId>44317</VoteItemId>
+    <VoteEntry>&lt;p&gt;Welsh Affairs Committee&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Wales and the Armed Forces&lt;/em&gt;: Written evidence, to be published (HC 128) (David T C Davies)&lt;em&gt;.&lt;/em&gt;&lt;/p&gt;</VoteEntry>
+    <Number>17</Number>
+    <FormattedNumber>17</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Other Proceedings</Section>
+    <VoteItemId>44297</VoteItemId>
+    <VoteEntry>&lt;p style="text-align: right;"&gt;John Bercow&lt;/p&gt;
+&lt;p style="text-align: right;"&gt;Speaker&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Heading</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>44322</VoteItemId>
+    <VoteEntry>&lt;p&gt;Papers subject to Affirmative Resolution&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Heading</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>44323</VoteItemId>
+    <VoteEntry>&lt;p&gt;Exiting the European Union (Financial Services and Markets)&lt;/p&gt;
+&lt;p&gt;Cross-Border Distribution of Funds, Proxy Advisors, Prospectus and Gibraltar (Amendment) (EU Exit) Regulations 2019 (S.I., 2019, No. 1370),&amp;nbsp;dated 22 October 2019 (by Act), with an Explanatory Memorandum (by Command) (John Glen)&lt;/p&gt;</VoteEntry>
+    <Number>1</Number>
+    <FormattedNumber>1</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>44325</VoteItemId>
+    <VoteEntry>&lt;p&gt;Papers subject to Negative Resolution&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Heading</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>44326</VoteItemId>
+    <VoteEntry>&lt;p&gt;Lebanon No. 1 (2019)&lt;/p&gt;
+&lt;p&gt;Agreement, done at London on 19 September 2019, establishing an Association between the United Kingdom of Great Britain and Northern Ireland and the Republic of Lebanon (by Command) (CP 183),&amp;nbsp;with an Explanatory Memorandum (by Act) (Secretary Dominic Raab)&lt;/p&gt;</VoteEntry>
+    <Number>2</Number>
+    <FormattedNumber>2</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>44329</VoteItemId>
+    <VoteEntry>&lt;p&gt;Local Government&lt;/p&gt;
+&lt;p&gt;(1) Draft Isle of Wight (Electoral Changes) Order 2019 (by Act),&amp;nbsp;with an Explanatory Memorandum (by Command) (The Speaker)&lt;/p&gt;</VoteEntry>
+    <Number>3</Number>
+    <FormattedNumber>3</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>44330</VoteItemId>
+    <VoteEntry>&lt;p&gt;(2) Draft London Borough of Harrow (Electoral Changes) Order 2019 (by Act),&amp;nbsp;with an Explanatory Memorandum (by Command) (The Speaker)&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>44331</VoteItemId>
+    <VoteEntry>&lt;p&gt;(3) Draft London Borough of Hillingdon (Electoral Changes) Order 2019 (by Act),&amp;nbsp;with an Explanatory Memorandum (by Command) (The Speaker)&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>44333</VoteItemId>
+    <VoteEntry>&lt;p&gt;Magistrates' Courts&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>44334</VoteItemId>
+    <VoteEntry>&lt;p&gt;(1) Magistrates&amp;rsquo; Courts (Proceeds of Crime Act 2002 (External Requests and Orders) Order 2005, Part 5A, and Miscellaneous Amendments) Rules 2019&amp;nbsp;(S.I., 2019, No. 1368),&amp;nbsp;dated 21 October 2019 (by Act),&amp;nbsp;with an Explanatory Memorandum (by Command) (Secretary Robert Buckland)&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>44335</VoteItemId>
+    <VoteEntry>&lt;p&gt;(2) Magistrates&amp;rsquo; Courts (Proceeds of Crime Act 2002 (External Requests and Orders) Order 2005, Part 5B) Rules 2019&amp;nbsp;(S.I., 2019, No. 1369),&amp;nbsp;dated 21 October 2019 (by Act),&amp;nbsp;with an Explanatory Memorandum (by Command) (Secretary Robert Buckland)&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>44320</VoteItemId>
+    <VoteEntry>&lt;p&gt;Other papers&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Heading</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>44321</VoteItemId>
+    <VoteEntry>&lt;p&gt;Business, Energy and Industrial Strategy&lt;/p&gt;
+&lt;p&gt;Department for Business, Energy and Industrial Strategy Minute, dated 22 October 2019, concerning the notification of a guarantee as part of the British Business Bank's ENABLE Funding scheme following the first planned securitisation (by&amp;nbsp;Command) (Kelly Tolhurst)&lt;/p&gt;</VoteEntry>
+    <Number>4</Number>
+    <FormattedNumber>4</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>44342</VoteItemId>
+    <VoteEntry>&lt;p&gt;Exiting the European Union (Agriculture)&lt;/p&gt;
+&lt;p&gt;Explanatory Memorandum to the Agricultural Products, Food and Drink (Amendment) (EU Exit) Regulations 2019 (S.I., 2019, No. 1366) (by Command) (Secretary Theresa Villiers)&lt;/p&gt;</VoteEntry>
+    <Number>5</Number>
+    <FormattedNumber>5</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>44337</VoteItemId>
+    <VoteEntry>&lt;p&gt;USA No. 6 (2019)&lt;/p&gt;
+&lt;p&gt;(1) Understanding in relation to Freedom of Speech accompanying the Agreement, done at Washington on 3 October 2019, between the Government of the United Kingdom of Great Britain and Northern Ireland and the United States of America on Access to Electronic Data for the Purpose of Countering Serious Crime, laid on 7 October 2019 (by&amp;nbsp;Command) (Secretary Dominic Raab)&lt;/p&gt;</VoteEntry>
+    <Number>6</Number>
+    <FormattedNumber>6</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>44338</VoteItemId>
+    <VoteEntry>&lt;p&gt;(2)&amp;nbsp;Understanding in relation to GTMO accompanying the Agreement, done at Washington on 3 October 2019, between the Government of the United Kingdom of Great Britain and Northern Ireland and the United States of America on Access to Electronic Data for the Purpose of Countering Serious Crime, laid on 7 October 2019 (by&amp;nbsp;Command) (Secretary Dominic Raab)&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>44339</VoteItemId>
+    <VoteEntry>&lt;p&gt;(3) Understanding in relation to Subscriber Information and Preservation Process accompanying the Agreement, done at Washington on 3 October 2019, between the Government of the United Kingdom of Great Britain and Northern Ireland and the United States of America on Access to Electronic Data for the Purpose of Countering Serious Crime, laid on 7 October 2019 (by&amp;nbsp;Command) (Secretary Dominic Raab)&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>44340</VoteItemId>
+    <VoteEntry>&lt;p&gt;(4)&amp;nbsp;Understanding in relation to the Death Penalty accompanying the Agreement, done at Washington on 3 October 2019, between the Government of the United Kingdom of Great Britain and Northern Ireland and the United States of America on Access to Electronic Data for the Purpose of Countering Serious Crime, laid on 7 October 2019 (by&amp;nbsp;Command) (Secretary Dominic Raab)&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>44343</VoteItemId>
+    <VoteEntry>&lt;p style="text-align: center;"&gt;Withdrawn papers&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Heading</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>44341</VoteItemId>
+    <VoteEntry>&lt;p&gt;Exiting the European Union (Agriculture)&lt;/p&gt;
+&lt;p&gt;Explanatory Memorandum to the Agricultural Products, Food and Drink (Amendment) (EU Exit) Regulations 2019 (S.I., 2019, No. 1366) (laid 21 October)&lt;/p&gt;</VoteEntry>
+    <Number>7</Number>
+    <FormattedNumber>7</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Certificates and corrections</Section>
+    <VoteItemId>44311</VoteItemId>
+    <VoteEntry />
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>FullLine</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Certificates and corrections</Section>
+    <VoteItemId>44315</VoteItemId>
+    <VoteEntry>&lt;p style="text-align: center;"&gt;EXAMINER OF PETITIONS FOR PRIVATE BILLS&lt;/p&gt;
+&lt;p&gt;In pursuance of Standing Order 69 relating to Private Business (Appointment of Examiners of Petitions for Private Bills) the Speaker has appointed Christopher David Stanton as an Examiner of Petitions for Private Bills in place of Colin Geoffrey Lee.&lt;/p&gt;
+&lt;p style="text-align: center;"&gt;TAXING OFFICER&lt;/p&gt;
+&lt;p&gt;In pursuance of section 1(1) of the Parliamentary Costs Act 2006 the Speaker has appointed Christopher David Stanton as the Taxing Officer of the House of Commons.&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Certificates and corrections</Section>
+    <VoteItemId>44316</VoteItemId>
+    <VoteEntry />
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>FullLine</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Certificates and corrections</Section>
+    <VoteItemId>44312</VoteItemId>
+    <VoteEntry>&lt;p style="text-align: center;"&gt;CORRECTION&lt;/p&gt;
+&lt;p style="text-align: left;"&gt;Monday 21 October 2019&lt;/p&gt;
+&lt;p style="text-align: left;"&gt;The following item should have appeared after item 20:&lt;/p&gt;
+&lt;p style="text-align: left;"&gt;&lt;strong&gt;Procedure Committee&lt;/strong&gt;&lt;/p&gt;
+&lt;p style="text-align: left;"&gt;&lt;em&gt;Exiting the European Union: scrutiny of delegated legislation&lt;/em&gt;: Written evidence, to be published (HC 195) (Sir Charles Walker).&lt;strong&gt;&lt;br /&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;The following item should have appeared after item 4 in Papers Laid:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Magistrates' Courts&lt;/strong&gt;&lt;/p&gt;
+&lt;p style="text-align: left;"&gt;Magistrates' Courts (Amendment) Rules 2019 (S.I., 2019, No. 1367), dated 21 October 2019 (by Act), with an Explanatory Memorandum (by Command) (Secretary Robert Buckland)&lt;/p&gt;
+&lt;p style="text-align: left;"&gt;&amp;nbsp;&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+</ArrayOfVoteItemViewModel>

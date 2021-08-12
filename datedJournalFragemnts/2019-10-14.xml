@@ -1,0 +1,513 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfVoteItemViewModel xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>43866</VoteItemId>
+    <VoteEntry>&lt;p&gt;No. 1&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Heading</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>43867</VoteItemId>
+    <VoteEntry>&lt;p style="text-align: center;"&gt;The House met at 11.25 am.&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Heading</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>43868</VoteItemId>
+    <VoteEntry>&lt;p&gt;Prayers&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Heading</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>43870</VoteItemId>
+    <VoteEntry>&lt;p&gt;Message to attend Her Majesty&lt;/p&gt;
+&lt;p&gt;Message from Her Majesty delivered by the Lady Usher of the Black Rod:&lt;/p&gt;
+&lt;p style="padding-left: 30px;"&gt;Mr Speaker, The Queen commands this Honourable House to attend Her Majesty immediately, in the House of Peers.&lt;/p&gt;
+&lt;p&gt;The Speaker, with the House, went up to attend Her Majesty. When the Speaker and the House returned, the House was suspended.&lt;/p&gt;
+&lt;p&gt;The Speaker resumed the Chair at 2.30 pm.&lt;/p&gt;</VoteEntry>
+    <Number>1</Number>
+    <FormattedNumber>1</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>43876</VoteItemId>
+    <VoteEntry>&lt;p&gt;Speaker's Statement: Conduct and practice&lt;/p&gt;</VoteEntry>
+    <Number>2</Number>
+    <FormattedNumber>2</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>43871</VoteItemId>
+    <VoteEntry>&lt;p&gt;Outlawries Bill&lt;/p&gt;
+&lt;p&gt;A Bill for the more effectual preventing Clandestine Outlawries was read the first time and ordered to be read a second time.&lt;/p&gt;</VoteEntry>
+    <Number>3</Number>
+    <FormattedNumber>3</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>43872</VoteItemId>
+    <VoteEntry>&lt;p&gt;Queen&amp;rsquo;s Speech&lt;/p&gt;
+&lt;p&gt;The Speaker reported Her Majesty&amp;rsquo;s Speech and directed that it be entered in the Journal, as follows:&lt;/p&gt;
+&lt;p&gt;My Lords and Members of the House of Commons.&lt;/p&gt;
+&lt;p&gt;My Government's priority has always been to secure the United Kingdom's departure from the European Union on 31 October.&amp;nbsp; My Government intends to work towards a new partnership with the European Union based on free trade and friendly cooperation.&lt;/p&gt;
+&lt;p&gt;My Ministers will work to implement new regimes for fisheries, africulture and trade, seizing the opportunities that arise from leaving the European Union.&amp;nbsp; An immigration bill, ending free movement, will lay the foundation for a fair, modern and global immigration system.&amp;nbsp; My Government remains committed to ensuring that resident European citizens, who have built their lives in, and contributed so much to, the United Kingdom have the right to remain.&amp;nbsp; The bill will include measures that reinforce this commitment.&amp;nbsp; Steps will be taken to provide certainty, stability and new opportunities for the financial services and legal sectors.&lt;/p&gt;
+&lt;p&gt;My Government's new economic plan will be underpinned by a responsible fiscal strategy, investing in economic growth while maintaining the sustainability of the public finances.&lt;/p&gt;
+&lt;p&gt;Measures will be brought forward to support and strengthen the national health Service, its workforce and resources, enabling it to deliver the highest quality care.&amp;nbsp; new laws will be taken forward to help implement the National health Service's Long Term Plan in England, and to establish an independent body to investigate serious healthcare incidents.&lt;/p&gt;
+&lt;p&gt;My Government will bring forward proposals to reform adult social care in England to ensure dignity in old age.&amp;nbsp; My Ministers will continue to work to reform the Mental health Act to improve respect for, and care of, those receiving treatment.&lt;/p&gt;
+&lt;p&gt;My Government is committed to addressing violent crime, and to strengthening public confidence in the criminal justice system.&amp;nbsp; new sentencing laws will see that the most serious offenders spend longer in custody to reflect better the severity of their crimes.&amp;nbsp; Measures will be introduced to improve the justice system's response to foreign national offenders.&amp;nbsp; My Government will work to improve safety and security in prisons and to strengthen the rehabilitation of offenders.&amp;nbsp; proposals will be brought forward to to ensure that the parole system recognises the pain to victims and their families caused by offenders refusing to disclose information related to their crimes.&lt;/p&gt;
+&lt;p&gt;A new duty will be placed on public sector bodies, ensuring they work together to address serious violence.&amp;nbsp; Police officers will be provided with the protections they need to keep the population safe. They will also be awarded the power to arrest individuals who are wanted by trusted international partners.&lt;/p&gt;
+&lt;p&gt;My Government will bring forward measures to protect individuals, families and their homes.&amp;nbsp; legislation will transform the approach of the justice system and other agencies to victims of domestic abuse, and minimise the impact of divorce, particularly on children.&amp;nbsp; My Ministers will continue to develop proposals to improve internet safety and will bring forward laws to implement new building safety standards.&lt;/p&gt;
+&lt;p&gt;My Ministers will ensure that all young people have access to an excellent education, unlocking their full potential and preparing them for the world of work.&amp;nbsp; My Government will take steps to make work fairer, introducing measures that will support those working hard.&amp;nbsp; To help people plan for the future, measures will be brought forward to provide simpler oversight of pensions savings.&amp;nbsp; To protect people's savings for later life, new laws will provide greater powers to tackle irresponsible management of private pension schemes.&lt;/p&gt;
+&lt;p&gt;To ensure that the benefits of a prospering economy reach every corner of the United Kingdom, my Ministers will bring forward a National Infrastructure Strategy.&amp;nbsp; This will set out a long-term vision to improve the nation's digital, transport and energy infrastructure.&amp;nbsp; New legislation will help accelerate the delivery of fast, reliable and secure broadband networks to millions of homes.&amp;nbsp; An aviation bill will provide for the effective and efficient management of the United Kingdom's airspace. Proposals on railway reform will be brought forward.&lt;/p&gt;
+&lt;p&gt;A white paper will be published to set out my Government's ambitions for unleashing regional potential in England, and to enable decisions that affect local people to be made at a local level.&lt;/p&gt;
+&lt;p&gt;My Government is committed to establishing the United Kingdom as a world-leader in scientific capability and space technology.&amp;nbsp; increased investment in science will be complemented by the development of a new funding agency, a more open visa system, and an ambitious national space strategy.&lt;/p&gt;
+&lt;p&gt;My ministers remain committed to protecting and improving the environment for future generations.&amp;nbsp; For the first time, environmental principles will be enshrined in law.&amp;nbsp; measures will be introduced to improve air and water quality, tackle plastic pollution and restore habitats so plants and wildlife can thrive.&amp;nbsp; legislation will also create new legally-binding environmental improvement targets.&amp;nbsp; A new, world-leading independent regulator will be established in statute to scrutinise environmental policy and law, investigate complaints and take enforcement action.&lt;/p&gt;
+&lt;p&gt;Proposals will also be broguth forward to promote and protect the welfare of animals, including banning imports from trophy hunting.&lt;/p&gt;
+&lt;p&gt;The integrity and prosperity of the union that binds the four nations of the United Kingdom is of the utmost importance to my Government.&amp;nbsp; My Ministers will bring forward measures to support citizens across all nations of the United Kingdom.&lt;/p&gt;
+&lt;p&gt;My Government remains committed to working with all parties in Northern Ireland to support the return of devolved government and to address the legacy of the past.&lt;/p&gt;
+&lt;p&gt;My Government will take steps to protect the integrity of democracy and the electoral system in the United Kingdom.&lt;/p&gt;
+&lt;p&gt;My Government will continue to invest in our gallant Armed Forces.&amp;nbsp; My Ministers will honour the Armed Forces Covenant and the NATO commitment to spend at least two per cent of national income on defence.&lt;/p&gt;
+&lt;p&gt;As the United Kingdom leaves the European Union, my Government will ensure that it continues to play a leading role in global affairs, defending its interests and promoting its values.&lt;/p&gt;
+&lt;p&gt;My Government will be at the forefront of efforts to solve the most complex international security issues.&amp;nbsp; It will champion global free trade and work alongside international partners to solve the most pressing global challenges.&amp;nbsp; It will prioritise tackling climate change and ensuring that all girls have access to twelve years of quality education.&lt;/p&gt;
+&lt;p&gt;Members of the House of Commons:&lt;/p&gt;
+&lt;p&gt;Estimates for public services will be laid before you.&lt;/p&gt;
+&lt;p&gt;My Lords and Members of the House of Commons:&lt;/p&gt;
+&lt;p&gt;Other measures will be laid before you.&lt;/p&gt;
+&lt;p&gt;I pray that the blessing of Almighty God may rest upon your counsels.&lt;/p&gt;</VoteEntry>
+    <Number>4</Number>
+    <FormattedNumber>4</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>43875</VoteItemId>
+    <VoteEntry>&lt;p&gt;Queen&amp;rsquo;s Speech (Motion for an Address)&lt;/p&gt;
+&lt;p&gt;Motion made and Question proposed, That an humble Address be presented to Her Majesty, as follows:&lt;/p&gt;
+&lt;p&gt;Most Gracious Sovereign,&lt;/p&gt;
+&lt;p&gt;We, Your Majesty&amp;rsquo;s most dutiful and loyal subjects, the Commons of the United Kingdom of Great Britain and Northern Ireland in Parliament assembled, beg leave to offer our humble thanks to Your Majesty for the Gracious Speech which Your Majesty has addressed to both Houses of Parliament.&amp;mdash;(&lt;em&gt;Lee Rowley&lt;/em&gt;.)&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Ordered&lt;/em&gt;, That the debate be now adjourned.&amp;mdash;(&lt;em&gt;David Rutley&lt;/em&gt;.)&lt;/p&gt;
+&lt;p&gt;Debate to be resumed tomorrow.&lt;/p&gt;</VoteEntry>
+    <Number>5</Number>
+    <FormattedNumber>5</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>43874</VoteItemId>
+    <VoteEntry>&lt;p&gt;Adjournment&lt;/p&gt;
+&lt;p&gt;Subject: 75th anniversary of the Battle of Arnhem (Dan Jarvis)&lt;/p&gt;
+&lt;p&gt;Motion made and Question proposed, That this House do now adjourn.&amp;mdash;(&lt;em&gt;David Rutley&lt;/em&gt;.)&lt;/p&gt;
+&lt;p&gt;At 10.00 pm, the Motion lapsed (Standing Order No. 9(3)).&lt;/p&gt;
+&lt;p&gt;Resolved, That this House do now adjourn.&amp;mdash;(&lt;em style="background-color: transparent; color: #000000; font-size: 11px; font-style: italic; font-variant: normal; font-weight: 400; letter-spacing: normal; min-height: 0px; orphans: 2; text-align: left; text-decoration: none; text-indent: 0px; text-transform: none; -webkit-text-stroke-width: 0px; white-space: normal; word-spacing: 0px;"&gt;Leo Docherty&lt;/em&gt;.)&amp;nbsp;&lt;/p&gt;
+&lt;p style="text-align: right;"&gt;Adjourned at 10.11 pm until tomorrow.&lt;/p&gt;</VoteEntry>
+    <Number>6</Number>
+    <FormattedNumber>6</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Chamber</Section>
+    <VoteItemId>43919</VoteItemId>
+    <VoteEntry>&lt;p style="text-align: right;"&gt;John Bercow&lt;/p&gt;
+&lt;p style="text-align: right;"&gt;Speaker&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Heading</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Other Proceedings</Section>
+    <VoteItemId>45314</VoteItemId>
+    <VoteEntry>&lt;p style="text-align: center;"&gt;&lt;em&gt;Reports from Select Committees&lt;/em&gt;&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Heading</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Other Proceedings</Section>
+    <VoteItemId>45315</VoteItemId>
+    <VoteEntry>&lt;p&gt;Home Affairs Committee&lt;/p&gt;
+&lt;p&gt;(1) &lt;em&gt;Correspondence from the Cabinet Secretary relating to the association of the police with political activity&lt;/em&gt;: Written evidence, to be published;&lt;/p&gt;
+&lt;p&gt;(2) &lt;em&gt;Home Office preparations for Brexit&lt;/em&gt;: Written evidence, to be published (HC 67)&lt;/p&gt;
+&lt;p&gt;(Yvette Cooper).&lt;/p&gt;</VoteEntry>
+    <Number>1</Number>
+    <FormattedNumber>1</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>43913</VoteItemId>
+    <VoteEntry>&lt;p&gt;Papers presented and delivered to the Votes and Proceedings Office on the undermentioned dates under Standing Orders No. 158 and No. 159&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Heading</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>43916</VoteItemId>
+    <VoteEntry>&lt;p style="text-align: center;"&gt;Papers subject to Negative Resolution&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Heading</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>43914</VoteItemId>
+    <VoteEntry>&lt;p style="text-align: center;"&gt;&lt;em&gt;Wednesday 9 October 2019&lt;/em&gt;&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Heading</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>43896</VoteItemId>
+    <VoteEntry>&lt;p&gt;Exiting the European Union (Customs)&lt;/p&gt;
+&lt;p&gt;Trade Remedies (Increase in Imports Causing Serious Injury to UK Producers) (Amendment) (EU Exit) Regulations 2019&amp;nbsp;(S.I., 2019, No. 1319),&amp;nbsp;dated 8 October 2019 (by Act),&amp;nbsp;with an Explanatory Memorandum (by Command) (Conor Burns)&lt;/p&gt;</VoteEntry>
+    <Number>1</Number>
+    <FormattedNumber>1</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>43917</VoteItemId>
+    <VoteEntry>&lt;p style="text-align: center;"&gt;Other papers&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Heading</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>43915</VoteItemId>
+    <VoteEntry>&lt;p style="text-align: center;"&gt;&lt;em&gt;Thursday 10 October 2019&lt;/em&gt;&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Heading</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>43904</VoteItemId>
+    <VoteEntry>&lt;p&gt;Justice&lt;/p&gt;
+&lt;p&gt;Report of Prisons and Probation Ombudsman for 2018&amp;ndash;19 (by&amp;nbsp;Command) (CP&amp;nbsp;175) (Secretary Robert Buckland)&lt;/p&gt;</VoteEntry>
+    <Number>2</Number>
+    <FormattedNumber>2</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>43912</VoteItemId>
+    <VoteEntry>&lt;p&gt;Treaty Series No. 7 (2019)&lt;/p&gt;
+&lt;p&gt;Protocol, done at Nicosia on 19 December 2018, between the Government of the United Kingdom of Great Britain and Northern Ireland and the Government of the Republic of Cyprus to amend the convention for the elimination of double taxation with respect to taxes on income and on capital gains and the prevention of tax evasion and avoidance (by&amp;nbsp;Command) (CP&amp;nbsp;177) (Secretary Dominic Raab)&lt;/p&gt;</VoteEntry>
+    <Number>3</Number>
+    <FormattedNumber>3</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>43920</VoteItemId>
+    <VoteEntry>&lt;p style="text-align: center;"&gt;Withdrawn papers&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Heading</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>43921</VoteItemId>
+    <VoteEntry>&lt;p style="text-align: center;"&gt;&lt;em&gt;Friday 11 October 2019&lt;/em&gt;&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Heading</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>43885</VoteItemId>
+    <VoteEntry>&lt;p&gt;Treaty Series No. 4 (2019)&lt;/p&gt;
+&lt;p&gt;Agreement, done at London on 1 August 2019, between the Government of the United Kingdom of Great Britain and Northern Ireland and the Government of New Zealand on Cooperation and Mutual Administrative Assistance in Customs Matters (by&amp;nbsp;Command) (CP&amp;nbsp;149) (laid 12 August 2019)&lt;/p&gt;</VoteEntry>
+    <Number>4</Number>
+    <FormattedNumber>4</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>43879</VoteItemId>
+    <VoteEntry>&lt;p style="text-align: center;"&gt;Papers presented or laid upon the Table on Monday 14 October 2019&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Heading</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>43881</VoteItemId>
+    <VoteEntry>&lt;p style="text-align: center;"&gt;Papers subject to Affirmative Resolution&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Heading</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>43886</VoteItemId>
+    <VoteEntry>&lt;p&gt;Criminal Law&lt;/p&gt;</VoteEntry>
+    <Number>5</Number>
+    <FormattedNumber>5</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>43887</VoteItemId>
+    <VoteEntry>&lt;p&gt;(1) Draft Criminal Justice and Courts Act 2015 (Consequential Amendment) Regulations 2019 (by Act), with an Explanatory Memorandum (by Command) (Secretary Robert Buckland)&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>43888</VoteItemId>
+    <VoteEntry>&lt;p&gt;(2) Draft Legal Aid, Sentencing and Punishment of Offenders Act 2012 (Commencement No. 14) Order 2019 (by Act), with an Explanatory Memorandum and an Impact Assessment (by Command) (Secretary Robert Buckland)&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>43889</VoteItemId>
+    <VoteEntry>&lt;p&gt;(3) Draft Release of Prisoners (Alteration of Relevant Proportion of Sentence) Order 2019 (by Act), with an Explanatory Memorandum and an Impact Assessment (by Command) (Secretary Robert Buckland)&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>43890</VoteItemId>
+    <VoteEntry>&lt;p&gt;Exiting the European Union&lt;/p&gt;
+&lt;p&gt;Rights, Equality and Citizenship Programme (Revocation) (EU Exit) Regulations 2019 (S.I., 2019, No. 1339),&amp;nbsp;dated 14 October 2019 (by Act), with an Explanatory Memorandum and an Impact Assessment (by Command) (Secretary Robert Buckland)&lt;/p&gt;</VoteEntry>
+    <Number>6</Number>
+    <FormattedNumber>6</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>43880</VoteItemId>
+    <VoteEntry>&lt;p&gt;Exiting the European Union (Agriculture)&lt;/p&gt;</VoteEntry>
+    <Number>7</Number>
+    <FormattedNumber>7</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>43891</VoteItemId>
+    <VoteEntry>&lt;p&gt;(1) Agricultural Products, Food and Drink (Amendment etc.) (EU Exit) Regulations 2019 (S.I., 2019, No. 1342),&amp;nbsp;dated 14 October 2019 (by Act), with an Explanatory Memorandum (by Command) (Secretary Theresa Villiers)&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>43892</VoteItemId>
+    <VoteEntry>&lt;p&gt;(2) Common Agricultural Policy (Market Measures, Notifications and Direct Payments) (Miscellaneous Amendments) (EU Exit) Regulations 2019 (S.I., 2019, No. 1344),&amp;nbsp;dated 14 October 2019 (by Act), with an Explanatory Memorandum (by Command) (Secretary Theresa Villiers)&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>43893</VoteItemId>
+    <VoteEntry>&lt;p&gt;(3) Common Organisation of the Markets in Agricultural Products (Producer Organisations and Wine) (Amendment etc.) (EU Exit) Regulations 2019 (S.I., 2019, No. 1343),&amp;nbsp;dated 14 October 2019 (by Act), with an Explanatory Memorandum (by Command) (Secretary Theresa Villiers)&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>43897</VoteItemId>
+    <VoteEntry>&lt;p&gt;Exiting The European Union (Environmental Protection)&lt;/p&gt;
+&lt;p&gt;Persistent Organic Pollutants (Amendment) (EU Exit) Regulations 2019 (S.I., 2019, No. 1340),&amp;nbsp;dated 14 October 2019 (by Act), with an Explanatory Memorandum (by Command) (Secretary Theresa Villiers)&lt;/p&gt;</VoteEntry>
+    <Number>8</Number>
+    <FormattedNumber>8</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>43898</VoteItemId>
+    <VoteEntry>&lt;p&gt;Exiting the European Union (Family Law)&lt;/p&gt;
+&lt;p&gt;Civil Jurisdiction and Judgments (Civil and Family) (Amendment) (EU Exit) Regulations 2019 (S.I., 2019, No. 1338),&amp;nbsp;dated 14 October 2019 (by Act), with an Explanatory Memorandum (by Command) (Secretary Robert Buckland)&lt;/p&gt;</VoteEntry>
+    <Number>9</Number>
+    <FormattedNumber>9</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>43902</VoteItemId>
+    <VoteEntry>&lt;p&gt;Income Tax&lt;/p&gt;
+&lt;p&gt;Draft Income Tax (Trading and Other Income) Act 2005 (Amendments to Chapter 2A of Part 5) Regulations 2019 (by Act), with an Explanatory Memorandum (by Command) (Jesse Norman)&lt;/p&gt;</VoteEntry>
+    <Number>10</Number>
+    <FormattedNumber>10</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>43908</VoteItemId>
+    <VoteEntry>&lt;p&gt;Public Bodies&lt;/p&gt;
+&lt;p&gt;Draft Public Bodies (Abolition of Public Works Loan Commissioners) Order 2019 (by Act), with an Explanatory Memorandum (by Act) (John Glen)&lt;/p&gt;</VoteEntry>
+    <Number>11</Number>
+    <FormattedNumber>11</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>43910</VoteItemId>
+    <VoteEntry>&lt;p&gt;Representation of the People&lt;/p&gt;
+&lt;p&gt;Draft Representation of the People (Annual Canvass) (Amendment) Regulations 2019 (by Act), with an Explanatory Memorandum and an Impact Assessment (by Command) (Kevin Foster)&lt;/p&gt;</VoteEntry>
+    <Number>12</Number>
+    <FormattedNumber>12</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>43884</VoteItemId>
+    <VoteEntry>&lt;p style="text-align: center;"&gt;Other papers&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Heading</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>43900</VoteItemId>
+    <VoteEntry>&lt;p&gt;Health and Social Care&lt;/p&gt;
+&lt;p&gt;Care Quality Commission: The state of health care and adult social care in England for&amp;nbsp;2018&amp;ndash;19 (by Act), to be printed (HC&amp;nbsp;9) (Caroline Dinenage)&lt;/p&gt;</VoteEntry>
+    <Number>13</Number>
+    <FormattedNumber>13</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Papers Laid</Section>
+    <VoteItemId>43906</VoteItemId>
+    <VoteEntry>&lt;p&gt;Northern Ireland (Executive Formation etc)&lt;/p&gt;
+&lt;p&gt;Report pursuant to Section 3(5) of the Northern Ireland (Executive Formation etc) Act 2019 (by&amp;nbsp;Act) (Secretary Julian Smith)&lt;/p&gt;</VoteEntry>
+    <Number>14</Number>
+    <FormattedNumber>14</FormattedNumber>
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Certificates and corrections</Section>
+    <VoteItemId>43877</VoteItemId>
+    <VoteEntry />
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>FullLine</VoteEntryType>
+  </VoteItemViewModel>
+  <VoteItemViewModel>
+    <Section>Certificates and corrections</Section>
+    <VoteItemId>43878</VoteItemId>
+    <VoteEntry>&lt;p style="text-align: center;"&gt;CORRECTION&lt;/p&gt;
+&lt;p&gt;Monday 15 July 2019&lt;/p&gt;
+&lt;p&gt;Item 16 (Housing, Communities and Local Government Committee) should have included:&lt;/p&gt;
+&lt;p&gt;() &lt;em&gt;Commissioned research on audit and inspection of local authorities in England&lt;/em&gt;: Written evidence, to be published;&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;Tuesday 8 October 2019&lt;/p&gt;
+&lt;p&gt;The following should have been appeared at the end of the Votes and Proceedings&lt;/p&gt;
+&lt;p style="text-align: center;"&gt;SPEAKER'S CERTIFICATE&lt;/p&gt;
+&lt;p style="text-align: center;"&gt;Domestic Abuse Bill&lt;/p&gt;
+&lt;p&gt;The Speaker has certified, for the purposes of Standing Order No. 83J, and&amp;nbsp;on the basis of&amp;nbsp;material put before him, that in his opinion Clause&amp;nbsp;56&amp;nbsp;of&amp;nbsp;the&amp;nbsp;Domestic Abuse&amp;nbsp;Bill&amp;nbsp;relates&amp;nbsp;exclusively to England on matters within devolved legislative competence, as defined in Standing Order No. 83J; and&amp;nbsp; Clauses 1 to 18, 53 to 55, 75, 76 and 79 of the Domestic Abuse Bill relate exclusively to England and Wales on matters within devolved legislative competence, as defined in Standing Order No. 83J.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p style="text-align: center;"&gt;Proxy voting for Parental Absence&lt;/p&gt;
+&lt;p style="text-align: left;"&gt;The Speaker has certified, under terms of the temporary Standing Order on voting by proxy for parental absence and the Resolution of the House of 28 January, that the certificate issued on 8 October 2019 in respect of Mark Pritchard is rescinded.&lt;/p&gt;</VoteEntry>
+    <Number xsi:nil="true" />
+    <FormattedNumber />
+    <NumericSystem>Arabic</NumericSystem>
+    <Children />
+    <VoteEntryType>Text</VoteEntryType>
+  </VoteItemViewModel>
+</ArrayOfVoteItemViewModel>
