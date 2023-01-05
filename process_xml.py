@@ -6,62 +6,161 @@
 # Ideas for improvement are welcome
 
 # python standard library imports
-# from copy import deepcopy
 import argparse
-from datetime import datetime, date
-from functools import lru_cache
+from datetime import datetime, date, timedelta
 from pathlib import Path
 import re
-import ssl
 import sys
-from typing import cast, Optional
-from os import path
-
+from typing import cast
+import os
+from cache_to_disk import cache_to_disk
 import requests
 
 from lxml import etree
 from lxml.etree import _Element
+from lxml.etree import iselement
 
-# import urllib.request
+
+OUTPUT_XML_NAME = 'papers_for_indesign11.xml'
+
+NS_MAP = {'xsi': 'http://www.w3.org/2001/XMLSchema-instance'}
 
 
-NS_MAP = {'xsi': 'http://www.w3.org/2001/XMLSchema-instance',
-          'aid': 'http://ns.adobe.com/AdobeInDesign/4.0/',
-          'aid5': 'http://ns.adobe.com/AdobeInDesign/5.0/'}
+class Paper:
+    def __init__(self, paper_element: _Element):
+        self.side_title = paper_element.findtext('SideTitle', default='').strip()
+        self.title = paper_element.findtext('Title', default='').strip()
+        self.is_draft = paper_element.findtext('Draft', default='').strip()
+        # replace any hyphens in the year with the en-dash as that is typographically correct
+        self.year = paper_element.findtext('Year', default='').strip().replace('-', '\u2013')
+        # papers don't always have a subject heading.
+        self.subject_heading = paper_element.findtext('SubjectHeading', default='').strip()
 
-OUTPUT_XML_NAME = 'papers_for_indesign3.xml'
+        self._input_date_laid: str = paper_element.findtext('DateLaidCommons', default='').strip()
+        self._input_date_withdrawn: str = paper_element.findtext('DateWithdrawn', default='').strip()
 
-PAPER_IDS = set()  # use a set to contain all the paper Ids.
+        self.date_laid, self.date_withdrawn = self.__process_dates()
 
-PAPERS_DATA: dict[str, dict[str, list]] = {}
+        if self.subject_heading:
+            self.title = self.subject_heading.replace('  ', ' ')
 
-PAPERS_INFO = [
-    {'pattern': re.compile(r'Regulations$', flags=re.IGNORECASE),
+
+    def __process_dates(self) -> tuple[str,str]:
+        try:
+            laid_sitting_date =  get_sitting_date(datetime.strptime(self._input_date_laid[0:10], '%Y-%m-%d'))
+            laid_sitting_date_str = format_date(laid_sitting_date)
+        except Exception:
+            laid_sitting_date_str = ''
+
+        date_withdrawn = ''
+        try:
+            withdrawn_sitting_date = get_sitting_date(datetime.strptime(self._input_date_withdrawn[0:10], '%Y-%m-%d'))
+            date_withdrawn = f'[withdrawn, {format_date(withdrawn_sitting_date)}]'
+        except Exception:
+            date_withdrawn = ''
+
+        return laid_sitting_date_str, date_withdrawn
+
+
+    @property
+    def index_entry(self):
+        return f'{self.title}, {self.date_laid} {self.date_withdrawn}'.strip(', ')
+
+    def __eq__(self, other):
+        return self.index_entry == other.index_entry
+
+    # for sorting
+    @property
+    def _sort_str(self):
+        return self.index_entry.upper().removeprefix('THE ')
+    def __lt__(self, other):
+        return self._sort_str < other._sort_str
+    def __gt__(self, other):
+        # we only really need less than but hey
+        return self._sort_str > other._sort_str
+
+    def __str__(self):
+        return self.index_entry
+
+
+
+Side_Title = str
+Group = str
+Papers_Structure = dict[Side_Title, dict[Group, list[Paper]]]
+
+PAPERS_GROUPING = [
+    # the order here matters
+    {'pattern': re.compile(r'Regulations ? ?\d?\d?\d?\d?$', flags=re.IGNORECASE),
         'base_key': 'Regulations: '},
     # {'pattern': re.compile(r'Regulations\(Northern Ireland\)$', flags=re.IGNORECASE),
     #     'base_key': 'Regulations (Northern Ireland): '},
-    {'pattern': re.compile(r'Report of the Law Commission ',  flags=re.IGNORECASE),
+    {'pattern': re.compile(r'^Report of the Law Commission ',  flags=re.IGNORECASE),
         'base_key': 'Report of the Law Commission: '},
-    {'pattern': re.compile(r'Order$', flags=re.IGNORECASE),
+    {'pattern': re.compile(r'Order ? ?\d?\d?\d?\d?$', flags=re.IGNORECASE),
         'base_key': 'Order: '},
-    {'pattern': re.compile(r'Order of Council$', flags=re.IGNORECASE),
+    {'pattern': re.compile(r'Order of Council ? ?\d?\d?\d?\d?$', flags=re.IGNORECASE),
         'base_key': 'Order of Council: '},
     {'pattern': re.compile(r'^Report and Accounts of ', flags=re.IGNORECASE),
         'base_key': 'Reports and Accounts, '},
+    {'pattern': re.compile(r'Rules ? ?\d?\d?\d?\d?$', flags=re.IGNORECASE),
+        'base_key': 'Rules: '},
     {'pattern': re.compile(r'^Accounts of ', flags=re.IGNORECASE),
         'base_key': 'Accounts, '},
     {'pattern': re.compile(r'^Account ', flags=re.IGNORECASE),
-        'base_key': 'Account, '}
+        'base_key': 'Account, '},
+    {'pattern': re.compile(r'^Report of the Independent Chief Inspector of Borders and Immigration: ', flags=re.IGNORECASE),
+        'base_key': 'Report of the Independent Chief Inspector of Borders and Immigration: '},
+    {'pattern': re.compile(r'^Report by the Comptroller and Auditor General on ', flags=re.IGNORECASE),
+        'base_key': 'Report by the Comptroller and Auditor General: '},
 ]
 
 PLURALS = (
+    ('^Draft Order: ', 'Draft Orders: '),
     ('^Order: ', 'Orders: '),
-    ('^Draft Order: ', 'Draft Orders: ')
+    ('^Order of Council', 'Orders of Council')
 )
 
 
-def main():
 
+def main() -> int:
+
+    args = cli()
+
+    if args.process_local:
+        papers_xml_tree = etree.parse(args.process_local.name)
+        papers_xml = papers_xml_tree.getroot()
+    elif args.session:
+        try:
+            session_start, session_end = get_dates_from_session(args.session)
+        except Exception as e:
+            print(e)
+            return os.EX_UNAVAILABLE
+        response = request_papers_data(session_start, session_end)
+        if args.save_raw:
+            as_downloaded_file_name = f'as_downloaded_papers_{args.session}.xml'
+            with open(as_downloaded_file_name, 'wb') as f:
+                f.write(response.content)
+        papers_xml = etree.fromstring(response.content)
+    else:
+        print('Error: Must have either an XML file or a session.')
+        return os.EX_USAGE
+
+    filtered_papers = filter_papers(papers_xml)
+
+    print(f'There are {len(filtered_papers)} papers once filtered.')
+
+    papers_data = populate_papers_data(filtered_papers)
+
+    sorted_papers_data = sort_papers(papers_data)
+
+    output_xml = convert_to_xml(sorted_papers_data)
+
+    write_xml(output_xml)
+
+    return 0
+
+
+def cli():
     parser = argparse.ArgumentParser(
         description="Download and process XML from papers laid to create InDesign XML for the papers index."
     )
@@ -82,27 +181,75 @@ def main():
 
     args = parser.parse_args(sys.argv[1:])
 
-    local_file = None
-    if args.process_local:
-        local_file = Path(args.process_local.name)
-
-    process_papers(local_xml=local_file, session=args.session, save_raw_xml=args.save_raw)
+    return args
 
 
-def filter_papers(papers: list[_Element]) -> list[_Element]:
+def sort_papers(papers_data: Papers_Structure) -> Papers_Structure:
+    sorted_papers_data: Papers_Structure = {}
+    for side_title in sorted(papers_data.keys(), key =lambda item: item.upper()):
+        sorted_papers_data[side_title] = {}
+        for group in sorted(papers_data[side_title].keys(), key=group_sort):
+            sorted_papers_data[side_title][group] = sorted(papers_data[side_title][group])
+
+    return sorted_papers_data
+
+def group_sort(item: str) -> tuple[int, str]:
+    """Helper to sort groups as specified"""
+    if item.startswith('Draft Order'):
+        return 1, item
+    if item.startswith('Order of Council') or item.startswith('Orders of Council'):
+        return 3, item
+    if item.startswith('Order'):
+        # note this comes before the above
+        return 2, item
+    if item.startswith('Draft Regulations'):
+        return 4, item
+    if item.startswith('Regulations (Northern Ireland)'):
+        return 6, item
+    if item.startswith('Regulations'):
+        return 5, item
+    if item.startswith('Rules'):
+        return 7, item
+    if item.startswith('Accounts'):
+        return 8, item
+    if item.startswith('Report and Accounts'):
+        return 9, item
+    else:
+        # We want these at the back of each section
+        return 100, item
+
+def filter_papers(papers_xml: _Element | list[_Element]) -> list[_Element]:
+    """Remove duplicates and any papers not laid in Commons"""
+
+    if iselement(papers_xml):
+        papers_xpath_result = papers_xml.xpath(
+            # get all papers
+            '/ArrayOfDailyPapers/DailyPapers/*/Paper'
+            #  remove any not laid in the commons
+            '[DateLaidCommons[text()]]',
+            namespaces=NS_MAP
+        )
+    else:
+        papers_xpath_result = papers_xml
+    papers_xpath_result = cast(list[_Element], papers_xpath_result)
+
+    paper_ids = set()  # use a set to contain all the paper Ids.
     papers_of_interest = []
-    for paper in reversed(papers):
+    for paper in reversed(papers_xpath_result):
         # get the papers Id, ** I am assuming that these are unique to each paper **
         paper_id = paper.findtext('Id')
 
-        if paper_id not in PAPER_IDS:
-            PAPER_IDS.add(paper_id)
+        if paper_id not in paper_ids:
+            paper_ids.add(paper_id)
             papers_of_interest.append(paper)
+
     return papers_of_interest
 
 
-def get_dates_from_session(session_code):
+def get_dates_from_session(session_code: str) -> tuple[datetime, datetime]:
     """Return a tuple of start and end dates (as strings) of a session of parliament"""
+
+    # session code e.g. '2015-16'
 
     # Get the dates from API
     url = 'http://service.calendar.parliament.uk/calendar/sessions/list.json'
@@ -112,179 +259,152 @@ def get_dates_from_session(session_code):
 
     for session_obj in session_json:
         if session_obj['CommonsDescription'] == session_code:
-            start_date = session_obj['StartDate']
-            end_date = session_obj['EndDate']
+            start_date_str = session_obj['StartDate']
+            end_date_str = session_obj['EndDate']
 
-            return(start_date[:10], end_date[:10])
+            start_date = datetime.strptime(start_date_str[:10], '%Y-%m-%d')
+            end_date = datetime.strptime(end_date_str[:10], '%Y-%m-%d')
+
+            return start_date, end_date
+
+    raise ValueError(f'Dates for session, {session_code} could not be found.\nCheck {url}')
 
 
-def xml_from_papers_laid(session_code: str):
-    """get the xml from the papers laid API"""
+def request_papers_data(date_from: datetime, date_to: datetime) -> requests.Response:
+    """Query the papers laid API for papers laid in the date range"""
 
-    # session code e.g. '2015-16'
-
-    # dates of session of parliament
-    session_dates = get_dates_from_session(session_code)
+    session_from_str = date_from.strftime('%Y-%m-%d')
+    session_to_str = date_to.strftime('%Y-%m-%d')
 
     url = ('http://services.paperslaid.parliament.uk/papers/list/daily.xml'
-        f'?fromDate={session_dates[0]}&toDate={session_dates[1]}&house=commons')
+        f'?fromDate={session_from_str}&toDate={session_to_str}&house=commons')
 
     response = requests.get(url)
 
     return response
 
 
-def process_papers(
-    local_xml: Optional[Path] = None,
-    session: Optional[str] = None,
-    save_raw_xml = False):
+def convert_to_xml(papers_data: Papers_Structure) -> _Element:
+    """create a lxml.etree._Element from Papers structure"""
 
-    path_to_dir = ''
+    output_root = etree.Element('PapersIndex')
 
-    # assume we want to save the output next to the input so get the location
-    if local_xml:
-        path_to_dir = local_xml.parent.absolute()
-        papers_xml_tree = etree.parse(str(local_xml))
-        papers_xml_root = papers_xml_tree.getroot()
-
-    elif not session:
-        print('Must have either an XML file or a session')
-        return
-    else:
-        # download the XML first
-        response = xml_from_papers_laid(session)
-
-        if save_raw_xml:
-            as_downloaded_file_name = f'as_downloaded_papers_{session}.xml'
-            with open(as_downloaded_file_name, 'wb') as f:
-                f.write(response.content)
-
-        papers_xml_root = etree.fromstring(response.content)
-
-    papers_xpath_result = papers_xml_root.xpath(
-        # get all papers
-        '/ArrayOfDailyPapers/DailyPapers/*/Paper'
-        #  remove any not laid in the commons
-        '[DateLaidCommons[text()]]',
-        namespaces=NS_MAP
-    )
-    papers_xpath_result = cast(list[_Element], papers_xpath_result)
-
-    papers_of_interest = filter_papers(papers_xpath_result)
-
-    print(f'There are {len(papers_of_interest)} papers.')
-
-    # regulations_str = 'Regulations'
-    populate_papers_data(papers_of_interest)
-
-    # create a root element for output XML
-    output_root = etree.Element('root')
-
-
-    for side_t in sorted(PAPERS_DATA.keys()):
+    for side_t in papers_data:
         etree.SubElement(output_root, 'SideTitle').text = side_t
 
-        entries_under_side_title = []
+        # entries_under_side_title = []
 
-        for key, value in PAPERS_DATA[side_t].items():
-            if key == 'papers':
-                # papers is a special case
-                entries_under_side_title += value
+        for key, value in papers_data[side_t].items():
+            if key == '[other papers]':
+                # paper that are not grouped
+                # entries_under_side_title += value
+                # entries_under_side_title += f'{value}.'
+                for paper in value:
+                    etree.SubElement(output_root, 'Paper').text = f'{paper.index_entry}.'
             elif len(value) > 0:
-                value.sort()
                 if len(value) > 1:
-                    for plural in PLURALS:
-                        key = re.sub(plural[0], plural[1], key)
-                entries_under_side_title.append(f'{key}{"; ".join(value)}')
+                    key = fix_plurals(key)
+                etree.SubElement(output_root, 'Paper').text = f'{key}{"; ".join(paper.index_entry for paper in value)}.'
+                # entries_under_side_title.append(f'{key}{"; ".join(value)}.')
+                # entries_under_side_title.append(f'{key}{"; ".join(value)}')
 
         # add all the entries to the XML
-        for paper in sorted(entries_under_side_title):
-            etree.SubElement(output_root, 'Paper').text = paper
+        # for paper in entries_under_side_title:
+        # for paper in sorted(entries_under_side_title, key=lambda item_str: item_str.removeprefix('The ')):
+        #     etree.SubElement(output_root, 'Paper').text = paper
 
     # for every element in output_root add a new line after
     for ele in output_root:
         ele.tail = '\n'
 
-    # xml_file_path = path.join(path_to_dir, 'papers_for_indesign.xml')
-    xml_file_Path = Path(path_to_dir, OUTPUT_XML_NAME)
-    outputTree = etree.ElementTree(output_root)
-    outputTree.write(xml_file_Path, encoding='UTF-8', xml_declaration=True)
-
-    print(
-        f'After combining there are {len(output_root.xpath("//Paper"))} entries.')
+    return output_root
 
 
-def populate_papers_data(papers_of_interest: list[_Element]):
+def write_xml(xml_root: _Element, parent_directory: str|Path|None = None):
+    if parent_directory:
+        xml_file_Path = Path(parent_directory, OUTPUT_XML_NAME)
+    else:
+        xml_file_Path = Path(OUTPUT_XML_NAME)
+    outputTree = etree.ElementTree(xml_root)
+    outputTree.write(str(xml_file_Path), encoding='UTF-8', xml_declaration=True)
 
-    for paper in papers_of_interest:
-        side_title = paper.findtext('SideTitle', default='').strip()
-        title = paper.findtext('Title', default='').strip()
-        date_laid = paper.findtext('DateLaidCommons', default='').strip()
-        is_draft = paper.findtext('Draft', default='').strip()
-        year = paper.findtext('Year', default='').strip()
-        date_withdrawn = paper.findtext('DateWithdrawn', default='').strip()
-        # papers don't always have a subject heading.
-        subject_heading = paper.findtext('SubjectHeading', default='').strip()
 
-        date_laid = process_date(date_laid)
-        # if date_withdrawn: print(date_withdrawn)
-        date_withdrawn = process_date(date_withdrawn)
-        if date_withdrawn:
-            date_withdrawn = f'[withdrawn, {date_withdrawn}]'
-            # print(date_withdrawn)
+def fix_plurals(possible_plural: str) -> str:
+    for plural in PLURALS:
+        if re.search(plural[0], possible_plural):
+            return re.sub(plural[0], plural[1], possible_plural)
+    return possible_plural
+
+
+def populate_papers_data(papers_of_interest: list[_Element]) -> Papers_Structure:
+
+    papers_data: Papers_Structure = {}
+
+    for p in papers_of_interest:
+        paper = Paper(p)
 
         # paper_obj.setdefault(side_title, []).append()
-        if side_title not in PAPERS_DATA:
+        if paper.side_title not in papers_data:
             # PAPERS_DATA[side_title] = deepcopy(default_side_title_obj)
-            PAPERS_DATA[side_title] = {}
+            papers_data[paper.side_title] = {}
 
-        key = 'papers'  # key for standard paper
-        for obj in PAPERS_INFO:
-            match = re.search(r'(Regulations \(Northern Ireland\)) ([12]\d\d\d)', subject_heading)
+        key = '[other papers]'  # key for ungrouped paper
+        for group_obj in PAPERS_GROUPING:
+
+            # Nortern Ireland Regulations are special
+            NI_re = r'(Regulations \(Northern Ireland\)) ([12]\d\d\d)'
+            match = re.search(NI_re, paper.title)
             if match:
                 key = f'{match.group(1)}: {match.group(2)}: '
-                title = re.sub(r'Regulations \(Northern Ireland\)', '', title)
+                paper.title = re.sub(NI_re, '', paper.title).strip()
                 break
 
-            if not re.search(obj['pattern'], title):
+            if not re.search(group_obj['pattern'], paper.title):
                 continue
-                # this is a special paper
 
             # set the key up
-            key = obj['base_key']
-            if is_draft == 'true':
+            key = group_obj['base_key']
+            if paper.is_draft == 'true':
                 key = 'Draft ' + key
-            if year:
-                # replace any hyphens in the year with the en-dash as that is typographically correct
-                year = year.replace('-', '\u2013')
-                key = f'{key}{year}: '  # key for special paper
+            if paper.year:
+                key = f'{key}{paper.year}: '  # key for special paper
 
             # amend the title
-            title = re.sub(obj['pattern'], '', title).strip()
+            paper.title = re.sub(group_obj['pattern'], '', paper.title).strip()
 
             # if the above matched we do not need to check anymore so break
             break
 
+        # if subject_heading.startswith(title) and subject_heading != title:
+        #     # sometimes the subject heading includes info that we want that
+        #     # does not appear in the title.
+        #     title = subject_heading
+
         # journal_title = title
         # if year:
         #     journal_title = f'{title} for {year}'
-        paper_entry = f'{title}, {date_laid} {date_withdrawn}'.strip(', ')
-        PAPERS_DATA[side_title].setdefault(key, []).append(paper_entry)
+
+        papers_data[paper.side_title].setdefault(key, []).append(paper)
+
+    return papers_data
 
 
-def process_date(date):
-    if date and len(date) > 9:
-        return datetime.strptime(
-            date[0:10], '%Y-%m-%d').strftime('%d %b %Y').lstrip('0')
-    return ''
+def format_date(date_: date) -> str:
+    """Convert a date object to a string formatted for the Journal."""
 
-@lru_cache
-def get_next_sitting_date(date_: datetime) -> datetime:
-    """Get next sitting day from whatson api"""
+    return date_.strftime('%d %b %Y').lstrip('0')
+
+
+@cache_to_disk(1)
+def get_sitting_date(date_: datetime) -> datetime:
+    """If input date is a sitting date return the input date
+    else return the next sitting date"""
 
     url_template = "https://whatson-api.parliament.uk/calendar/proceduraldates/Commons/nextsittingdate.json?dateToCheck={}"
 
-    url = url_template.format(date_.strftime("%Y-%m-%d"))
+    one_day_ago = date_ - timedelta(days=1)
+
+    url = url_template.format(one_day_ago.strftime("%Y-%m-%d"))
 
     response = requests.get(url)
 
@@ -292,4 +412,4 @@ def get_next_sitting_date(date_: datetime) -> datetime:
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
