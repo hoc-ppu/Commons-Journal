@@ -51,14 +51,14 @@ def test_filter_papers():
         if len(e1) != len(e2): return False
         return all(elements_equal(c1, c2) for c1, c2 in zip(e1, e2))
 
-    root_ele = etree.parse("filtering_test_before_2.xml").getroot()
+    root_ele = etree.parse("tests/filtering_test_before_2.xml").getroot()
 
     papers_l = filter_papers(root_ele)
 
     papers_e = etree.Element('ExpectedPapers')
     papers_e.extend(papers_l)
 
-    et = etree.parse('expected_after_filter.xml')
+    et = etree.parse('tests/expected_after_filter.xml')
     expected_papers = et.getroot()
 
     assert elements_equal(papers_e, expected_papers) ==  True
