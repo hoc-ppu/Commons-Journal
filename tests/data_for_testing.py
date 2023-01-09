@@ -1,8 +1,8 @@
 from lxml import etree
 from lxml.etree import Element
 
-import process_xml
-from process_xml import Papers_Structure
+import make_papers_index
+from make_papers_index import Papers_Structure
 
 # test the group sort (i.e. groups within side title groups)
 # all elements must have same side title

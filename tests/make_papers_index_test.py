@@ -8,11 +8,11 @@ import pytest
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from process_xml import get_dates_from_session
-from process_xml import filter_papers
-from process_xml import populate_papers_data
-from process_xml import sort_papers
-from process_xml import convert_to_xml
+from make_papers_index import get_dates_from_session
+from make_papers_index import filter_papers
+from make_papers_index import populate_papers_data
+from make_papers_index import sort_papers
+from make_papers_index import convert_to_xml
 from data_for_testing import output_senior_courts_xml
 from data_for_testing import output_regs_NI_xml
 from data_for_testing import output_orders_in_council
