@@ -21,7 +21,9 @@ from lxml.etree import _Element
 from lxml.etree import iselement
 
 
-OUTPUT_XML_NAME = "papers_for_indesign11.xml"
+OUTPUT_XML_NAME = "papers_for_indesign.xml"
+
+DEFAULT_RAW_XML_TEMPLATE = "as_downloaded_papers_{session}.xml"
 
 NS_MAP = {"xsi": "http://www.w3.org/2001/XMLSchema-instance"}
 
@@ -158,57 +160,52 @@ PLURALS = (
 
 def main(
     session: str | None = None,
-    local_input_file_Path: Path | None = None,
+    local_input_file: Path | None = None,
+    output_file_or_dir: Path | None = None,
     save_raw: bool = True,
 ) -> int:
 
-    # args = cli()
-
-    # if args.process_local:
-    #     papers_xml_tree = etree.parse(args.process_local.name)
-    #     papers_xml = papers_xml_tree.getroot()
-    # elif args.session:
-    #     try:
-    #         session_start, session_end = get_dates_from_session(args.session)
-    #     except Exception as e:
-    #         print(e)
-    #         return os.EX_UNAVAILABLE
-    #     response = request_papers_data(session_start, session_end)
-    #     if args.save_raw:
-    #         as_downloaded_file_name = f"as_downloaded_papers_{args.session}.xml"
-    #         with open(as_downloaded_file_name, "wb") as f:
-    #             f.write(response.content)
-    #     papers_xml = etree.fromstring(response.content)
-    # else:
-    #     print("Error: Must have either an XML file or a session.")
-    #     return os.EX_USAGE
-
-    if local_input_file_Path is not None:
-        papers_xml_tree = etree.parse(local_input_file_Path)
+    if local_input_file is not None:
+        # use local file as input rather than querying API
+        papers_xml_tree = etree.parse(local_input_file)
         papers_xml = papers_xml_tree.getroot()
 
     elif session is not None:
+        # Query papers laid API. First use passed in session to work out what
+        # dates should be queried
         try:
+            # first get the dates for the session
             session_start, session_end = get_dates_from_session(session)
         except Exception as e:
             print(e)
-            return os.EX_UNAVAILABLE
+            sys.exit(os.EX_UNAVAILABLE)
         try:
+            # Query papers laid API
             response = request_papers_data(session_start, session_end)
         except Exception as e:
             print(e)
             print(
-                "Could not get XML from the papers laid API. Check that you are connected to the parliament network."
+                "Could not get XML from the papers laid API. "
+                "Check that you are connected to the parliament network."
             )
-            return os.EX_UNAVAILABLE
+            sys.exit(os.EX_UNAVAILABLE)
+
         if save_raw:
-            as_downloaded_file_name = f"as_downloaded_papers_{session}.xml"
-            with open(as_downloaded_file_name, "wb") as f:
+            as_downloaded_file_name = DEFAULT_RAW_XML_TEMPLATE.format(session)
+            if output_file_or_dir is None:
+                output_path = Path(as_downloaded_file_name)
+            elif output_file_or_dir.is_dir():
+                output_path = Path(output_file_or_dir, as_downloaded_file_name)
+            else:
+                # assume file instead of dir
+                output_path = Path(output_file_or_dir.parent, as_downloaded_file_name)
+            with open(output_path, "wb") as f:
                 f.write(response.content)
+
         papers_xml = etree.fromstring(response.content)
     else:
         print("Error: Must have either an XML file or a session.")
-        return os.EX_USAGE
+        sys.exit(os.EX_USAGE)
 
     filtered_papers = filter_papers(papers_xml)
 
@@ -220,7 +217,7 @@ def main(
 
     output_xml = convert_to_xml(sorted_papers_data)
 
-    write_xml(output_xml)
+    write_xml(output_xml, output_file_or_dir)
 
     return 0
 
@@ -235,13 +232,19 @@ def cli():
 
 @cli.command()
 @click.argument("input_path", type=click.Path(exists=True, path_type=Path))
-def from_file(input_path: Path):
+@click.option(
+    "--output",
+    "-o",
+    help="Optionally provide the directory or file path for the output XML",
+    type=click.Path(writable=True, path_type=Path),
+)
+def from_file(input_path: Path, output: Path | None = None):
     """Create papers index XML from a raw XML file already on your computer.
 
     if you do not already have a raw XML file containing papers data,
     use the from-api subcomand instead.
     """
-    main(local_input_file_Path=input_path, save_raw=False)
+    return main(local_input_file=input_path, save_raw=False, output_file_or_dir=output)
 
 
 @cli.command()
@@ -251,7 +254,13 @@ def from_file(input_path: Path):
     default=False,
     help="Use this option to suppress saving the raw XML downloaded from the API",
 )
-def from_api(session: str, discard_raw_xml: bool):
+@click.option(
+    "--output",
+    "-o",
+    help="Optionally provide the directory or file path for the output XML",
+    type=click.Path(writable=True, path_type=Path),
+)
+def from_api(session: str, discard_raw_xml: bool, output: Path | None = None):
     """For a given session, create papers index XML (to be typeset in InDesign)
     from data downloaded from the papers laid API.
 
@@ -266,7 +275,9 @@ def from_api(session: str, discard_raw_xml: bool):
     For a list of parliamentary sessions check:
     https://whatson-api.parliament.uk/calendar/sessions/list.json
     """
-    main(session=session, save_raw=not (discard_raw_xml))
+    return main(
+        session=session, save_raw=not (discard_raw_xml), output_file_or_dir=output
+    )
 
 
 # --------------------- End comand line interface -------------------- #
@@ -365,7 +376,7 @@ def get_dates_from_session(session_code: str) -> tuple[datetime, datetime]:
 
 
 def request_papers_data(date_from: datetime, date_to: datetime) -> requests.Response:
-    """Query the papers laid API for papers laid in the date range"""
+    """Query the papers laid API for papers laid in the date range."""
 
     session_from_str = date_from.strftime("%Y-%m-%d")
     session_to_str = date_to.strftime("%Y-%m-%d")
@@ -420,13 +431,31 @@ def convert_to_xml(papers_data: Papers_Structure) -> _Element:
     return output_root
 
 
-def write_xml(xml_root: _Element, parent_directory: str | Path | None = None):
-    if parent_directory:
-        xml_file_Path = Path(parent_directory, OUTPUT_XML_NAME)
+def write_xml(xml_root: _Element, output_file_or_dir: Path | None = None):
+
+    """Write XML to file. If output_file_or_dir is not passed use global
+    constant OUTPUT_XML_NAME instead"""
+
+    if output_file_or_dir is None:
+        xml_file_Path: Path = Path(OUTPUT_XML_NAME)
+    elif output_file_or_dir.is_dir():
+        xml_file_Path = Path(output_file_or_dir, OUTPUT_XML_NAME)
     else:
-        xml_file_Path = Path(OUTPUT_XML_NAME)
+        xml_file_Path = output_file_or_dir
+
     outputTree = etree.ElementTree(xml_root)
-    outputTree.write(str(xml_file_Path), encoding="UTF-8", xml_declaration=True)
+    try:
+        outputTree.write(str(xml_file_Path), encoding="UTF-8", xml_declaration=True)
+    except Exception as e:
+        print(e)
+        print(
+            f"Warning: Can't print to {xml_file_Path}. "
+            f"Trying {OUTPUT_XML_NAME} instead."
+        )
+        xml_file_Path = Path(OUTPUT_XML_NAME)
+        outputTree.write(str(xml_file_Path), encoding="UTF-8", xml_declaration=True)
+
+    print(f"Created: {xml_file_Path.absolute()}")
 
 
 def fix_plurals(possible_plural: str) -> str:
