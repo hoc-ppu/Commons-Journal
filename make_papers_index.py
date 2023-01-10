@@ -10,7 +10,7 @@ from datetime import datetime, date, timedelta
 from pathlib import Path
 import re
 import sys
-from typing import cast
+from typing import cast, Union
 import os
 from cache_to_disk import cache_to_disk
 import requests
@@ -26,6 +26,7 @@ OUTPUT_XML_NAME = "papers_for_indesign.xml"
 DEFAULT_RAW_XML_TEMPLATE = "as_downloaded_papers_{session}.xml"
 
 NS_MAP = {"xsi": "http://www.w3.org/2001/XMLSchema-instance"}
+
 
 
 class Paper:
@@ -159,9 +160,9 @@ PLURALS = (
 
 
 def main(
-    session: str | None = None,
-    local_input_file: Path | None = None,
-    output_file_or_dir: Path | None = None,
+    session: Union[str, None] = None,
+    local_input_file: Union[Path, None] = None,
+    output_file_or_dir: Union[Path, None] = None,
     save_raw: bool = True,
 ) -> int:
 
@@ -178,9 +179,10 @@ def main(
             session_start, session_end = get_dates_from_session(session)
         except Exception as e:
             print(e)
-            sys.exit(os.EX_UNAVAILABLE)
+            sys.exit(1)
         try:
             # Query papers laid API
+            print("Getting data from papers laid")
             response = request_papers_data(session_start, session_end)
         except Exception as e:
             print(e)
@@ -188,10 +190,10 @@ def main(
                 "Could not get XML from the papers laid API. "
                 "Check that you are connected to the parliament network."
             )
-            sys.exit(os.EX_UNAVAILABLE)
+            sys.exit(1)
 
         if save_raw:
-            as_downloaded_file_name = DEFAULT_RAW_XML_TEMPLATE.format(session)
+            as_downloaded_file_name = DEFAULT_RAW_XML_TEMPLATE.format(session=session)
             if output_file_or_dir is None:
                 output_path = Path(as_downloaded_file_name)
             elif output_file_or_dir.is_dir():
@@ -201,11 +203,12 @@ def main(
                 output_path = Path(output_file_or_dir.parent, as_downloaded_file_name)
             with open(output_path, "wb") as f:
                 f.write(response.content)
+                print(f"Downloaded: {output_path.absolute()}")
 
         papers_xml = etree.fromstring(response.content)
     else:
         print("Error: Must have either an XML file or a session.")
-        sys.exit(os.EX_USAGE)
+        sys.exit(1)
 
     filtered_papers = filter_papers(papers_xml)
 
@@ -238,7 +241,7 @@ def cli():
     help="Optionally provide the directory or file path for the output XML",
     type=click.Path(writable=True, path_type=Path),
 )
-def from_file(input_path: Path, output: Path | None = None):
+def from_file(input_path: Path, output: Union[Path, None] = None):
     """Create papers index XML from a raw XML file already on your computer.
 
     if you do not already have a raw XML file containing papers data,
@@ -251,6 +254,7 @@ def from_file(input_path: Path, output: Path | None = None):
 @click.argument("session")
 @click.option(
     "--discard-raw-xml",
+    is_flag=True,
     default=False,
     help="Use this option to suppress saving the raw XML downloaded from the API",
 )
@@ -260,7 +264,7 @@ def from_file(input_path: Path, output: Path | None = None):
     help="Optionally provide the directory or file path for the output XML",
     type=click.Path(writable=True, path_type=Path),
 )
-def from_api(session: str, discard_raw_xml: bool, output: Path | None = None):
+def from_api(session: str, discard_raw_xml: bool, output: Union[Path, None] = None):
     """For a given session, create papers index XML (to be typeset in InDesign)
     from data downloaded from the papers laid API.
 
@@ -321,7 +325,7 @@ def group_sort(item: str) -> tuple[int, str]:
         return 100, item
 
 
-def filter_papers(papers_xml: _Element | list[_Element]) -> list[_Element]:
+def filter_papers(papers_xml: Union[_Element, list[_Element]]) -> list[_Element]:
     """Remove duplicates and any papers not laid in Commons"""
 
     if iselement(papers_xml):
@@ -431,7 +435,7 @@ def convert_to_xml(papers_data: Papers_Structure) -> _Element:
     return output_root
 
 
-def write_xml(xml_root: _Element, output_file_or_dir: Path | None = None):
+def write_xml(xml_root: _Element, output_file_or_dir: Union[Path, None] = None):
 
     """Write XML to file. If output_file_or_dir is not passed use global
     constant OUTPUT_XML_NAME instead"""
