@@ -52,7 +52,7 @@ You can either create XML from a local file or via querying the Papers Laid API.
 ### From API
 To create XML from the Papers Laid API run the following command in your terminal or PowerShell. (replacing SESSION with a session of parliament e.g. 2016-17):
 ```bash
-python make_papers_index.py SESSION
+python make_papers_index.py from-api SESSION
 ```
 Note, by default, the above will save a copy of the raw XML on your system. This is so that if you make changes to the python script (e.g. tweaking the sort order) you can use the raw file in the from file method below. You can suppress saving the raw xml with the `--discard-raw-xml` option. e.g. `python make_papers_index.py --discard-raw-xml 2015-16`
 
