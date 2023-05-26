@@ -21,39 +21,45 @@ from lxml.etree import _Element
 from lxml.etree import iselement
 
 
-OUTPUT_XML_NAME = "papers_for_indesign.xml"
+OUTPUT_XML_NAME = "papers_for_indesign3.xml"
 
 DEFAULT_RAW_XML_TEMPLATE = "as_downloaded_papers_{session}.xml"
 
 NS_MAP = {"xsi": "http://www.w3.org/2001/XMLSchema-instance"}
 
+WORD_FOR_PATTERN = re.compile(r"([12]\d\d\d(?:-\d\d)? ?(?:\([A-Za-z0-9 ]*\))?)$")
+LAID_PATTERN = re.compile(r" ?\(laid \d\d? [A-Za-z]{3,11} ?[0-9]{0,5}\)")
+
+WITHDRAWAL_PREFIX = "[Withdrawal] "
+RELAY_PREFIX = "[Relay] "
 
 
 class Paper:
-    def __init__(self, paper_element: _Element):
-        self.side_title = paper_element.findtext("SideTitle", default="").strip()
-        self.title = paper_element.findtext("Title", default="").strip()
-        self.is_draft = paper_element.findtext("Draft", default="").strip()
-        # replace any hyphens in the year with the en-dash as that is typographically correct
-        self.year = (
-            paper_element.findtext("Year", default="").strip().replace("-", "\u2013")
-        )
-        # papers don't always have a subject heading.
-        self.subject_heading = paper_element.findtext(
-            "SubjectHeading", default=""
-        ).strip()
+    @staticmethod
+    def clean(string: str) -> str:
+        return re.sub(r" +", " ", string.strip())
 
-        self._input_date_laid: str = paper_element.findtext(
-            "DateLaidCommons", default=""
-        ).strip()
-        self._input_date_withdrawn: str = paper_element.findtext(
-            "DateWithdrawn", default=""
-        ).strip()
+    def __init__(self, element: _Element):
+        self.side_title = self.clean(element.findtext("SideTitle", ""))
+        self._raw_title = self.clean(element.findtext("Title", ""))
+        self.is_draft = self.clean(element.findtext("Draft", ""))
+        # we will replace any hyphens in the year with the en-dash later
+        # as for now we need to keep hyphens
+        self.year = self.clean(element.findtext("Year", "")).replace("\u2013", "-")
+        # papers don't always have a subject heading.
+        self.subject_heading = self.clean(element.findtext("SubjectHeading", ""))
+
+        self._input_date_laid: str = self.clean(element.findtext("DateLaidCommons", ""))
+        self._input_date_withdrawn: str = self.clean(
+            element.findtext("DateWithdrawn", "")
+        )
 
         self.date_laid, self.date_withdrawn = self.__process_dates()
 
         if self.subject_heading:
-            self.title = self.subject_heading.replace("  ", " ")
+            self.title = self.subject_heading
+        else:
+            self.title = self._raw_title
 
     def __process_dates(self) -> tuple[str, str]:
         try:
@@ -77,15 +83,34 @@ class Paper:
 
     @property
     def index_entry(self):
-        return f"{self.title}, {self.date_laid} {self.date_withdrawn}".strip(", ")
+        entry = f"{self.title.strip()}, {self.date_laid} {self.date_withdrawn}".strip(
+            ", "
+        )
+        return re.sub(r"(?<=\d)-(?=\d)", "\u2013", entry)
 
     def __eq__(self, other):
         return self.index_entry == other.index_entry
 
     # for sorting
     @property
-    def _sort_str(self):
-        return self.index_entry.upper().removeprefix("THE ")
+    def _sort_str(self) -> str:
+
+        # some things should not be included in the sort
+        # (e.g. the word `the` at the beginning)
+        # some papers are withdrawn and then relayed and these two entries
+        # should appear together see fix_relayed().
+
+        title_no_laid = re.sub(LAID_PATTERN, "", self.title.casefold().strip())
+        index_entry = (
+            f"{title_no_laid}, {self._input_date_laid} {self.date_withdrawn}".strip(
+                ", "
+            )
+        )
+        index_entry = index_entry.removeprefix("the ")
+        index_entry = index_entry.removeprefix(WITHDRAWAL_PREFIX.casefold())
+        index_entry = index_entry.removeprefix(RELAY_PREFIX.casefold())
+
+        return index_entry
 
     def __lt__(self, other):
         return self._sort_str < other._sort_str
@@ -105,58 +130,72 @@ Papers_Structure = dict[Side_Title, dict[Group, list[Paper]]]
 PAPERS_GROUPING = [
     # the order here matters
     {
-        "pattern": re.compile(r"Regulations ? ?\d?\d?\d?\d?$", flags=re.IGNORECASE),
+        "pattern": re.compile(r"Regulations ? ?\d?\d?\d?\d?$", flags=re.I),
         "base_key": "Regulations: ",
     },
-    # {'pattern': re.compile(r'Regulations\(Northern Ireland\)$', flags=re.IGNORECASE),
+    # {'pattern': re.compile(r'Regulations\(Northern Ireland\)$', flags=re.I),
     #     'base_key': 'Regulations (Northern Ireland): '},
     {
-        "pattern": re.compile(r"^Report of the Law Commission ", flags=re.IGNORECASE),
+        "pattern": re.compile(r"^Report of the Law Commission (on )?", flags=re.I),
         "base_key": "Report of the Law Commission: ",
     },
     {
-        "pattern": re.compile(r"Order ? ?\d?\d?\d?\d?$", flags=re.IGNORECASE),
+        "pattern": re.compile(r"Order ? ?\d?\d?\d?\d?$", flags=re.I),
         "base_key": "Order: ",
     },
     {
-        "pattern": re.compile(
-            r"Order of Council ? ?\d?\d?\d?\d?$", flags=re.IGNORECASE
-        ),
+        "pattern": re.compile(r"Order of Council ? ?\d?\d?\d?\d?$", flags=re.I),
         "base_key": "Order of Council: ",
     },
     {
-        "pattern": re.compile(r"^Report and Accounts of ", flags=re.IGNORECASE),
+        "pattern": re.compile(r"^Report and Accounts of ", flags=re.I),
         "base_key": "Reports and Accounts, ",
     },
     {
-        "pattern": re.compile(r"Rules ? ?\d?\d?\d?\d?$", flags=re.IGNORECASE),
+        # "pattern": re.compile(r"Rules ? ?\d?\d?\d?\d?$", flags=re.I),  too  loose
+        "pattern": re.compile(r"Rules ? ?\d\d\d\d$", flags=re.I),
         "base_key": "Rules: ",
     },
     {
-        "pattern": re.compile(r"^Accounts of ", flags=re.IGNORECASE),
+        "pattern": re.compile(r"^Accounts of ", flags=re.I),
         "base_key": "Accounts, ",
     },
-    {"pattern": re.compile(r"^Account ", flags=re.IGNORECASE), "base_key": "Account, "},
+    {
+        "pattern": re.compile(r"^Account of (the)?", flags=re.I),
+        "base_key": "Account, ",
+    },
     {
         "pattern": re.compile(
             r"^Report of the Independent Chief Inspector of Borders and Immigration: ",
-            flags=re.IGNORECASE,
+            flags=re.I,
         ),
         "base_key": "Report of the Independent Chief Inspector of Borders and Immigration: ",
     },
     {
         "pattern": re.compile(
-            r"^Report by the Comptroller and Auditor General on ", flags=re.IGNORECASE
+            r"^Report by the Comptroller and Auditor General on ", flags=re.I
         ),
         "base_key": "Report by the Comptroller and Auditor General: ",
     },
 ]
 
-PLURALS = (
+PLURALS: list[tuple[str, str]] = [
     ("^Draft Order: ", "Draft Orders: "),
     ("^Order: ", "Orders: "),
     ("^Order of Council", "Orders of Council"),
-)
+    (
+        "^Report of the Independent Chief Inspector of Borders and Immigration",
+        "Reports of the Independent Chief Inspector of Borders and Immigration",
+    ),
+    (
+        "^Report by the Comptroller and Auditor General",
+        "Reports by the Comptroller and Auditor General",
+    ),
+    (
+        "^Report of the Law Commission",
+        "Reports of the Law Commission",
+    ),
+]
 
 
 def main(
@@ -168,17 +207,19 @@ def main(
 
     if local_input_file is not None:
         # use local file as input rather than querying API
-        papers_xml_tree = etree.parse(local_input_file)
+        papers_xml_tree = etree.parse(str(local_input_file))
         papers_xml = papers_xml_tree.getroot()
 
     elif session is not None:
         # Query papers laid API. First use passed in session to work out what
         # dates should be queried
+
         try:
             # first get the dates for the session
             session_start, session_end = get_dates_from_session(session)
         except Exception as e:
             print(e)
+            print("Could not get session data from whats on.")
             sys.exit(1)
         try:
             # Query papers laid API
@@ -187,7 +228,7 @@ def main(
         except Exception as e:
             print(e)
             print(
-                "Could not get XML from the papers laid API. "
+                "\nCould not get XML from the papers laid API. "
                 "Check that you are connected to the parliament network."
             )
             sys.exit(1)
@@ -212,9 +253,11 @@ def main(
 
     filtered_papers = filter_papers(papers_xml)
 
-    print(f"There are {len(filtered_papers)} papers once filtered.")
+    print(f"After filtering, there are {len(filtered_papers)} papers.")
 
     papers_data = populate_papers_data(filtered_papers)
+
+    fix_relayed(papers_data)
 
     sorted_papers_data = sort_papers(papers_data)
 
@@ -234,7 +277,9 @@ def cli():
 
 
 @cli.command()
-@click.argument("input_path", type=click.Path(exists=True, path_type=Path))
+@click.argument(
+    "input_path", type=click.Path(exists=True, dir_okay=False, path_type=Path)
+)
 @click.option(
     "--output",
     "-o",
@@ -265,13 +310,13 @@ def from_file(input_path: Path, output: Union[Path, None] = None):
     type=click.Path(writable=True, path_type=Path),
 )
 def from_api(session: str, discard_raw_xml: bool, output: Union[Path, None] = None):
-    """For a given session, create papers index XML (to be typeset in InDesign)
+    """For a given SESSION, create papers index XML (to be typeset in InDesign)
     from data downloaded from the papers laid API.
 
     SESSION is a parliamentary session and should entered in the form YYYY-YY.
     E.g. 2017-19.
 
-    By default the XML downloaded frompapers laid will be saved alongside the
+    By default the XML downloaded from papers laid will be saved alongside the
     output. You can stop this behaviour with the --discard-raw-xml flag.
 
     \b
@@ -301,6 +346,7 @@ def sort_papers(papers_data: Papers_Structure) -> Papers_Structure:
 
 def group_sort(item: str) -> tuple[int, str]:
     """Helper to sort groups as specified"""
+
     if item.startswith("Draft Order"):
         return 1, item
     if item.startswith("Order of Council") or item.startswith("Orders of Council"):
@@ -354,29 +400,51 @@ def filter_papers(papers_xml: Union[_Element, list[_Element]]) -> list[_Element]
 
 
 def get_dates_from_session(session_code: str) -> tuple[datetime, datetime]:
-    """Return a tuple of start and end dates (as strings) of a session of parliament"""
+
+    """Return a tuple of end date of last session and end of this session
+
+    If end date for last session can not be determined use start date
+    of this session instead"""
 
     # session code e.g. '2015-16'
 
     # Get the dates from API
-    url = "http://service.calendar.parliament.uk/calendar/sessions/list.json"
+    url = "https://whatson-api.parliament.uk/calendar/sessions/list.json"
     response = requests.get(url)
 
     session_json = response.json()
 
+    session_dict: dict[int, dict] = {}
+
+    session_of_interest_id = -1
+
     for session_obj in session_json:
+        session_dict[session_obj["SessionId"]] = session_obj
         if session_obj["CommonsDescription"] == session_code:
-            start_date_str = session_obj["StartDate"]
-            end_date_str = session_obj["EndDate"]
+            session_of_interest_id = session_obj["SessionId"]
 
-            start_date = datetime.strptime(start_date_str[:10], "%Y-%m-%d")
-            end_date = datetime.strptime(end_date_str[:10], "%Y-%m-%d")
+    if session_of_interest_id == -1:
+        raise ValueError(
+            f"Dates for session, {session_code} could not be found.\nCheck {url}"
+        )
 
-            return start_date, end_date
+    # see if we can find previous session
+    previous_session_id = session_of_interest_id - 1
+    if previous_session_id in session_dict:
+        start_date_str = session_dict[previous_session_id]["EndDate"]
+    else:
+        start_date_str = session_dict[session_of_interest_id]["StartDate"]
 
-    raise ValueError(
-        f"Dates for session, {session_code} could not be found.\nCheck {url}"
-    )
+    end_date_str = session_dict[session_of_interest_id]["EndDate"]
+
+    start_date = datetime.strptime(start_date_str[:10], "%Y-%m-%d")
+    if previous_session_id in session_dict:
+        # remember to add one day to the end of last session date
+        start_date = start_date + timedelta(days=1)
+
+    end_date = datetime.strptime(end_date_str[:10], "%Y-%m-%d")
+
+    return start_date, end_date
 
 
 def request_papers_data(date_from: datetime, date_to: datetime) -> requests.Response:
@@ -415,18 +483,12 @@ def convert_to_xml(papers_data: Papers_Structure) -> _Element:
                         output_root, "Paper"
                     ).text = f"{paper.index_entry}."
             elif len(value) > 0:
+                key = re.sub(r"(?<=\d)-(?=\d)", "\u2013", key)
                 if len(value) > 1:
                     key = fix_plurals(key)
                 etree.SubElement(
                     output_root, "Paper"
                 ).text = f'{key}{"; ".join(paper.index_entry for paper in value)}.'
-                # entries_under_side_title.append(f'{key}{"; ".join(value)}.')
-                # entries_under_side_title.append(f'{key}{"; ".join(value)}')
-
-        # add all the entries to the XML
-        # for paper in entries_under_side_title:
-        # for paper in sorted(entries_under_side_title, key=lambda item_str: item_str.removeprefix('The ')):
-        #     etree.SubElement(output_root, 'Paper').text = paper
 
     # for every element in output_root add a new line after
     for ele in output_root:
@@ -469,12 +531,19 @@ def fix_plurals(possible_plural: str) -> str:
     return possible_plural
 
 
-def populate_papers_data(papers_of_interest: list[_Element]) -> Papers_Structure:
+def populate_papers_data(
+    papers_of_interest: list[_Element] | list[Paper],
+) -> Papers_Structure:
 
     papers_data: Papers_Structure = {}
 
     for p in papers_of_interest:
-        paper = Paper(p)
+        if iselement(p):
+            # p is an element
+            paper = Paper(p)
+        else:
+            # p must already be a Paper instance
+            paper = cast(Paper, p)
 
         # paper_obj.setdefault(side_title, []).append()
         if paper.side_title not in papers_data:
@@ -483,6 +552,12 @@ def populate_papers_data(papers_of_interest: list[_Element]) -> Papers_Structure
 
         key = "[other papers]"  # key for ungrouped paper
         for group_obj in PAPERS_GROUPING:
+
+            # special cases for things not to be grouped
+            if paper.title.startswith((
+                "Explanatory Memorandum", "Impact Assessment")
+            ):
+                continue
 
             # Nortern Ireland Regulations are special
             NI_re = r"(Regulations \(Northern Ireland\)) ([12]\d\d\d)"
@@ -505,21 +580,85 @@ def populate_papers_data(papers_of_interest: list[_Element]) -> Papers_Structure
             # amend the title
             paper.title = re.sub(group_obj["pattern"], "", paper.title).strip()
 
+            # Remove the year from the paper title
+            # (this is since we started using <SubjectHeading>)
+            # needed for e.g.
+            # <Paper>Accounts, 2015–16: the Parliamentary Contributory Pension Fund 2015-16, 3 Feb 2017.</Paper>
+            # which should be:
+            # <Paper>Accounts, 2015–16: the Parliamentary Contributory Pension Fund, 3 Feb 2017.</Paper>
+            if paper.year and paper.title.endswith(paper.year):
+                # remove the year from the end
+                paper.title = paper.title[: -len(paper.year)]
+
             # if the above matched we do not need to check anymore so break
             break
 
-        # if subject_heading.startswith(title) and subject_heading != title:
-        #     # sometimes the subject heading includes info that we want that
-        #     # does not appear in the title.
-        #     title = subject_heading
-
-        # journal_title = title
-        # if year:
-        #     journal_title = f'{title} for {year}'
-
+        add_word_for(paper)
         papers_data[paper.side_title].setdefault(key, []).append(paper)
 
     return papers_data
+
+
+def fix_relayed(papers_data: Papers_Structure):
+    """Prepend [Withdrawal] or [Relay] to relevant paper titles"""
+
+    # Sometimes papers (usually Explanatory Memoranda or Impact Assessments)
+    # can be withdrawn are relaid. When this happens the following format is required
+    # [Withdrawal] Explanatory Memorandum to the Schools (Definition) Order 2017, 10 Jan 2017 [withdrawn, 20 Feb 2017].
+    # [Relay] Explanatory Memorandum to the Schools (Definition) Order 2017 (laid 10 January), 20 Feb 2017.
+
+    # Note care must be taken in the sort here as the [Withdrawal] should come
+    # before the [Relay]. See paper._sort_str
+
+    # Papers_Structure = dict[Side_Title, dict[Group, list[Paper]]]
+
+    for group in papers_data.values():
+
+        for papers_list in group.values():
+            # find withdrawns
+            withdrawns: list[Paper] = []
+            for paper in papers_list:
+                if paper.date_withdrawn:
+                    withdrawns.append(paper)
+
+            # next find any matched papers
+            for r_paper in papers_list:
+                relay_paper_title = re.sub(LAID_PATTERN, "", r_paper.title).strip()
+                for w_paper in withdrawns:
+
+                    paper_withdrawn = bool(r_paper.date_withdrawn)
+                    titles_match = relay_paper_title == w_paper.title
+
+                    if paper_withdrawn or not titles_match:
+                        continue
+
+                    # found a matching pair
+                    w_paper.title = (
+                        WITHDRAWAL_PREFIX
+                        + w_paper.title.removeprefix(WITHDRAWAL_PREFIX).strip()
+                    )
+                    r_paper.title = (
+                        RELAY_PREFIX + r_paper.title.removeprefix(RELAY_PREFIX).strip()
+                    )
+                    break
+
+
+def add_word_for(paper: Paper):
+    """if appropriate add the word `for` towards the end of the paper.title"""
+
+    # sometime we need to add the word `for` between the main part of the title
+    # and the year/year range. This must also allow for adding `for` between the
+    # main title and something like `2015–16 (laid 12 July)`... I'm going to
+    # assume the main title is in the paper._raw_title filed. Otherwise we may
+    # get false positives...
+
+    if paper._raw_title != paper.subject_heading:
+
+        match = re.search(WORD_FOR_PATTERN, paper.title)
+        if match and match.group(0) not in paper._raw_title:
+            # here we are guarding against the situation where the raw title has
+            # the pattern in. I.e. where there are numbers in the raw_title
+            paper.title = re.sub(WORD_FOR_PATTERN, r"for \1", paper.title)
 
 
 def format_date(date_: date) -> str:
@@ -545,5 +684,4 @@ def get_sitting_date(date_: datetime) -> datetime:
 
 
 if __name__ == "__main__":
-    # sys.exit(main())
     cli()

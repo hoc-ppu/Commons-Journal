@@ -8,11 +8,16 @@ import pytest
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
+from make_papers_index import Paper
 from make_papers_index import get_dates_from_session
 from make_papers_index import filter_papers
 from make_papers_index import populate_papers_data
 from make_papers_index import sort_papers
 from make_papers_index import convert_to_xml
+from make_papers_index import fix_relayed
+from data_for_testing import em_relaid_withdrawn
+from data_for_testing import em_relaid
+from data_for_testing import relaid_output
 from data_for_testing import output_senior_courts_xml
 from data_for_testing import output_regs_NI_xml
 from data_for_testing import output_orders_in_council
@@ -34,7 +39,11 @@ def xml_test_root() -> _Element:
 
 def test_get_dates_from_session() -> None:
 
-    assert get_dates_from_session('2017-19') == (datetime(2017, 6, 21, 0, 0), datetime(2019, 10, 8, 0, 0))
+    # Note: while the 2017-19 session starts from 2017-06-21, we want this
+    # function so return 2017-04-27 (the end date of the session before) as the
+    # first item in the tuple. This is because the papers index needs to pick
+    # up papers laid in the time between sessions
+    assert get_dates_from_session('2017-19') == (datetime(2017, 4, 27, 0, 0), datetime(2019, 10, 8, 0, 0))
 
     with pytest.raises(ValueError):
         get_dates_from_session('Junk')
@@ -62,6 +71,27 @@ def test_filter_papers():
     expected_papers = et.getroot()
 
     assert elements_equal(papers_e, expected_papers) ==  True
+
+
+def test_relayed():
+    """Relaid items must have special notes prepended and be in the correct order"""
+
+    Paper_relaid = Paper(etree.fromstring(em_relaid))
+    Paper_withdrawn = Paper(etree.fromstring(em_relaid_withdrawn))
+
+    # Create papers data with only these two papers in
+    # note papers passed in in wrong order
+    papers_data = populate_papers_data([Paper_relaid, Paper_withdrawn])
+    fix_relayed(papers_data)
+    sorted_papers_data = sort_papers(papers_data)
+
+    # assert order is correct
+    xml = convert_to_xml(sorted_papers_data)
+
+    xml_str = etree.tostring(xml, encoding='unicode')
+    # print(xml_str)
+
+    assert xml_str == relaid_output
 
 
 # ---------------------------- Sort tests ---------------------------- #
@@ -92,6 +122,7 @@ def test_senior_courts(xml_test_root):
              '[SubjectHeading[contains(.,"Rules")]]')
 
     xml_str = xml_section_from_xpath(xml_test_root, xpath)
+    print(xml_str)
 
     assert xml_str == output_senior_courts_xml
 
@@ -144,6 +175,7 @@ def test_law_commission(xml_test_root):
              '[SubjectHeading[starts-with(.,"Report of the Law Commission")]]')
 
     xml_str = xml_section_from_xpath(xml_test_root, xpath)
+    print(xml_str)
 
     assert xml_str == output_law_commission
 
@@ -176,6 +208,7 @@ def test_alphabetical_side_title_sort(xml_test_root):
              'normalize-space() = "High Speed Rail (London-West Midlands)"]]')
 
     xml_str = xml_section_from_xpath(xml_test_root, xpath)
+    print(xml_str)
 
     assert xml_str == output_alphabetical_side_title_sort
 
@@ -196,7 +229,7 @@ def test_sorting_titles_starting_with_the_word_the(xml_test_root):
              '[SubjectHeading[starts-with(.,"Report and Accounts of")]]')
 
     xml_str = xml_section_from_xpath(xml_test_root, xpath)
-    print(xml_str)
+    # print(xml_str)
     assert xml_str == output_sorting_word_the
 
 
