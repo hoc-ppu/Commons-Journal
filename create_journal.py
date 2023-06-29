@@ -115,19 +115,19 @@ def main():
             section_text = vote_item.findtext("Section")
             if section_text:
                 section_text = section_text.strip()
-                section_text_upper = section_text.upper()
+                section_text_cf = section_text.casefold()
                 # There is also no heading needed for Certificates and Corrections
-                if section_text_upper not in (
+                if section_text_cf not in (
                     last_section,
-                    "CERTIFICATES AND CORRECTIONS",
+                    "certificates and corrections",
                 ):
                     SubElement(temp_output_root, "OPHeading1").text = (
                         section_text + "\n"
                     )
-                    last_section = section_text_upper
+                    last_section = section_text_cf
                     # The numbering is also supposed to restart after new sections
                     # unless section is other proceedings
-                    if section_text_upper != "OTHER PROCEEDINGS":
+                    if section_text_cf != "other proceedings":
                         restart_numbers = True
 
             # add a line to InDesign XML if vote Entry is 'FullLine'
