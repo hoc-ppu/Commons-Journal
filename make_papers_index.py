@@ -7,6 +7,7 @@
 
 # python standard library imports
 from datetime import datetime, date, timedelta
+from functools import cached_property
 from pathlib import Path
 import re
 import sys
@@ -21,7 +22,7 @@ from lxml.etree import _Element
 from lxml.etree import iselement
 
 
-OUTPUT_XML_NAME = "papers_for_indesign3.xml"
+OUTPUT_XML_NAME = "for-id7.xml"
 
 DEFAULT_RAW_XML_TEMPLATE = "as_downloaded_papers_{session}.xml"
 
@@ -30,8 +31,8 @@ NS_MAP = {"xsi": "http://www.w3.org/2001/XMLSchema-instance"}
 WORD_FOR_PATTERN = re.compile(r"([12]\d\d\d(?:-\d\d)? ?(?:\([A-Za-z0-9 ]*\))?)$")
 LAID_PATTERN = re.compile(r" ?\(laid \d\d? [A-Za-z]{3,11} ?[0-9]{0,5}\)")
 
-WITHDRAWAL_PREFIX = "[Withdrawal] "
-RELAY_PREFIX = "[Relay] "
+# WITHDRAWAL_PREFIX = "[Withdrawal] "
+# RELAY_PREFIX = "[Relay] "
 
 
 class Paper:
@@ -88,15 +89,11 @@ class Paper:
         )
         return re.sub(r"(?<=\d)-(?=\d)", "\u2013", entry)
 
-    def __eq__(self, other):
-        return self.index_entry == other.index_entry
 
     # for sorting
-    @property
+    @cached_property
     def _sort_str(self) -> str:
 
-        # some things should not be included in the sort
-        # (e.g. the word `the` at the beginning)
         # some papers are withdrawn and then relayed and these two entries
         # should appear together see fix_relayed().
 
@@ -106,9 +103,12 @@ class Paper:
                 ", "
             )
         )
+
+        # some things should not be included in the sort
+        # (e.g. the word `the` at the beginning)
         index_entry = index_entry.removeprefix("the ")
-        index_entry = index_entry.removeprefix(WITHDRAWAL_PREFIX.casefold())
-        index_entry = index_entry.removeprefix(RELAY_PREFIX.casefold())
+        # index_entry = index_entry.removeprefix(WITHDRAWAL_PREFIX.casefold())
+        # index_entry = index_entry.removeprefix(RELAY_PREFIX.casefold())
 
         return index_entry
 
@@ -118,6 +118,9 @@ class Paper:
     def __gt__(self, other):
         # we only really need less than but hey
         return self._sort_str > other._sort_str
+
+    def __eq__(self, other):
+        return self._sort_str == other._sort_str
 
     def __str__(self):
         return self.index_entry
@@ -257,7 +260,7 @@ def main(
 
     papers_data = populate_papers_data(filtered_papers)
 
-    fix_relayed(papers_data)
+    # fix_relayed(papers_data)
 
     sorted_papers_data = sort_papers(papers_data)
 
@@ -532,7 +535,7 @@ def fix_plurals(possible_plural: str) -> str:
 
 
 def populate_papers_data(
-    papers_of_interest: list[_Element] | list[Paper],
+    papers_of_interest: Union[list[_Element], list[Paper]],
 ) -> Papers_Structure:
 
     papers_data: Papers_Structure = {}
@@ -599,48 +602,48 @@ def populate_papers_data(
     return papers_data
 
 
-def fix_relayed(papers_data: Papers_Structure):
-    """Prepend [Withdrawal] or [Relay] to relevant paper titles"""
+# def fix_relayed(papers_data: Papers_Structure):
+#     """Prepend [Withdrawal] or [Relay] to relevant paper titles"""
 
-    # Sometimes papers (usually Explanatory Memoranda or Impact Assessments)
-    # can be withdrawn are relaid. When this happens the following format is required
-    # [Withdrawal] Explanatory Memorandum to the Schools (Definition) Order 2017, 10 Jan 2017 [withdrawn, 20 Feb 2017].
-    # [Relay] Explanatory Memorandum to the Schools (Definition) Order 2017 (laid 10 January), 20 Feb 2017.
+#     # Sometimes papers (usually Explanatory Memoranda or Impact Assessments)
+#     # can be withdrawn are relaid. When this happens the following format is required
+#     # [Withdrawal] Explanatory Memorandum to the Schools (Definition) Order 2017, 10 Jan 2017 [withdrawn, 20 Feb 2017].
+#     # [Relay] Explanatory Memorandum to the Schools (Definition) Order 2017 (laid 10 January), 20 Feb 2017.
 
-    # Note care must be taken in the sort here as the [Withdrawal] should come
-    # before the [Relay]. See paper._sort_str
+#     # Note care must be taken in the sort here as the [Withdrawal] should come
+#     # before the [Relay]. See paper._sort_str
 
-    # Papers_Structure = dict[Side_Title, dict[Group, list[Paper]]]
+#     # Papers_Structure = dict[Side_Title, dict[Group, list[Paper]]]
 
-    for group in papers_data.values():
+#     for group in papers_data.values():
 
-        for papers_list in group.values():
-            # find withdrawns
-            withdrawns: list[Paper] = []
-            for paper in papers_list:
-                if paper.date_withdrawn:
-                    withdrawns.append(paper)
+#         for papers_list in group.values():
+#             # find withdrawns
+#             withdrawns: list[Paper] = []
+#             for paper in papers_list:
+#                 if paper.date_withdrawn:
+#                     withdrawns.append(paper)
 
-            # next find any matched papers
-            for r_paper in papers_list:
-                relay_paper_title = re.sub(LAID_PATTERN, "", r_paper.title).strip()
-                for w_paper in withdrawns:
+#             # next find any matched papers
+#             for r_paper in papers_list:
+#                 relay_paper_title = re.sub(LAID_PATTERN, "", r_paper.title).strip()
+#                 for w_paper in withdrawns:
 
-                    paper_withdrawn = bool(r_paper.date_withdrawn)
-                    titles_match = relay_paper_title == w_paper.title
+#                     paper_withdrawn = bool(r_paper.date_withdrawn)
+#                     titles_match = relay_paper_title == w_paper.title
 
-                    if paper_withdrawn or not titles_match:
-                        continue
+#                     if paper_withdrawn or not titles_match:
+#                         continue
 
-                    # found a matching pair
-                    w_paper.title = (
-                        WITHDRAWAL_PREFIX
-                        + w_paper.title.removeprefix(WITHDRAWAL_PREFIX).strip()
-                    )
-                    r_paper.title = (
-                        RELAY_PREFIX + r_paper.title.removeprefix(RELAY_PREFIX).strip()
-                    )
-                    break
+#                     # found a matching pair
+#                     w_paper.title = (
+#                         WITHDRAWAL_PREFIX
+#                         + w_paper.title.removeprefix(WITHDRAWAL_PREFIX).strip()
+#                     )
+#                     r_paper.title = (
+#                         RELAY_PREFIX + r_paper.title.removeprefix(RELAY_PREFIX).strip()
+#                     )
+#                     break
 
 
 def add_word_for(paper: Paper):
