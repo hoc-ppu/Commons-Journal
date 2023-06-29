@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfDailyPapers xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <DailyPapers>
+    <Date>2016-05-19T00:00:00</Date>
+    <PublishedPapers>
+      <Paper>
+        <Id>35040</Id>
+        <DateLaidCommons>2016-05-19T00:00:00</DateLaidCommons>
+        <DateLaidLords>2016-05-19T00:00:00</DateLaidLords>
+        <DateWithdrawn xsi:nil="true" />
+        <IndexNumber>15</IndexNumber>
+        <Title>Double Taxation Relief (Guernsey) Order</Title>
+        <SideTitle>Corporation Tax</SideTitle>
+        <Year>2016</Year>
+        <StatutoryDays>0</StatutoryDays>
+        <ApprovedDateCommons>2016-06-28T00:00:00</ApprovedDateCommons>
+        <ApprovedDateLords>2016-06-28T00:00:00</ApprovedDateLords>
+        <Notes>25/05/16: Considered but not certified.</Notes>
+        <Status>Published</Status>
+        <Authority>Act</Authority>
+        <CagName>None</CagName>
+        <MnisDepartment>
+          <Id>100</Id>
+          <Name>HM Revenue and Customs</Name>
+          <Acronym>HMRC</Acronym>
+          <StartDate>2011-06-08T00:00:00</StartDate>
+          <EndDate>2011-11-23T00:00:00</EndDate>
+          <SesId xsi:nil="true" />
+        </MnisDepartment>
+        <Evel />
+        <EvelTermId xsi:nil="true" />
+        <PaperType>Statutory Instrument</PaperType>
+        <RdfElementName>StatutoryInstrument</RdfElementName>
+        <RdfIdentifierFormat>{{prefix}} {{year}}/{{number}}</RdfIdentifierFormat>
+        <Prefix />
+        <Proceeding>Affirmative</Proceeding>
+        <Referral>DL</Referral>
+        <Session>2016-17</Session>
+        <LayingMinisterId>1529</LayingMinisterId>
+        <LayingMinister>Secretary David Gauke</LayingMinister>
+        <DateMade>2016-05-19T00:00:00</DateMade>
+        <StatutoryInstrument>true</StatutoryInstrument>
+        <ProposedStatutoryInstrument>false</ProposedStatutoryInstrument>
+        <Draft>true</Draft>
+        <Withdrawn>false</Withdrawn>
+        <Published>true</Published>
+        <IsCommons>true</IsCommons>
+        <IsLords>false</IsLords>
+        <SelectCommitteeReviewed>false</SelectCommitteeReviewed>
+        <PublicBodiesOrder>false</PublicBodiesOrder>
+        <SiPeriodExtended>false</SiPeriodExtended>
+        <SubjectHeading>Draft Double Taxation Relief (Guernsey) Order 2016</SubjectHeading>
+        <ReportingOnByJSCI>false</ReportingOnByJSCI>
+        <ChairmansReportDate xsi:nil="true" />
+        <DateEvelConsideration>2016-06-28T00:00:00</DateEvelConsideration>
+        <Edms />
+        <AssociatedDocuments>
+          <AssociatedDocument>
+            <Id>39370</Id>
+            <Withdrawn>false</Withdrawn>
+            <TypeId>1</TypeId>
+            <Type>Explanatory Memorandum</Type>
+            <ReportedInVnP>true</ReportedInVnP>
+            <RdfElementName>containsEM</RdfElementName>
+            <Replacements />
+            <DateWithdrawn xsi:nil="true" />
+            <CreatedDate>2016-05-19T00:00:00</CreatedDate>
+            <ChangeType>Added</ChangeType>
+          </AssociatedDocument>
+        </AssociatedDocuments>
+        <LinkedPapers />
+        <UpdatedWhen>2016-05-19T00:00:00</UpdatedWhen>
+        <LastDateForAnnulment>2017-06-01T00:00:00</LastDateForAnnulment>
+        <ProposedSIReportedOnByCommonsCommittee xsi:nil="true" />
+        <ProposedSIReportedOnByCommonsCommitteeDate xsi:nil="true" />
+        <ProposedSIReportedOnByLordsCommittee xsi:nil="true" />
+        <ProposedSIReportedOnByLordsCommitteeDate xsi:nil="true" />
+        <ProposedSIsLinkedTo />
+      </Paper>
+    </PublishedPapers>
+    <WithdrawnPapers />
+    <PapersWithChangedAssociatedDocuments>
+      <Paper>
+        <Id>35040</Id>
+        <DateLaidCommons>2016-05-19T00:00:00</DateLaidCommons>
+        <DateLaidLords>2016-05-19T00:00:00</DateLaidLords>
+        <DateWithdrawn xsi:nil="true" />
+        <IndexNumber>15</IndexNumber>
+        <Title>Double Taxation Relief (Guernsey) Order</Title>
+        <SideTitle>Corporation Tax</SideTitle>
+        <Year>2016</Year>
+        <StatutoryDays>0</StatutoryDays>
+        <ApprovedDateCommons>2016-06-28T00:00:00</ApprovedDateCommons>
+        <ApprovedDateLords>2016-06-28T00:00:00</ApprovedDateLords>
+        <Notes>25/05/16: Considered but not certified.</Notes>
+        <Status>Published</Status>
+        <Authority>Act</Authority>
+        <CagName>None</CagName>
+        <MnisDepartment>
+          <Id>100</Id>
+          <Name>HM Revenue and Customs</Name>
+          <Acronym>HMRC</Acronym>
+          <StartDate>2011-06-08T00:00:00</StartDate>
+          <EndDate>2011-11-23T00:00:00</EndDate>
+          <SesId xsi:nil="true" />
+        </MnisDepartment>
+        <Evel />
+        <EvelTermId xsi:nil="true" />
+        <PaperType>Statutory Instrument</PaperType>
+        <RdfElementName>StatutoryInstrument</RdfElementName>
+        <RdfIdentifierFormat>{{prefix}} {{year}}/{{number}}</RdfIdentifierFormat>
+        <Prefix />
+        <Proceeding>Affirmative</Proceeding>
+        <Referral>DL</Referral>
+        <Session>2016-17</Session>
+        <LayingMinisterId>1529</LayingMinisterId>
+        <LayingMinister>Secretary David Gauke</LayingMinister>
+        <DateMade>2016-05-19T00:00:00</DateMade>
+        <StatutoryInstrument>true</StatutoryInstrument>
+        <ProposedStatutoryInstrument>false</ProposedStatutoryInstrument>
+        <Draft>true</Draft>
+        <Withdrawn>false</Withdrawn>
+        <Published>true</Published>
+        <IsCommons>true</IsCommons>
+        <IsLords>false</IsLords>
+        <SelectCommitteeReviewed>false</SelectCommitteeReviewed>
+        <PublicBodiesOrder>false</PublicBodiesOrder>
+        <SiPeriodExtended>false</SiPeriodExtended>
+        <SubjectHeading>Draft Double Taxation Relief (Guernsey) Order 2016</SubjectHeading>
+        <ReportingOnByJSCI>false</ReportingOnByJSCI>
+        <ChairmansReportDate xsi:nil="true" />
+        <DateEvelConsideration>2016-06-28T00:00:00</DateEvelConsideration>
+        <Edms />
+        <AssociatedDocuments>
+          <AssociatedDocument>
+            <Id>39370</Id>
+            <Withdrawn>false</Withdrawn>
+            <TypeId>1</TypeId>
+            <Type>Explanatory Memorandum</Type>
+            <ReportedInVnP>true</ReportedInVnP>
+            <RdfElementName>containsEM</RdfElementName>
+            <Replacements />
+            <DateWithdrawn xsi:nil="true" />
+            <CreatedDate>2016-05-19T00:00:00</CreatedDate>
+            <ChangeType>Added</ChangeType>
+          </AssociatedDocument>
+        </AssociatedDocuments>
+        <LinkedPapers />
+        <UpdatedWhen>2016-05-19T00:00:00</UpdatedWhen>
+        <LastDateForAnnulment>2017-06-01T00:00:00</LastDateForAnnulment>
+        <ProposedSIReportedOnByCommonsCommittee xsi:nil="true" />
+        <ProposedSIReportedOnByCommonsCommitteeDate xsi:nil="true" />
+        <ProposedSIReportedOnByLordsCommittee xsi:nil="true" />
+        <ProposedSIReportedOnByLordsCommitteeDate xsi:nil="true" />
+        <ProposedSIsLinkedTo />
+      </Paper>
+    </PapersWithChangedAssociatedDocuments>
+  </DailyPapers>
+  <DailyPapers>
+    <Date>2017-03-14T00:00:00</Date>
+    <PublishedPapers>
+
+      <Paper>
+        <Id>36706</Id>
+        <DateLaidCommons xsi:nil="true" />
+        <DateLaidLords>2017-03-14T00:00:00</DateLaidLords>
+        <DateWithdrawn>2017-06-26T00:00:00</DateWithdrawn>
+        <IndexNumber>1722</IndexNumber>
+        <Title>Independent Parliamentary Standards Authority: The MPs' Scheme of Business Costs and Expenses for 2017–18 (Ninth Edition)</Title>
+        <SideTitle>Parliamentary Standards</SideTitle>
+        <StatutoryDays>0</StatutoryDays>
+        <ApprovedDateCommons xsi:nil="true" />
+        <ApprovedDateLords xsi:nil="true" />
+        <Status>Published</Status>
+        <Authority>Act</Authority>
+        <CagName>None</CagName>
+        <Evel />
+        <EvelTermId xsi:nil="true" />
+        <PaperType>Command Paper</PaperType>
+        <RdfElementName>CommandPaper</RdfElementName>
+        <RdfIdentifierFormat>{{prefix}} {{number}}</RdfIdentifierFormat>
+        <Prefix>HC</Prefix>
+        <Proceeding>None</Proceeding>
+        <Referral>None</Referral>
+        <Number>1024</Number>
+        <Session>2016-17</Session>
+        <LayingMinisterId>1</LayingMinisterId>
+        <LayingMinister>The Speaker</LayingMinister>
+        <DateMade>2017-03-14T00:00:00</DateMade>
+        <StatutoryInstrument>false</StatutoryInstrument>
+        <ProposedStatutoryInstrument>false</ProposedStatutoryInstrument>
+        <Draft>false</Draft>
+        <Withdrawn>false</Withdrawn>
+        <Published>true</Published>
+        <IsCommons>true</IsCommons>
+        <IsLords>true</IsLords>
+        <SelectCommitteeReviewed>false</SelectCommitteeReviewed>
+        <PublicBodiesOrder>false</PublicBodiesOrder>
+        <SiPeriodExtended>false</SiPeriodExtended>
+        <SubjectHeading>Independent Parliamentary Standards Authority: The MPs' Scheme of Business Costs and Expenses for 2017–18 (Ninth Edition)</SubjectHeading>
+        <ReportingOnByJSCI>false</ReportingOnByJSCI>
+        <ChairmansReportDate xsi:nil="true" />
+        <DateEvelConsideration xsi:nil="true" />
+        <Edms />
+        <AssociatedDocuments />
+        <LinkedPapers />
+        <UpdatedWhen>2017-06-26T16:50:43.6</UpdatedWhen>
+        <LastDateForAnnulment>2017-06-01T00:00:00</LastDateForAnnulment>
+        <ProposedSIReportedOnByCommonsCommittee xsi:nil="true" />
+        <ProposedSIReportedOnByCommonsCommitteeDate xsi:nil="true" />
+        <ProposedSIReportedOnByLordsCommittee xsi:nil="true" />
+        <ProposedSIReportedOnByLordsCommitteeDate xsi:nil="true" />
+      </Paper>
+    </PublishedPapers>
+  </DailyPapers>
+
+</ArrayOfDailyPapers>

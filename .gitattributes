@@ -1,0 +1,5 @@
+
+# text eol=lf Git will always convert line endings to LF on checkout. You should use this for files that must keep LF endings, even on Windows.
+
+# in this case the xml in the test folder must keep LF line ending
+*.xml text eol=lf

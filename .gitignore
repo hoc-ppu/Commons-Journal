@@ -3,7 +3,11 @@
 # mac junk
 .DS_Store
 
+# ignore .vscode project setting
+.vscode/
 
+# don't need logs/ in this project in particular
+logs/
 
 ################################
 
@@ -271,3 +275,4 @@ dist
 .pnp.*
 workspace.code-workspace
 venv-cj/
+
