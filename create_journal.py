@@ -48,11 +48,11 @@ chair_titles = ("SPEAKER", "CHAIRMAN OF WAYS AND MEANS", "SPEAKER ELECT")
 
 def main():
     # 2019 session
-    # sitting_dates = get_sitting_dates_in_range(Datetime(2019, 10, 14), Datetime(2019, 11, 14))
-    # 2020 session
-    sitting_dates = get_sitting_dates_in_range(
-        Datetime(2017, 9, 17), Datetime(2019, 10, 8)
-    )
+    sitting_dates = get_sitting_dates_in_range(Datetime(2019, 10, 14), Datetime(2019, 11, 14))
+    # 2017-19 session
+    # sitting_dates = get_sitting_dates_in_range(
+    #     Datetime(2017, 9, 17), Datetime(2019, 10, 8)
+    # )
     sitting_dates = list(dict.fromkeys(sitting_dates))
     print(sitting_dates)
 
