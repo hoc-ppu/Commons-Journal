@@ -1,25 +1,30 @@
 #!/usr/bin/env python3
 
 # std library imports
-from datetime import datetime as Datetime
-import datetime
+from datetime import datetime, date, timedelta
 from copy import deepcopy
 import json
 from json import JSONDecodeError
 from os import path
+from pathlib import Path
 import re  # regex
 import ssl
+import sys
 from socket import timeout
-from typing import List
+from typing import List, cast, Union, Tuple
 import urllib.request
 from urllib.error import HTTPError, URLError
 
 
-# stuff needed for parsing and manipulating XML
-# this moduel does not come with python and needs to be installed with pip
-from lxml import etree  # type: ignore
-from lxml.etree import QName, Element, SubElement, iselement  # type: ignore
+import click
+from lxml import etree
+from lxml.etree import QName, Element, SubElement, iselement
 from lxml import html as lhtml
+import requests
+from requests import Response
+
+# 1st party imports
+from package.utilities import get_dates_from_session
 
 # local imports
 try:
@@ -46,27 +51,143 @@ ns2 = "http://www.w3.org/2001/XMLSchema-instance"
 chair_titles = ("SPEAKER", "CHAIRMAN OF WAYS AND MEANS", "SPEAKER ELECT")
 
 
-def main():
-    # 2019 session
-    sitting_dates = get_sitting_dates_in_range(Datetime(2019, 10, 14), Datetime(2019, 11, 14))
-    # 2017-19 session
-    # sitting_dates = get_sitting_dates_in_range(
-    #     Datetime(2017, 9, 17), Datetime(2019, 10, 8)
-    # )
-    sitting_dates = list(dict.fromkeys(sitting_dates))
-    print(sitting_dates)
+# -------------------- Begin comand line interface ------------------- #
+
+
+@click.group()
+def cli():
+    pass
+
+
+@cli.command()
+@click.argument(
+    "input_path", type=click.Path(exists=True, dir_okay=False, path_type=Path)
+)
+@click.option(
+    "--output",
+    "-o",
+    help="Optionally provide the directory or file path for the output XML",
+    type=click.Path(writable=True, path_type=Path),
+)
+def from_file(input_path: Path, output: Union[Path, None] = None):
+    """Create papers index XML from a raw XML file already on your computer.
+
+    if you do not already have a raw XML file containing papers data,
+    use the from-api subcomand instead.
+    """
+    return main(local_input_file=input_path, save_raw=False, output_file_or_dir=output)
+
+
+@cli.command()
+@click.argument("session")
+@click.option(
+    "--discard-raw-xml",
+    is_flag=True,
+    default=False,
+    help="Use this option to suppress saving the raw XML downloaded from the API",
+)
+@click.option(
+    "--output",
+    "-o",
+    help="Optionally provide the directory or file path for the output XML",
+    type=click.Path(writable=True, path_type=Path),
+)
+def from_api(session: str, discard_raw_xml: bool, output: Union[Path, None] = None):
+    """For a given SESSION, create the body of the commons journal
+    (to be typeset in InDesign) from data downloaded from the vnp API.
+
+    SESSION is a parliamentary session and should entered in the form YYYY-YY.
+    E.g. 2017-19.
+
+    By default the XML downloaded from vnp will be saved alongside the
+    output. You can stop this behaviour with the --discard-raw-xml flag.
+
+    You will need to be connected to the parliament network.
+    For a list of parliamentary sessions check:
+    https://whatson-api.parliament.uk/calendar/sessions/list.json
+    """
+    sys.exit(
+        main(session=session, save_raw=not(discard_raw_xml), output_file_or_dir=output)
+    )
+
+
+# --------------------- End comand line interface -------------------- #
+
+def request_vnp_data(sitting_date: datetime) -> Tuple[requests.Response, datetime]:
+    """Query the VnP API for papers laid in the date range."""
+
+    url = f'{BASE_URL}/{sitting_date.strftime("%Y-%m-%d")}.xml'
+
+    response = requests.get(url)
+
+    return response, sitting_date
+
+
+def main(
+    session: Union[str, None] = None,
+    local_input_path: Union[Path, None] = None,
+    save_raw: bool = True,
+) -> int:
+
+    if  local_input_path is not None:
+        # Do not query API
+        # insted assume path is dir with vnp xml files.
+        # Each filename should be the date
+
+        glob = local_input_path.glob('*.xml')
+        files_or_responses: List[Union[Tuple[Response, datetime], Path]] = list(glob)
+
+    elif session is not None:
+        try:
+            # first get the dates for the session
+            session_start, session_end = get_dates_from_session(session)
+            sitting_dates = get_sitting_dates_in_range(session_start, session_end)
+        except Exception as e:
+            print(e)
+            print("Could not get session data from whats on.")
+            return 1
+        try:
+            # Query papers VnP API
+            print("Getting data from VnP API.")
+            files_or_responses = []
+            for sitting_date in sitting_dates:
+                response = request_vnp_data(sitting_date)
+                files_or_responses.append(response)
+                if save_raw:
+                    with open(f"{sitting_date}.xml", 'wb') as f:
+                        f.write(response[0].content)
+        except Exception as e:
+            print(e)
+            print(
+                "\nCould not get XML from the VnP API. "
+                "Check that you are connected to the parliament network."
+            )
+            return 1
+
+    else:
+        return 1
+
+
+
 
     # transform and combine a bunch of files.
 
     output_root = Element("root", nsmap=NS_ADOBE)
 
-    for date in sitting_dates:
+    for item in files_or_responses:
         # parse and build up a tree for the input file
 
-        file_name = f'{date.strftime("%Y-%m-%d")}.xml'
-        input_root = etree.parse(
-            file_name
-        ).getroot()  # LXML element object for the root
+        if isinstance(item, Path):
+            date = datetime.strptime("%Y-%m-%d", item.name[:10])
+            tree = etree.parse(str(item))
+            input_root = tree.getroot()
+        else:
+            # assume tuple
+            date = item[1]
+            response = item[0]
+            input_root = etree.fromstring(response.content)
+            tree = etree.ElementTree(input_root)
+
 
         temp_output_root = Element(
             "day", nsmap=NS_ADOBE, attrib={"date": date.strftime("%Y-%m-%d")}
@@ -291,21 +412,21 @@ def json_from_uri(uri: str, default=None, showerror=True):
 
 
 def get_sitting_dates_in_range(
-    from_date: Datetime, to_date: Datetime
-) -> List[Datetime]:
+    from_date: datetime, to_date: datetime
+) -> List[datetime]:
     """get return a list of sitting days"""
 
     # date
-    cal_api_url_template = "http://service.calendar.parliament.uk/calendar/proceduraldates/commons/nextsittingdate.json?dateToCheck={}"
+    cal_api_url_template = "https://whatson-api.parliament.uk/calendar/proceduraldates/commons/nextsittingdate.json?dateToCheck={}"
 
     # the calendar api gives you the next sitting day so we need to start form the day before
-    start_date = from_date - datetime.timedelta(days=1)
+    start_date = from_date - timedelta(days=1)
 
     current_date = start_date
     dates = []
     count = 0
     while current_date < to_date:
-        current_date = start_date + datetime.timedelta(days=count)
+        current_date = start_date + timedelta(days=count)
         dates.append(current_date)
         count += 1
 
@@ -315,7 +436,7 @@ def get_sitting_dates_in_range(
         next_sitting_date_str = json_from_uri(
             cal_api_url_template.format(date.strftime("%Y-%m-%d"))
         )
-        next_sitting_date = Datetime.strptime(next_sitting_date_str[:10], "%Y-%m-%d")
+        next_sitting_date = datetime.strptime(next_sitting_date_str[:10], "%Y-%m-%d")
         sitting_dates.append(next_sitting_date)
 
     return sitting_dates
