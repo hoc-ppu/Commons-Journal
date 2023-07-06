@@ -11,7 +11,7 @@ import re  # regex
 import ssl
 import sys
 from socket import timeout
-from typing import List, cast, Union, Tuple
+from typing import List, cast, Union, Tuple, Optional
 import urllib.request
 from urllib.error import HTTPError, URLError
 
@@ -106,7 +106,7 @@ def from_api(session: str, discard_raw_xml: bool, output: Union[Path, None] = No
     For a list of parliamentary sessions check:
     https://whatson-api.parliament.uk/calendar/sessions/list.json
     """
-    sys.exit(
+    return(
         main(session=session, save_raw=not(discard_raw_xml), output_file_or_dir=output)
     )
 
@@ -125,9 +125,12 @@ def request_vnp_data(sitting_date: datetime) -> Tuple[requests.Response, datetim
 
 def main(
     session: Union[str, None] = None,
-    local_input_path: Union[Path, None] = None,
     save_raw: bool = True,
+    output_file_or_dir: Optional[Path] = None,
+    local_input_path: Union[Path, None] = None,
 ) -> int:
+    
+    print('main')
 
     if  local_input_path is not None:
         # Do not query API
@@ -154,7 +157,7 @@ def main(
                 response = request_vnp_data(sitting_date)
                 files_or_responses.append(response)
                 if save_raw:
-                    with open(f"{sitting_date}.xml", 'wb') as f:
+                    with open(f"{sitting_date.strftime('%Y-%m-%d')}.xml", 'wb') as f:
                         f.write(response[0].content)
         except Exception as e:
             print(e)
@@ -443,4 +446,4 @@ def get_sitting_dates_in_range(
 
 
 if __name__ == "__main__":
-    main()
+    cli()
