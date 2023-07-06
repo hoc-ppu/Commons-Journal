@@ -13,13 +13,13 @@ import re
 import sys
 from typing import cast, Union
 import os
-from cache_to_disk import cache_to_disk
-import requests
 
+from cache_to_disk import cache_to_disk
 import click
 from lxml import etree
 from lxml.etree import _Element
 from lxml.etree import iselement
+import requests
 
 # 1st party imports
 from package.utilities import get_dates_from_session
