@@ -3,22 +3,17 @@
 # std library imports
 from datetime import datetime, date, timedelta
 from copy import deepcopy
-import json
-from json import JSONDecodeError
 from os import path
 from pathlib import Path
 import re  # regex
 import ssl
 import sys
 from socket import timeout
-from typing import List, cast, Union, Tuple, Optional
-import urllib.request
-from urllib.error import HTTPError, URLError
-
+from typing import List, cast, Union, Tuple, Optional, Dict, TypeVar, Any
 
 import click
 from lxml import etree
-from lxml.etree import QName, Element, SubElement, iselement
+from lxml.etree import QName, Element, SubElement, iselement, _Element
 from lxml import html as lhtml
 import requests
 from requests import Response
@@ -32,17 +27,22 @@ try:
 except ModuleNotFoundError:
     from . import tables  # type: ignore
 
+T = TypeVar("T")
+
 CONTEXT = ssl._create_unverified_context()
 
-FILEEXTENSION = ".xml"
+DEFAULT_OUTPUT_FILENAME = "output.xml"
+DEFAULT_RAW_XML_FOLDER = "datedJournalFragments"
 
 BASE_URL = "http://services.vnp.parliament.uk/voteitems"
+
+CAL_API_URL_TEMPLATE = "https://whatson-api.parliament.uk/calendar/proceduraldates/commons/nextsittingdate.json?dateToCheck={}"
 
 # xml namespaces used
 AID = "http://ns.adobe.com/AdobeInDesign/4.0/"
 AID5 = "http://ns.adobe.com/AdobeInDesign/5.0/"
 
-NS_ADOBE = {"aid": AID, "aid5": AID5}
+NS_ADOBE: Dict[str, str] = {"aid": AID, "aid5": AID5}
 
 ns2 = "http://www.w3.org/2001/XMLSchema-instance"
 # ns1 = 'http://www.w3.org/2001/XMLSchema'
@@ -53,29 +53,44 @@ chair_titles = ("SPEAKER", "CHAIRMAN OF WAYS AND MEANS", "SPEAKER ELECT")
 
 # -------------------- Begin comand line interface ------------------- #
 
-
 @click.group()
 def cli():
+    """To get XML for the journal from the VnP API use from-api subcomand.
+    If you have all the XML for each day in the Journal saved in a folder use
+    the from-folder subcomand. You can get additional help by typing --help
+    after the subcommands, e.g. create_journal.py from-api --help"""
     pass
 
 
 @cli.command()
 @click.argument(
-    "input_path", type=click.Path(exists=True, dir_okay=False, path_type=Path)
+    "input_path",
+    type=click.Path(exists=True, dir_okay=True, file_okay=False, path_type=Path),
 )
 @click.option(
     "--output",
     "-o",
-    help="Optionally provide the directory or file path for the output XML",
+    help=(
+        "Optionally provide the file path for the output XML (for InDesign)."
+        f" default={DEFAULT_OUTPUT_FILENAME}"
+    ),
     type=click.Path(writable=True, path_type=Path),
 )
-def from_file(input_path: Path, output: Union[Path, None] = None):
-    """Create papers index XML from a raw XML file already on your computer.
+def from_folder(input_path: Path, output: Optional[Path] = None):
+    """Create papers index XML from raw XML files stored in a folder INPUT_PATH
+    already on your computer.
 
-    if you do not already have a raw XML file containing papers data,
-    use the from-api subcomand instead.
+    INPUT_PATH is the file path to the folder containing the individual VnP XML
+    files
+
+    Each file within INPUT_PATH must contain one day of VnP data and must be
+    named with the VnP date in the form YYY-MM-DD.
+    If you have not already downloaded VnP XML files, use the from-api
+    subcomand instead.
     """
-    return main(local_input_file=input_path, save_raw=False, output_file_or_dir=output)
+    sys.exit(
+        main(raw_xml_dir=input_path, save_raw=False, output_file=output)
+    )
 
 
 @cli.command()
@@ -87,12 +102,24 @@ def from_file(input_path: Path, output: Union[Path, None] = None):
     help="Use this option to suppress saving the raw XML downloaded from the API",
 )
 @click.option(
+    "--raw-xml-folder",
+    type=click.Path(writable=True, dir_okay=True, file_okay=False),
+    help= "Use this option to specify the folder for the raw XML to be saved in" \
+         f"default={DEFAULT_RAW_XML_FOLDER}",
+)
+@click.option(
     "--output",
     "-o",
-    help="Optionally provide the directory or file path for the output XML",
     type=click.Path(writable=True, path_type=Path),
+    help= "Use this option to specify the folder for the raw XML to be saved in" \
+         f" default={DEFAULT_RAW_XML_FOLDER}",
 )
-def from_api(session: str, discard_raw_xml: bool, output: Union[Path, None] = None):
+def from_api(
+    session: str,
+    discard_raw_xml: bool,
+    raw_xml_folder: Optional[Path],
+    output: Union[Path, None] = None,
+):
     """For a given SESSION, create the body of the commons journal
     (to be typeset in InDesign) from data downloaded from the vnp API.
 
@@ -106,12 +133,18 @@ def from_api(session: str, discard_raw_xml: bool, output: Union[Path, None] = No
     For a list of parliamentary sessions check:
     https://whatson-api.parliament.uk/calendar/sessions/list.json
     """
-    return(
-        main(session=session, save_raw=not(discard_raw_xml), output_file_or_dir=output)
+    sys.exit(
+        main(
+            session=session,
+            save_raw=not (discard_raw_xml),
+            raw_xml_dir=raw_xml_folder,
+            output_file=output,
+        )
     )
 
 
 # --------------------- End comand line interface -------------------- #
+
 
 def request_vnp_data(sitting_date: datetime) -> Tuple[requests.Response, datetime]:
     """Query the VnP API for papers laid in the date range."""
@@ -124,20 +157,20 @@ def request_vnp_data(sitting_date: datetime) -> Tuple[requests.Response, datetim
 
 
 def main(
-    session: Union[str, None] = None,
+    session: Optional[str] = None,
     save_raw: bool = True,
-    output_file_or_dir: Optional[Path] = None,
-    local_input_path: Union[Path, None] = None,
+    raw_xml_dir: Optional[Path] = None,
+    output_file: Optional[Path] = None,
 ) -> int:
-    
-    print('main')
 
-    if  local_input_path is not None:
+    print("main")
+
+    if raw_xml_dir is not None:
         # Do not query API
         # insted assume path is dir with vnp xml files.
         # Each filename should be the date
 
-        glob = local_input_path.glob('*.xml')
+        glob = raw_xml_dir.glob("*.xml")
         files_or_responses: List[Union[Tuple[Response, datetime], Path]] = list(glob)
 
     elif session is not None:
@@ -157,7 +190,7 @@ def main(
                 response = request_vnp_data(sitting_date)
                 files_or_responses.append(response)
                 if save_raw:
-                    with open(f"{sitting_date.strftime('%Y-%m-%d')}.xml", 'wb') as f:
+                    with open(f"{sitting_date.strftime('%Y-%m-%d')}.xml", "wb") as f:
                         f.write(response[0].content)
         except Exception as e:
             print(e)
@@ -170,9 +203,6 @@ def main(
     else:
         return 1
 
-
-
-
     # transform and combine a bunch of files.
 
     output_root = Element("root", nsmap=NS_ADOBE)
@@ -181,7 +211,7 @@ def main(
         # parse and build up a tree for the input file
 
         if isinstance(item, Path):
-            date = datetime.strptime("%Y-%m-%d", item.name[:10])
+            date = datetime.strptime(item.name[:10], "%Y-%m-%d")
             tree = etree.parse(str(item))
             input_root = tree.getroot()
         else:
@@ -191,13 +221,13 @@ def main(
             input_root = etree.fromstring(response.content)
             tree = etree.ElementTree(input_root)
 
-
         temp_output_root = Element(
             "day", nsmap=NS_ADOBE, attrib={"date": date.strftime("%Y-%m-%d")}
         )
 
         # get all the VoteItemViewModel elements
         VoteItems = input_root.xpath(".//VoteItemViewModel")
+        VoteItems = cast(List[_Element], VoteItems)
 
         # put the vote number as an attribute into the root element
         # e.g. <root VnPNumber="No. 184">
@@ -300,7 +330,7 @@ def main(
                 ):
                     continue
 
-                # if the element is an html tabe...
+                # if the element is an html table...
                 if item.tag == "table":
                     # temp_output_root.append(convert_table(item))
                     indesign_table = tables.html_table_to_indesign(
@@ -328,12 +358,12 @@ def main(
                 # get the style attribute if it exists
                 item_style = item.get("style", "").rstrip(
                     ";"
-                )  # somewitmes there is an unwadted `;`
+                )  # somewitmes there is an unwanted `;`
 
                 # decide what tag we need to give it
                 number_ele = vote_item.find("Number")
                 vote_entry_type = vote_item.find("VoteEntryType")
-                if i == 0 and number_ele.text:
+                if i == 0 and number_ele is not None and number_ele.text:
                     item.tag = "BusinessItemHeadingNumbered"
                     if restart_numbers is True:
                         item.tag = "BusinessItemHeadingNumberedRestart"
@@ -386,27 +416,26 @@ def main(
             output_root.append(temp_output_root)
 
     # write out the file
-    filename = "for_inDesign_Journal_XML"
+    if output_file is None:
+        output_file = Path(DEFAULT_OUTPUT_FILENAME)
 
     et = etree.ElementTree(output_root)
 
     et.write(
-        filename + FILEEXTENSION, encoding="utf-8", xml_declaration=True
-    )  # ,pretty_print=True
-    print(
-        "\nTransformed XML (for InDesign) is at:\n{}".format(
-            path.abspath(filename + FILEEXTENSION)
-        )
+        str(output_file), encoding="utf-8", xml_declaration=True
     )
+    print(f"\nTransformed XML (for InDesign) is at:\n{output_file.resolve()}")
+    return 0
 
 
-def json_from_uri(uri: str, default=None, showerror=True):
+def json_from_uri(
+    uri: str, default: Optional[T] = None, showerror=True
+) -> Union[T, Any]:
     headers = {"Content-Type": "application/json"}
-    request = urllib.request.Request(uri, headers=headers)
     try:
-        response = urllib.request.urlopen(request, context=CONTEXT, timeout=30)
-        json_obj = json.load(response)
-    except (HTTPError, URLError, timeout, JSONDecodeError) as e:
+        response = requests.get(uri, headers=headers)
+        json_obj = response.json()
+    except Exception as e:
         if showerror:
             print(f"Error getting data from:\n{uri}\n{e}")
         return default
@@ -418,9 +447,6 @@ def get_sitting_dates_in_range(
     from_date: datetime, to_date: datetime
 ) -> List[datetime]:
     """get return a list of sitting days"""
-
-    # date
-    cal_api_url_template = "https://whatson-api.parliament.uk/calendar/proceduraldates/commons/nextsittingdate.json?dateToCheck={}"
 
     # the calendar api gives you the next sitting day so we need to start form the day before
     start_date = from_date - timedelta(days=1)
@@ -437,10 +463,13 @@ def get_sitting_dates_in_range(
     for date in dates:
 
         next_sitting_date_str = json_from_uri(
-            cal_api_url_template.format(date.strftime("%Y-%m-%d"))
+            CAL_API_URL_TEMPLATE.format(date.strftime("%Y-%m-%d"))
         )
-        next_sitting_date = datetime.strptime(next_sitting_date_str[:10], "%Y-%m-%d")
-        sitting_dates.append(next_sitting_date)
+        if next_sitting_date_str:
+            next_sitting_date = datetime.strptime(
+                next_sitting_date_str[:10], "%Y-%m-%d"
+            )
+            sitting_dates.append(next_sitting_date)
 
     return sitting_dates
 
