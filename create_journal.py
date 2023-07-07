@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
 
 # std library imports
-from datetime import datetime, date, timedelta
+from concurrent.futures import ThreadPoolExecutor
 from copy import deepcopy
+from datetime import datetime, date, timedelta
 from os import path
 from pathlib import Path
 import re  # regex
 import ssl
 import sys
 from socket import timeout
-from typing import List, cast, Union, Tuple, Optional, Dict, TypeVar, Any
+from typing import List, cast, Union, Tuple, Optional, Dict, TypeVar, Any, Iterable
 
 import click
 from lxml import etree
@@ -53,6 +54,7 @@ chair_titles = ("SPEAKER", "CHAIRMAN OF WAYS AND MEANS", "SPEAKER ELECT")
 
 # -------------------- Begin comand line interface ------------------- #
 
+
 @click.group()
 def cli():
     """To get XML for the journal from the VnP API use from-api subcomand.
@@ -88,9 +90,7 @@ def from_folder(input_path: Path, output: Optional[Path] = None):
     If you have not already downloaded VnP XML files, use the from-api
     subcomand instead.
     """
-    sys.exit(
-        main(raw_xml_dir=input_path, save_raw=False, output_file=output)
-    )
+    sys.exit(main(raw_xml_dir=input_path, save_raw=False, output_file=output))
 
 
 @cli.command()
@@ -104,15 +104,15 @@ def from_folder(input_path: Path, output: Optional[Path] = None):
 @click.option(
     "--raw-xml-folder",
     type=click.Path(writable=True, dir_okay=True, file_okay=False),
-    help= "Use this option to specify the folder for the raw XML to be saved in" \
-         f"default={DEFAULT_RAW_XML_FOLDER}",
+    help="Use this option to specify the folder for the raw XML to be saved in"
+    f"default={DEFAULT_RAW_XML_FOLDER}",
 )
 @click.option(
     "--output",
     "-o",
     type=click.Path(writable=True, path_type=Path),
-    help= "Use this option to specify the folder for the raw XML to be saved in" \
-         f" default={DEFAULT_RAW_XML_FOLDER}",
+    help="Use this option to specify the folder for the raw XML to be saved in"
+    f" default={DEFAULT_RAW_XML_FOLDER}",
 )
 def from_api(
     session: str,
@@ -146,14 +146,42 @@ def from_api(
 # --------------------- End comand line interface -------------------- #
 
 
-def request_vnp_data(sitting_date: datetime) -> Tuple[requests.Response, datetime]:
+def request_vnp_data(
+    sitting_date: datetime,
+    save_to_disk: bool = True,
+    save_to_folder: Path = Path(DEFAULT_RAW_XML_FOLDER)
+) -> Tuple[requests.Response, datetime]:
+
     """Query the VnP API for papers laid in the date range."""
 
-    url = f'{BASE_URL}/{sitting_date.strftime("%Y-%m-%d")}.xml'
+    formatted_sitting_date = sitting_date.strftime("%Y-%m-%d")
+
+    url = f'{BASE_URL}/{formatted_sitting_date}.xml'
 
     response = requests.get(url)
 
+    if save_to_disk:
+        file_path = save_to_folder.joinpath(f"{formatted_sitting_date}.xml")
+        with open(file_path, "wb") as f:
+            f.write(response.content)
+
     return response, sitting_date
+
+
+def progress_bar(iterable: Iterable, total: int) -> list:
+    output = []
+    count = 0
+    bar_len = 50
+    for item in iterable:
+        output.append(item)
+        count += 1
+        filled_len = int(round(bar_len * count / total))
+        percents = round(100.0 * count / total, 1)
+        bar = "#" * filled_len + "-" * (bar_len - filled_len)
+        sys.stdout.write(f"[{bar}] {percents}%\r")
+        sys.stdout.flush()
+
+    return output
 
 
 def main(
@@ -185,13 +213,19 @@ def main(
         try:
             # Query papers VnP API
             print("Getting data from VnP API.")
-            files_or_responses = []
-            for sitting_date in sitting_dates:
-                response = request_vnp_data(sitting_date)
-                files_or_responses.append(response)
-                if save_raw:
-                    with open(f"{sitting_date.strftime('%Y-%m-%d')}.xml", "wb") as f:
-                        f.write(response[0].content)
+            # query concurrently to save time
+            with ThreadPoolExecutor(max_workers=8) as pool:
+
+                # create a progress bar and return a list
+                files_or_responses = progress_bar(
+                    pool.map(
+                        lambda sitting_date: request_vnp_data(sitting_date, save_raw),
+                        sitting_dates,
+                    ),
+                    len(sitting_dates),
+                )
+                print()  # newline after progress bar
+
         except Exception as e:
             print(e)
             print(
@@ -421,9 +455,7 @@ def main(
 
     et = etree.ElementTree(output_root)
 
-    et.write(
-        str(output_file), encoding="utf-8", xml_declaration=True
-    )
+    et.write(str(output_file), encoding="utf-8", xml_declaration=True)
     print(f"\nTransformed XML (for InDesign) is at:\n{output_file.resolve()}")
     return 0
 
