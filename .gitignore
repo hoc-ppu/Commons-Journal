@@ -9,6 +9,9 @@
 # don't need logs/ in this project in particular
 logs/
 
+# don't want the VnP XML files
+datedJournalFragments/
+
 ################################
 
 # From Github https://github.com/github/gitignore Python
