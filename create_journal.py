@@ -12,6 +12,7 @@ import sys
 from socket import timeout
 from typing import List, cast, Union, Tuple, Optional, Dict, TypeVar, Any, Iterable
 
+# 3rd party imports
 import click
 from lxml import etree
 from lxml.etree import QName, Element, SubElement, iselement, _Element
@@ -37,7 +38,7 @@ DEFAULT_RAW_XML_FOLDER = "datedJournalFragments"
 
 BASE_URL = "http://services.vnp.parliament.uk/voteitems"
 
-CAL_API_URL_TEMPLATE = "https://whatson-api.parliament.uk/calendar/proceduraldates/commons/nextsittingdate.json?dateToCheck={}"
+CAL_API_URL_TEMPLATE = "https://whatson-api.parliament.uk/calendar/proceduraldates/commons/nextsittingdate.json?dateToCheck={}&includeWeekendSittings=true"
 
 # xml namespaces used
 AID = "http://ns.adobe.com/AdobeInDesign/4.0/"
@@ -50,6 +51,9 @@ ns2 = "http://www.w3.org/2001/XMLSchema-instance"
 
 # Text before the following should get the speaker style
 chair_titles = ("SPEAKER", "CHAIRMAN OF WAYS AND MEANS", "SPEAKER ELECT")
+
+speaker_certificates = ("speaker's certificate", "speaker’s certificate",
+                        "speaker’s certificates", "speaker's certificates")
 
 
 # -------------------- Begin comand line interface ------------------- #
@@ -184,6 +188,14 @@ def progress_bar(iterable: Iterable, total: int) -> list:
     return output
 
 
+def xml_sort_helper(item):
+    # item can either be a path or a tuple [Response, datetime]
+    # in either cased we want to sort by date
+    if isinstance(item, Path):
+        return item.name
+    else:
+        return item[1].strftime('%Y-%m-%d')
+
 def main(
     session: Optional[str] = None,
     save_raw: bool = True,
@@ -204,11 +216,19 @@ def main(
     elif session is not None:
         try:
             # first get the dates for the session
+            print("Getting session data")
+
             session_start, session_end = get_dates_from_session(session)
+
+            print(f"Session starts: {session_start.strftime('%y-%m-%d')}.")
+            print(f"Session ends: {session_end.strftime('%y-%m-%d')}.")
+
             sitting_dates = get_sitting_dates_in_range(session_start, session_end)
+            print(f"There are {len(sitting_dates)} sitting days this session.")
+
         except Exception as e:
-            print(e)
-            print("Could not get session data from whats on.")
+            print(repr(e))
+            print("Error: Could not get session data from whats on.")
             return 1
         try:
             # Query papers VnP API
@@ -241,7 +261,11 @@ def main(
 
     output_root = Element("root", nsmap=NS_ADOBE)
 
-    for item in files_or_responses:
+    # sort the VnP XML by date
+    files_or_responses.sort(key=xml_sort_helper)
+
+
+    for i, item in enumerate(files_or_responses):
         # parse and build up a tree for the input file
 
         if isinstance(item, Path):
@@ -273,14 +297,14 @@ def main(
             if m:
                 temp_output_root.set("VnPNumber", m.group(0))
 
-                DayLine = SubElement(temp_output_root, "DayLine")
-                DayLine.tail = "\n"
+                if i > 0:
+                    # we want a line between days (bun not before the first day)
+                    DayLine = SubElement(temp_output_root, "DayLine")
+                    DayLine.tail = "\n"
 
-                # delete this element so it wont go into the usual InDesign flow
-                # first_VoteEntry.getparent().remove(first_VoteEntry)
-                # actually keep it
+
                 first_VoteEntry.text = f"[{m.group(0)}]"
-                first_VoteEntry.tag = "NormalCentred"
+                first_VoteEntry.tag = "DaySep"
                 first_VoteEntry.tail = "\n"
                 temp_output_root.append(first_VoteEntry)
 
@@ -292,10 +316,9 @@ def main(
             date_ele.tail = "\n"
 
         # variable to contain the section
-        last_section = "CHAMBER"
-        restart_numbers = (
-            False  # used to help tell if numbering should restart in InDesign
-        )
+        last_section = "chamber"
+        # used to help tell if numbering should restart in InDesign
+        restart_numbers = True
 
         for vote_item in VoteItems:
 
@@ -406,32 +429,49 @@ def main(
                 elif item.get("class", "") == "HalfLine":
                     item.tag = "HalfLine"
 
-                # apply the special style to the speaker or chairs name
                 elif (
                     item_style == "text-align: right"
-                    and next_item_text.upper() in chair_titles
                 ):
-                    continue
-                    # item.getparent().remove(item)
-                    # item.tag = 'SpeakerName'
+                    # apply the special style to the speaker or chairs name
+                    if next_item_text.upper().strip() in chair_titles:
+                        # We need to remove the speakers signature as it is
+                        # not needed for the journal
+                        print(f"\n{etree.tostring(date_ele)}")
+                        print(f"{next_item_text=}")
+                        print(etree.tostring(item))
+                        continue
+                        # item.getparent().remove(item)
+                        # item.tag = 'SpeakerName'
+                    if item_text.upper().strip() in chair_titles:
+                        continue
+
+                    # other wise right align
+                    item.tag = "RightAlign"
 
                 # some elements are headings and take particular styles
                 elif iselement(vote_entry_type) and vote_entry_type.text == "Heading":
                     item.tag = "OPHeading2"
-                    if item_text.upper() in chair_titles:
+                    if item_text.upper().strip() in chair_titles:
+                        # print(f"{etree.tostring(vote_entry_type)}")
+                        # print(f"{vote_entry_type.text=}")
+                        # print(etree.tostring(item))
                         continue
                         # item.getparent().remove(item)
                         # item.tag = 'RightAlign'
+
                     # put The House met at in the center
                     if re.search(r"^The House met at", item_text) is not None:
                         item.tag = "NormalCentred"
                     if item_text.upper() == "PRAYERS":
                         item.tag = "MotionText"
+                    if item_text.casefold().strip() in speaker_certificates:
+                        item.tag = "SpeakersCertificates"
 
                 elif item_style == "text-align: center":
                     item.tag = "NormalCentred"
-                elif item_style == "text-align: right":
-                    item.tag = "RightAlign"
+                    if item.text and item.text.casefold().strip() in speaker_certificates:
+                        item.tag = "SpeakersCertificates"
+
                 elif item_style == "padding-left: 30px":
                     item.tag = "Indent1"
                 elif item_style == "padding-left: 60px":
