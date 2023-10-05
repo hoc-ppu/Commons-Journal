@@ -1,23 +1,24 @@
 #!/usr/bin/env python3
 
 # std library imports
-from concurrent.futures import ThreadPoolExecutor
-from copy import deepcopy
-from datetime import datetime, date, timedelta
-from os import path
-from pathlib import Path
 import re  # regex
 import ssl
 import sys
+from concurrent.futures import ThreadPoolExecutor
+from copy import deepcopy
+from datetime import date, datetime, timedelta
+from os import path
+from pathlib import Path
 from socket import timeout
-from typing import List, cast, Union, Tuple, Optional, Dict, TypeVar, Any, Iterable
+from typing import (Any, Dict, Iterable, List, Optional, Tuple, TypeVar, Union,
+                    cast)
 
 # 3rd party imports
 import click
-from lxml import etree
-from lxml.etree import QName, Element, SubElement, iselement, _Element
-from lxml import html as lhtml
 import requests
+from lxml import etree
+from lxml import html as lhtml
+from lxml.etree import Element, QName, SubElement, _Element, iselement
 from requests import Response
 
 # 1st party imports
@@ -532,17 +533,23 @@ def get_sitting_dates_in_range(
         count += 1
 
     sitting_dates = []
-    for date in dates:
+    for d in dates:
 
         next_sitting_date_str = json_from_uri(
-            CAL_API_URL_TEMPLATE.format(date.strftime("%Y-%m-%d"))
+            CAL_API_URL_TEMPLATE.format(d.strftime("%Y-%m-%d"))
         )
-        if next_sitting_date_str:
-            next_sitting_date = datetime.strptime(
-                next_sitting_date_str[:10], "%Y-%m-%d"
-            )
+
+        if not next_sitting_date_str:
+            continue
+
+        next_sitting_date = datetime.strptime(
+            next_sitting_date_str[:10], "%Y-%m-%d"
+        )
+
+        if next_sitting_date not in sitting_dates:
             sitting_dates.append(next_sitting_date)
 
+    print(f"{[sd.strftime('%y-%m-%d') for sd in sitting_dates]}")
     return sitting_dates
 
 
