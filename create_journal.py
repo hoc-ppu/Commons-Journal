@@ -57,6 +57,7 @@ speaker_certificates = ("speaker's certificate", "speaker’s certificate",
                         "speaker’s certificates", "speaker's certificates")
 
 
+
 # -------------------- Begin comand line interface ------------------- #
 
 
@@ -416,7 +417,7 @@ def main(
                 # get the style attribute if it exists
                 item_style = item.get("style", "").rstrip(
                     ";"
-                )  # somewitmes there is an unwanted `;`
+                )  # sometimes there is an unwanted `;`
 
                 # decide what tag we need to give it
                 number_ele = vote_item.find("Number")
@@ -485,10 +486,16 @@ def main(
                     item.tag = "Indent5"
                 else:
                     item.tag = "MotionText"
+
+
+                # item.text = re.sub(r"[ \u00A0]+", " ", item.text.strip())
+
                 item.tail = "\n"
                 temp_output_root.append(deepcopy(item))
 
             output_root.append(temp_output_root)
+
+    output_root = journal_mods(output_root)
 
     # write out the file
     if output_file is None:
@@ -500,6 +507,67 @@ def main(
     print(f"\nTransformed XML (for InDesign) is at:\n{output_file.resolve()}")
     return 0
 
+
+def journal_mods(output_root: _Element) -> _Element:
+
+    allowed_empty_paras = ("DaySep", "ThinLine", "TableContainerPara")
+
+    for item in output_root.findall('./day/*'):
+
+        if item.text:
+            item.text = item.text.strip()
+
+        # remove the bold on e.g. (2) the Prime Minister
+        try:
+            is_para = item.tag in ("MotionText", "Indent1")
+            strong_child = item[0].tag == "strong"
+            no_other_children = len(item) == 1
+            starts_with_number = re.match(r'\(\d+\)\s', item[0].text.strip()) is not None
+
+            if is_para and strong_child and no_other_children and starts_with_number:
+                if item.text and item[0].text:
+                    item.text += " " + item[0].text
+                elif item[0].text:
+                    item.text = item[0].text
+
+                if item[0].tail:
+                    item.text += ' ' + item[0].tail
+
+        except Exception:
+            pass
+
+        # convert loads of underscores to a thin line
+        if item.text and item.text.strip() == '_' * len(item.text.strip()):
+            item.tag = 'ThinLine'
+            item.text = ''
+
+        # in the journal we use a thin line above to separate things and
+        # but it needs to be a separate elements so that is is kept with
+        # the last paragraph
+        if item.tag == "OPHeading1":
+            item.tag = "HeadingItalicAfterLine"
+            thin_line = etree.Element("ThinLine")
+            thin_line.tail = "\n"
+            item.addprevious(thin_line)
+
+        # TODO: members names in brackets keep with previous
+        # TODO: remove none breaking spaces
+        if item.text:
+            item.text = item.text.replace("\u00A0", " ")
+
+
+        # TODO: remove empty paragraphs
+        if item.tag not in allowed_empty_paras and item.text and item.text.strip() == '' and len(item) == 0 and item.tail and item.tail.strip() == '':
+            item.getparent().remove(item)
+        # TODO: fix tables
+
+        if item.tag == "FullLine" and item.getnext() is not None and item.getnext().tag == "SpeakersCertificates":
+            item.getparent().remove(item)
+
+
+
+
+    return output_root
 
 def json_from_uri(
     uri: str, default: Optional[T] = None, showerror=True
@@ -550,6 +618,7 @@ def get_sitting_dates_in_range(
             sitting_dates.append(next_sitting_date)
 
     print(f"{[sd.strftime('%y-%m-%d') for sd in sitting_dates]}")
+
     return sitting_dates
 
 
