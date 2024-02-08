@@ -438,9 +438,9 @@ def main(
                     if next_item_text.upper().strip() in chair_titles:
                         # We need to remove the speakers signature as it is
                         # not needed for the journal
-                        print(f"\n{etree.tostring(date_ele)}")
-                        print(f"{next_item_text=}")
-                        print(etree.tostring(item))
+                        # print(f"\n{etree.tostring(date_ele)}")
+                        # print(f"{next_item_text=}")
+                        # print(etree.tostring(item))
                         continue
                         # item.getparent().remove(item)
                         # item.tag = 'SpeakerName'
@@ -500,6 +500,10 @@ def main(
     # write out the file
     if output_file is None:
         output_file = Path(DEFAULT_OUTPUT_FILENAME)
+    else:
+        output_file = output_file.resolve()
+        output_file.mkdir(parents=True, exist_ok=True)
+        output_file = output_file / f"session_{session}_for_id.xml"
 
     et = etree.ElementTree(output_root)
 
