@@ -285,6 +285,12 @@ def main(
             "day", nsmap=NS_ADOBE, attrib={"date": date.strftime("%Y-%m-%d")}
         )
 
+        # for the time being lets only get days within a renage
+        first_date = datetime(2018, 12, 20)
+        last_date = datetime(2020, 1, 1)
+        if date < first_date or date > last_date:
+            continue
+
         # get all the VoteItemViewModel elements
         VoteItems = input_root.xpath(".//VoteItemViewModel")
         VoteItems = cast(List[_Element], VoteItems)
@@ -294,8 +300,14 @@ def main(
         # input_root.find finds the first match. (The number is always first)
         first_VoteEntry = input_root.find("VoteItemViewModel/VoteEntry")
         if first_VoteEntry is not None and first_VoteEntry.text:
+
+            # remove non-breaking spaces as these cause problems
+            # in finding the start of each day
+            _first_VoteEntry_t = first_VoteEntry.text.replace("\u00A0", " ")
+            _first_VoteEntry_t = _first_VoteEntry_t.replace("&nbsp;", " ")
+
             # case insensitive search
-            m = re.search(r"No\. ?[0-9]+", first_VoteEntry.text, flags=re.I)
+            m = re.search(r"No\. ?[0-9]+", _first_VoteEntry_t, flags=re.I)
             if m:
                 temp_output_root.set("VnPNumber", m.group(0))
 
@@ -312,8 +324,9 @@ def main(
 
             # insert date element
             date_ele = SubElement(temp_output_root, "VotesDate")
-            date_ele.text = date.strftime("%A") + " "
+            date_ele.text = date.strftime("%A")
             date_for_header = SubElement(date_ele, "DateForHeader")
+            date_ele.text += " "
             date_for_header.text = date.strftime("%d %B %Y").lstrip("0")
             date_ele.tail = "\n"
 
@@ -334,9 +347,11 @@ def main(
                     last_section,
                     "certificates and corrections",
                 ):
-                    SubElement(temp_output_root, "OPHeading1").text = (
-                        section_text + "\n"
+                    op_heading1 = SubElement(temp_output_root, "OPHeading1")
+                    op_heading1.text = (
+                        section_text
                     )
+                    op_heading1.tail = "\n"
                     last_section = section_text_cf
                     # The numbering is also supposed to restart after new sections
                     # unless section is other proceedings
@@ -465,7 +480,9 @@ def main(
                     if re.search(r"^The House met at", item_text) is not None:
                         item.tag = "NormalCentred"
                     if item_text.upper() == "PRAYERS":
-                        item.tag = "MotionText"
+                        # changed for Journal
+                        # item.tag = "MotionText"
+                        item.tag = "Prayers"
                     if item_text.casefold().strip() in speaker_certificates:
                         item.tag = "SpeakersCertificates"
 
@@ -500,10 +517,13 @@ def main(
     # write out the file
     if output_file is None:
         output_file = Path(DEFAULT_OUTPUT_FILENAME)
-    else:
+    elif output_file.is_dir():
         output_file = output_file.resolve()
         output_file.mkdir(parents=True, exist_ok=True)
         output_file = output_file / f"session_{session}_for_id.xml"
+    else:
+        output_file.parent.mkdir(parents=True, exist_ok=True)
+        output_file = output_file.resolve()
 
     et = etree.ElementTree(output_root)
 
@@ -518,8 +538,11 @@ def journal_mods(output_root: _Element) -> _Element:
 
     for item in output_root.findall('./day/*'):
 
-        if item.text:
+
+
+        if item.text and len(item) == 0:
             item.text = item.text.strip()
+
 
         # remove the bold on e.g. (2) the Prime Minister
         try:
@@ -537,8 +560,21 @@ def journal_mods(output_root: _Element) -> _Element:
                 if item[0].tail:
                     item.text += ' ' + item[0].tail
 
+                item.remove(item[0])
+
         except Exception:
             pass
+
+        # Ayes and Noes:
+        if item.tag in ("MotionText", "Indent1") and item.text:
+            match = re.match(r"(ayes|noes):\s\d", item.text.casefold().strip())
+            if match is not None:
+                item.tag = "AyesAndNoes"
+                # replace first and second space with a tab character
+                item.text = item.text.replace(" ", "\t", 2)
+
+                if re.search(r"\d\.?$", item.text):
+                    item.text = item.text + "\t"
 
         # convert loads of underscores to a thin line
         if item.text and item.text.strip() == '_' * len(item.text.strip()):
@@ -560,9 +596,20 @@ def journal_mods(output_root: _Element) -> _Element:
             item.text = item.text.replace("\u00A0", " ")
 
 
+        # if item.getparent().get('date', '') == '2018-03-14':
+        #     print(f"{item.tag} {repr(item.text)} {repr(item.tail)}")
+
+        #     not_in_empty_pars = item.tag not in allowed_empty_paras
+        #     no_item_text = item.text is not None and item.text.strip() == ''
+        #     no_children = len(item) == 0
+        #     no_item_tail = item.tail and item.tail.strip() == ''
+
+        #     print(f"{not_in_empty_pars=} {no_item_text=} {no_children=} {no_item_tail=}")
+
         # TODO: remove empty paragraphs
-        if item.tag not in allowed_empty_paras and item.text and item.text.strip() == '' and len(item) == 0 and item.tail and item.tail.strip() == '':
+        if item.tag not in allowed_empty_paras and item.text is not None and item.text.strip() == '' and len(item) == 0 and item.tail and item.tail.strip() == '':
             item.getparent().remove(item)
+            # print('item removed')
         # TODO: fix tables
 
         if item.tag == "FullLine" and item.getnext() is not None and item.getnext().tag == "SpeakersCertificates":
