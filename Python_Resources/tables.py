@@ -17,7 +17,7 @@ cleaner = Cleaner(page_structure=False, links=False, remove_unknown_tags=False,
 
 
 def html_table_to_indesign(html_table_element,
-                           max_table_width: int = 466,  # this is measured in points
+                           max_table_width: int = 233,  # this is measured in points
                            tablestyle: Optional[str] = None
                            ):
     """
@@ -80,6 +80,7 @@ def html_table_to_indesign(html_table_element,
                 col_width = max_table_width / number_of_colls
             if not inner_table:
                 cell.set(QName(AID, 'ccolwidth'), str(col_width))
+                # print(f'{col_width=}')
 
 
         # convert cells to InDesign cells
