@@ -5,7 +5,6 @@ from lxml import etree  # type: ignore
 from lxml.etree import QName  # type: ignore
 from lxml.html.clean import Cleaner  # type: ignore
 
-
 # xml namespaces used
 AID = 'http://ns.adobe.com/AdobeInDesign/4.0/'
 AID5 = 'http://ns.adobe.com/AdobeInDesign/5.0/'
@@ -118,6 +117,21 @@ def html_table_to_indesign(html_table_element,
                 if last_child.tail:
                     last_child.tail = last_child.tail.strip()
 
+            # optionally put all the cell content into a <TableBodyPara> element as
+            # this is easier to style in InDesign
+            if cell.text or cell.tail or len(cell):
+                para = etree.Element(QName(AID, 'TableBodyPara'))
+                para.text = cell.text or ''
+                para.tail = cell.tail or ''
+                # remove the text and tail from the cell
+                cell.text = None
+                cell.tail = None
+                # add the para to the cell
+                cell.append(para)
+                # move the children of the cell to the para
+                para.extend(list(cell))
+
+
         # delete all table rows but keep children
         for row in table_rows:
             if row.tail:
@@ -127,6 +141,13 @@ def html_table_to_indesign(html_table_element,
 
         if table.text:
             table.text = table.text.strip()
+
+        # ensure newline at the end of a table
+        # if not table.tail:
+        #     table.tail = '\n'
+        # elif table.tail.endswith('\n'):
+        #     table.tail = table.tail + '\n'
+
 
     return cleaner.clean_html(html_table_element)
     # return html_table_element
