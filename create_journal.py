@@ -10,8 +10,7 @@ from datetime import date, datetime, timedelta
 from os import path
 from pathlib import Path
 from socket import timeout
-from typing import (Any, Dict, Iterable, List, Optional, Tuple, TypeVar, Union,
-                    cast)
+from typing import Any, Dict, Iterable, List, Optional, Tuple, TypeVar, Union, cast
 
 # 3rd party imports
 import click
@@ -167,6 +166,10 @@ def request_vnp_data(
     response = requests.get(url)
 
     if save_to_disk:
+
+        if not save_to_folder.exists():
+            save_to_folder.mkdir(parents=True)
+
         file_path = save_to_folder.joinpath(f"{formatted_sitting_date}.xml")
         with open(file_path, "wb") as f:
             f.write(response.content)
@@ -272,22 +275,30 @@ def main(
 
         if isinstance(item, Path):
             date = datetime.strptime(item.name[:10], "%Y-%m-%d")
-            tree = etree.parse(str(item))
-            input_root = tree.getroot()
+            try:
+                tree = etree.parse(item)
+                input_root = tree.getroot()
+            except Exception as e:
+                print(f"Error parsing XML for date {date.strftime('%Y-%m-%d')}: {e}")
+                continue
         else:
             # assume tuple
             date = item[1]
             response = item[0]
-            input_root = etree.fromstring(response.content)
-            tree = etree.ElementTree(input_root)
+            try:
+                input_root = etree.fromstring(response.content)
+                tree = etree.ElementTree(input_root)
+            except Exception as e:
+                print(f"Error parsing XML for date {date.strftime('%Y-%m-%d')}: {e}")
+                continue
 
         temp_output_root = Element(
             "day", nsmap=NS_ADOBE, attrib={"date": date.strftime("%Y-%m-%d")}
         )
 
         # for the time being lets only get days within a renage
-        first_date = datetime(2018, 12, 20)
-        last_date = datetime(2020, 1, 1)
+        first_date = datetime(2020, 7, 31)
+        last_date = datetime(2021, 5, 10)
         if date < first_date or date > last_date:
             continue
 
@@ -408,7 +419,7 @@ def main(
                 if item.tag == "table":
                     # temp_output_root.append(convert_table(item))
                     indesign_table = tables.html_table_to_indesign(
-                        item, tablestyle="Table Style 2", max_table_width=540
+                        item, tablestyle="Table Style 2", max_table_width=233
                     )
                     TableContainerPara = SubElement(
                         temp_output_root, "TableContainerPara"
