@@ -6,7 +6,6 @@ import sys
 from concurrent.futures import ThreadPoolExecutor
 from copy import deepcopy
 from datetime import date, datetime, timedelta
-from os import path
 from pathlib import Path
 from socket import timeout
 from typing import Any, Dict, Iterable, List, Optional, Tuple, TypeVar, Union, cast
@@ -21,34 +20,50 @@ from lxml.etree import Element, QName, SubElement, _Element, iselement
 
 # 1st party imports
 import journal.tables as tables
+from journal.logger import logger
 from journal.utilities import get_dates_from_session
 
-T = TypeVar("T")
+T = TypeVar('T')
 
 CONTEXT = ssl._create_unverified_context()
 
-DEFAULT_OUTPUT_FILENAME = "output.xml"
-DEFAULT_RAW_XML_FOLDER = "datedJournalFragments"
+DEFAULT_OUTPUT_FILENAME = 'output.xml'
+DEFAULT_RAW_XML_FOLDER = 'datedJournalFragments'
 
-BASE_URL = "http://services.vnp.parliament.uk/voteitems"
+BASE_URL = 'http://services.vnp.parliament.uk/voteitems'
 
-CAL_API_URL_TEMPLATE = "https://whatson-api.parliament.uk/calendar/proceduraldates/commons/nextsittingdate.json?dateToCheck={}&includeWeekendSittings=true"
+CAL_API_URL_TEMPLATE = 'https://whatson-api.parliament.uk/calendar/proceduraldates/commons/nextsittingdate.json?dateToCheck={}&includeWeekendSittings=true'
 
 # xml namespaces used
-AID = "http://ns.adobe.com/AdobeInDesign/4.0/"
-AID5 = "http://ns.adobe.com/AdobeInDesign/5.0/"
+AID = 'http://ns.adobe.com/AdobeInDesign/4.0/'
+AID5 = 'http://ns.adobe.com/AdobeInDesign/5.0/'
 
-NS_ADOBE: Dict[str, str] = {"aid": AID, "aid5": AID5}
+NS_ADOBE: Dict[str, str] = {'aid': AID, 'aid5': AID5}
 
-ns2 = "http://www.w3.org/2001/XMLSchema-instance"
+ns2 = 'http://www.w3.org/2001/XMLSchema-instance'
 # ns1 = 'http://www.w3.org/2001/XMLSchema'
 
 # Text before the following should get the speaker style
-chair_titles = ("SPEAKER", "CHAIRMAN OF WAYS AND MEANS", "SPEAKER ELECT")
+chair_titles = ('SPEAKER', 'CHAIRMAN OF WAYS AND MEANS', 'SPEAKER ELECT')
 
-speaker_certificates = ("speaker's certificate", "speaker’s certificate",
-                        "speaker’s certificates", "speaker's certificates")
+speaker_certificates = (
+    "speaker's certificate",
+    'speaker’s certificate',
+    'speaker’s certificates',
+    "speaker's certificates",
+)
 
+
+class SessionDataError(Exception):
+    """Raised when session data cannot be retrieved."""
+
+    pass
+
+
+class VnPAPIError(Exception):
+    """Raised when VnP API data cannot be retrieved."""
+
+    pass
 
 
 # -------------------- Begin comand line interface ------------------- #
@@ -62,17 +77,18 @@ def cli():
     after the subcommands, e.g. create_journal.py from-api --help"""
     pass
 
+
 @cli.command()
 @click.argument(
-    "input_path",
+    'input_path',
     type=click.Path(exists=True, dir_okay=True, file_okay=False, path_type=Path),
 )
 @click.option(
-    "--output",
-    "-o",
+    '--output',
+    '-o',
     help=(
-        "Optionally provide the file path for the output XML (for InDesign)."
-        f" default={DEFAULT_OUTPUT_FILENAME}"
+        'Optionally provide the file path for the output XML (for InDesign).'
+        f' default={DEFAULT_OUTPUT_FILENAME}'
     ),
     type=click.Path(writable=True, path_type=Path),
 )
@@ -92,25 +108,25 @@ def from_folder(input_path: Path, output: Optional[Path] = None):
 
 
 @cli.command()
-@click.argument("session")
+@click.argument('session')
 @click.option(
-    "--discard-raw-xml",
+    '--discard-raw-xml',
     is_flag=True,
     default=False,
-    help="Use this option to suppress saving the raw XML downloaded from the API",
+    help='Use this option to suppress saving the raw XML downloaded from the API',
 )
 @click.option(
-    "--raw-xml-folder",
+    '--raw-xml-folder',
     type=click.Path(writable=True, dir_okay=True, file_okay=False),
-    help="Use this option to specify the folder for the raw XML to be saved in"
-    f"default={DEFAULT_RAW_XML_FOLDER}",
+    help='Use this option to specify the folder for the raw XML to be saved in'
+    f'default={DEFAULT_RAW_XML_FOLDER}',
 )
 @click.option(
-    "--output",
-    "-o",
+    '--output',
+    '-o',
     type=click.Path(writable=True, path_type=Path),
-    help="Use this option to specify the folder for the raw XML to be saved in"
-    f" default={DEFAULT_RAW_XML_FOLDER}",
+    help='Use this option to output the final XML (for InDesign) to a specific file '
+    f' default={DEFAULT_OUTPUT_FILENAME}',
 )
 def from_api(
     session: str,
@@ -141,30 +157,113 @@ def from_api(
     )
 
 
+@cli.command()
+@click.argument('start-date', type=click.DateTime(formats=['%Y-%m-%d']))
+@click.argument('end-date', type=click.DateTime(formats=['%Y-%m-%d']))
+@click.option(
+    '--discard-raw-xml',
+    is_flag=True,
+    default=False,
+    help='Use this option to suppress saving the raw XML downloaded from the API',
+)
+@click.option(
+    '--raw-xml-folder',
+    type=click.Path(writable=True, dir_okay=True, file_okay=False, path_type=Path),
+    help='Use this option to specify the folder for the raw XML to be saved in. '
+    f'default={DEFAULT_RAW_XML_FOLDER}',
+)
+@click.option(
+    '--output',
+    '-o',
+    type=click.Path(writable=True, path_type=Path),
+    help='Use this option to output the final XML (for InDesign) to a specific file. '
+    f'default={DEFAULT_OUTPUT_FILENAME}',
+)
+def from_date_range(
+    start_date: datetime,
+    end_date: datetime,
+    discard_raw_xml: bool,
+    raw_xml_folder: Optional[Path],
+    output: Optional[Path] = None,
+):
+    """Create journal XML from VnP API data between START-DATE and END-DATE.
+
+    START-DATE and END-DATE should be in the format YYYY-MM-DD.
+    Example: create_journal from-date-range 2020-07-31 2021-05-10
+
+    By default the XML downloaded from VnP will be saved alongside the
+    output. You can stop this behaviour with the --discard-raw-xml flag.
+
+    You will need to be connected to the parliament network.
+    """
+    # Validate date range
+    if start_date >= end_date:
+        raise click.BadParameter(
+            'START-DATE must be before END-DATE', param_hint='start-date/end-date'
+        )
+
+    try:
+        sitting_dates = get_sitting_dates_in_range(start_date, end_date)
+
+        if not sitting_dates:
+            click.echo('No sitting dates found in the specified range.', err=True)
+            sys.exit(1)
+
+        msg = f'Found {len(sitting_dates)} sitting days in date range.'
+        logger.info(msg)
+        click.echo(msg)
+
+        # Query VnP API
+        logger.info('Getting data from VnP API.')
+        with ThreadPoolExecutor(max_workers=8) as pool:
+            files_or_responses = progress_bar(
+                pool.map(
+                    lambda sitting_date: request_vnp_data(
+                        sitting_date,
+                        not discard_raw_xml,
+                        raw_xml_folder or Path(DEFAULT_RAW_XML_FOLDER),
+                    ),
+                    sitting_dates,
+                ),
+                len(sitting_dates),
+            )
+            print()  # newline after progress bar
+
+        # Use date range as session identifier for output filename
+        date_range = (
+            f'{start_date.strftime("%Y-%m-%d")}_to_{end_date.strftime("%Y-%m-%d")}'
+        )
+
+        sys.exit(main_from_responses(files_or_responses, output, date_range))
+
+    except (SessionDataError, VnPAPIError) as e:
+        logger.error(str(e))
+        click.echo(f'\nError: {e}', err=True)
+        sys.exit(1)
+
+
 # --------------------- End comand line interface -------------------- #
 
 
 def request_vnp_data(
     sitting_date: datetime,
     save_to_disk: bool = True,
-    save_to_folder: Path = Path(DEFAULT_RAW_XML_FOLDER)
+    save_to_folder: Path = Path(DEFAULT_RAW_XML_FOLDER),
 ) -> Tuple[Response, datetime]:
-
     """Query the VnP API for papers laid in the date range."""
 
-    formatted_sitting_date = sitting_date.strftime("%Y-%m-%d")
+    formatted_sitting_date = sitting_date.strftime('%Y-%m-%d')
 
     url = f'{BASE_URL}/{formatted_sitting_date}.xml'
 
     response = httpx.get(url)
 
     if save_to_disk:
-
         if not save_to_folder.exists():
             save_to_folder.mkdir(parents=True)
 
-        file_path = save_to_folder.joinpath(f"{formatted_sitting_date}.xml")
-        with open(file_path, "wb") as f:
+        file_path = save_to_folder.joinpath(f'{formatted_sitting_date}.xml')
+        with open(file_path, 'wb') as f:
             f.write(response.content)
 
     return response, sitting_date
@@ -179,8 +278,8 @@ def progress_bar(iterable: Iterable, total: int) -> list:
         count += 1
         filled_len = int(round(bar_len * count / total))
         percents = round(100.0 * count / total, 1)
-        bar = "#" * filled_len + "-" * (bar_len - filled_len)
-        sys.stdout.write(f"[{bar}] {percents}%\r")
+        bar = '#' * filled_len + '-' * (bar_len - filled_len)
+        sys.stdout.write(f'[{bar}] {percents}%\r')
         sys.stdout.flush()
 
     return output
@@ -194,61 +293,84 @@ def xml_sort_helper(item):
     else:
         return item[1].strftime('%Y-%m-%d')
 
+
+def get_vnp_data_for_session(
+    session: str, save_raw: bool
+) -> list[Tuple[Response, datetime]]:
+    try:
+        # first get the dates for the session
+        msg = 'Getting session data'
+        logger.info(msg)
+        print(msg)
+
+        session_start, session_end = get_dates_from_session(session)
+
+        msg = f'Session starts: {session_start.strftime("%y-%m-%d")}.\nSession ends: {session_end.strftime("%y-%m-%d")}.'
+        logger.info(msg)
+        print(msg)
+
+        sitting_dates = get_sitting_dates_in_range(session_start, session_end)
+        msg = f'Found {len(sitting_dates)} sitting days in this session.'
+        logger.info(msg)
+        print(msg)
+
+    except Exception as e:
+        logger.error("Could not get session data from what's on.")
+        logger.error(repr(e))
+        raise SessionDataError(
+            f'Failed to retrieve session data for {session}: {e}'
+        ) from e
+    try:
+        # Query papers VnP API
+        logger.info('Getting data from VnP API.')
+        # query concurrently to save time
+        with ThreadPoolExecutor(max_workers=8) as pool:
+            # create a progress bar and return a list
+            files_or_responses: list[Tuple[Response, datetime]] = progress_bar(
+                pool.map(
+                    lambda sitting_date: request_vnp_data(sitting_date, save_raw),
+                    sitting_dates,
+                ),
+                len(sitting_dates),
+            )
+            print()  # newline after progress bar
+
+        return files_or_responses
+
+    except Exception as e:
+        logger.error('Could not get XML from the VnP API.')
+        logger.error(repr(e))
+        raise VnPAPIError(
+            'Could not get XML from the VnP API. '
+            'Check that you are connected to the parliament network.'
+        ) from e
+
+
 def main(
     session: Optional[str] = None,
     save_raw: bool = True,
     raw_xml_dir: Optional[Path] = None,
-    output_file: Optional[Path] = None,
+    output_file_or_folder: Optional[Path] = None,
 ) -> int:
-
-    print("main")
+    logger.info('main')
 
     if raw_xml_dir is not None:
         # Do not query API
         # insted assume path is dir with vnp xml files.
         # Each filename should be the date
 
-        glob = raw_xml_dir.glob("*.xml")
+        glob = raw_xml_dir.glob('*.xml')
         files_or_responses: List[Union[Tuple[Response, datetime], Path]] = list(glob)
 
     elif session is not None:
         try:
             # first get the dates for the session
-            print("Getting session data")
-
-            session_start, session_end = get_dates_from_session(session)
-
-            print(f"Session starts: {session_start.strftime('%y-%m-%d')}.")
-            print(f"Session ends: {session_end.strftime('%y-%m-%d')}.")
-
-            sitting_dates = get_sitting_dates_in_range(session_start, session_end)
-            print(f"There are {len(sitting_dates)} sitting days this session.")
-
-        except Exception as e:
-            print(repr(e))
-            print("Error: Could not get session data from whats on.")
-            return 1
-        try:
-            # Query papers VnP API
-            print("Getting data from VnP API.")
-            # query concurrently to save time
-            with ThreadPoolExecutor(max_workers=8) as pool:
-
-                # create a progress bar and return a list
-                files_or_responses = progress_bar(
-                    pool.map(
-                        lambda sitting_date: request_vnp_data(sitting_date, save_raw),
-                        sitting_dates,
-                    ),
-                    len(sitting_dates),
-                )
-                print()  # newline after progress bar
-
+            get_vnp_data_for_session(session, save_raw)
         except Exception as e:
             print(e)
             print(
-                "\nCould not get XML from the VnP API. "
-                "Check that you are connected to the parliament network."
+                '\nCould not get XML from the VnP API. '
+                'Check that you are connected to the parliament network.'
             )
             return 1
 
@@ -257,22 +379,23 @@ def main(
 
     # transform and combine a bunch of files.
 
-    output_root = Element("root", nsmap=NS_ADOBE)
+    output_root = Element('root', nsmap=NS_ADOBE)
 
     # sort the VnP XML by date
     files_or_responses.sort(key=xml_sort_helper)
-
 
     for i, item in enumerate(files_or_responses):
         # parse and build up a tree for the input file
 
         if isinstance(item, Path):
-            date = datetime.strptime(item.name[:10], "%Y-%m-%d")
+            date = datetime.strptime(item.name[:10], '%Y-%m-%d')
             try:
                 tree = etree.parse(item)
                 input_root = tree.getroot()
             except Exception as e:
-                print(f"Error parsing XML for date {date.strftime('%Y-%m-%d')}: {e}")
+                logger.error(
+                    f'Could not parse XML for date {date.strftime("%Y-%m-%d")}: {e}'
+                )
                 continue
         else:
             # assume tuple
@@ -282,282 +405,287 @@ def main(
                 input_root = etree.fromstring(response.content)
                 tree = etree.ElementTree(input_root)
             except Exception as e:
-                print(f"Error parsing XML for date {date.strftime('%Y-%m-%d')}: {e}")
+                logger.error(
+                    f'Could not parse XML for date {date.strftime("%Y-%m-%d")}: {e}'
+                )
                 continue
 
         temp_output_root = Element(
-            "day", nsmap=NS_ADOBE, attrib={"date": date.strftime("%Y-%m-%d")}
+            'day', nsmap=NS_ADOBE, attrib={'date': date.strftime('%Y-%m-%d')}
         )
 
-        # for the time being lets only get days within a renage
-        first_date = datetime(2020, 7, 31)
-        last_date = datetime(2021, 5, 10)
-        if date < first_date or date > last_date:
-            continue
-
         # get all the VoteItemViewModel elements
-        VoteItems = input_root.xpath(".//VoteItemViewModel")
+        VoteItems = input_root.xpath('.//VoteItemViewModel')
         VoteItems = cast(List[_Element], VoteItems)
 
         # put the vote number as an attribute into the root element
         # e.g. <root VnPNumber="No. 184">
         # input_root.find finds the first match. (The number is always first)
-        first_VoteEntry = input_root.find("VoteItemViewModel/VoteEntry")
+        first_VoteEntry = input_root.find('VoteItemViewModel/VoteEntry')
         if first_VoteEntry is not None and first_VoteEntry.text:
-
             # remove non-breaking spaces as these cause problems
             # in finding the start of each day
-            _first_VoteEntry_t = first_VoteEntry.text.replace("\u00A0", " ")
-            _first_VoteEntry_t = _first_VoteEntry_t.replace("&nbsp;", " ")
+            _first_VoteEntry_t = first_VoteEntry.text.replace('\u00a0', ' ')
+            _first_VoteEntry_t = _first_VoteEntry_t.replace('&nbsp;', ' ')
 
             # case insensitive search
-            m = re.search(r"No\. ?[0-9]+", _first_VoteEntry_t, flags=re.I)
+            m = re.search(r'No\. ?[0-9]+', _first_VoteEntry_t, flags=re.I)
             if m:
-                temp_output_root.set("VnPNumber", m.group(0))
+                temp_output_root.set('VnPNumber', m.group(0))
 
                 if i > 0:
                     # we want a line between days (bun not before the first day)
-                    DayLine = SubElement(temp_output_root, "DayLine")
-                    DayLine.tail = "\n"
+                    DayLine = SubElement(temp_output_root, 'DayLine')
+                    DayLine.tail = '\n'
 
-
-                first_VoteEntry.text = f"[{m.group(0)}]"
-                first_VoteEntry.tag = "DaySep"
-                first_VoteEntry.tail = "\n"
+                first_VoteEntry.text = f'[{m.group(0)}]'
+                first_VoteEntry.tag = 'DaySep'
+                first_VoteEntry.tail = '\n'
                 temp_output_root.append(first_VoteEntry)
 
             # insert date element
-            date_ele = SubElement(temp_output_root, "VotesDate")
-            date_ele.text = date.strftime("%A")
-            date_for_header = SubElement(date_ele, "DateForHeader")
-            date_ele.text += " "
-            date_for_header.text = date.strftime("%d %B %Y").lstrip("0")
-            date_ele.tail = "\n"
+            date_ele = SubElement(temp_output_root, 'VotesDate')
+            date_ele.text = date.strftime('%A')
+            date_for_header = SubElement(date_ele, 'DateForHeader')
+            date_ele.text += ' '
+            date_for_header.text = date.strftime('%d %B %Y').lstrip('0')
+            date_ele.tail = '\n'
 
         # variable to contain the section
-        last_section = "chamber"
+        last_section = 'chamber'
         # used to help tell if numbering should restart in InDesign
         restart_numbers = True
 
         for vote_item in VoteItems:
-
             # If the section changes we need a new heading. There is not section heading needed for the chamber
-            section_text = vote_item.findtext("Section")
+            section_text = vote_item.findtext('Section')
             if section_text:
                 section_text = section_text.strip()
                 section_text_cf = section_text.casefold()
                 # There is also no heading needed for Certificates and Corrections
                 if section_text_cf not in (
                     last_section,
-                    "certificates and corrections",
+                    'certificates and corrections',
                 ):
-                    op_heading1 = SubElement(temp_output_root, "OPHeading1")
-                    op_heading1.text = (
-                        section_text
-                    )
-                    op_heading1.tail = "\n"
+                    op_heading1 = SubElement(temp_output_root, 'OPHeading1')
+                    op_heading1.text = section_text
+                    op_heading1.tail = '\n'
                     last_section = section_text_cf
                     # The numbering is also supposed to restart after new sections
                     # unless section is other proceedings
-                    if section_text_cf != "other proceedings":
+                    if section_text_cf != 'other proceedings':
                         restart_numbers = True
 
             # add a line to InDesign XML if vote Entry is 'FullLine'
-            if vote_item.findtext("VoteEntryType") == "FullLine":
-                SubElement(temp_output_root, "FullLine").text = " \n"
+            if vote_item.findtext('VoteEntryType') == 'FullLine':
+                SubElement(temp_output_root, 'FullLine').text = ' \n'
                 continue
 
             # get the vote entry text
-            vote_entry_text = vote_item.findtext("VoteEntry", default="")
+            vote_entry_text = vote_item.findtext('VoteEntry', default='')
             # convert vote entry text back to html and replace breaks with InDesign forced line breaks
             vote_entry_text = (
-                vote_entry_text.replace("&lt;", "<")
-                .replace("&gt;", ">")
-                .replace("&amp;", "&")
-                .replace("<br />", "&#8232;")
+                vote_entry_text.replace('&lt;', '<')
+                .replace('&gt;', '>')
+                .replace('&amp;', '&')
+                .replace('<br />', '&#8232;')
             )
             # also remove any divs
-            vote_entry_text = vote_entry_text.replace("<div>", "").replace("</div>", "")
+            vote_entry_text = vote_entry_text.replace('<div>', '').replace('</div>', '')
 
-            if len(vote_entry_text) > 0 and vote_entry_text[0] != "<":
-                vote_entry_text = "<p>" + vote_entry_text + "</p>"
+            if len(vote_entry_text) > 0 and vote_entry_text[0] != '<':
+                vote_entry_text = '<p>' + vote_entry_text + '</p>'
             cleaned_html_elements = lhtml.fromstring(
-                "<div>" + vote_entry_text + "</div>"
+                '<div>' + vote_entry_text + '</div>'
             )
 
             for i, item in enumerate(cleaned_html_elements):
                 next_item = item.getnext()  # returns the next element or None
 
-                next_item_tag = ""
-                next_item_text = ""
+                next_item_tag = ''
+                next_item_text = ''
                 if iselement(next_item):
                     next_item_tag = next_item.tag
                     if next_item.text:
                         next_item_text = next_item.text.strip()
 
-                item_text = ""
+                item_text = ''
                 if item.text:
                     item_text = item.text.strip()
 
                 # remove multiple new paragraphs, this sometimes happens after tables
                 if (
-                    item.tag == "p"
-                    and next_item_tag == "p"
-                    and item_text == "\u00A0"
-                    and next_item_text == "\u00A0"
+                    item.tag == 'p'
+                    and next_item_tag == 'p'
+                    and item_text == '\u00a0'
+                    and next_item_text == '\u00a0'
                 ):
                     continue
 
                 # if the element is an html table...
-                if item.tag == "table":
+                if item.tag == 'table':
                     # temp_output_root.append(convert_table(item))
                     indesign_table = tables.html_table_to_indesign(
-                        item, tablestyle="Table Style 2", max_table_width=233
+                        item, tablestyle='Table Style 2', max_table_width=233
                     )
                     TableContainerPara = SubElement(
-                        temp_output_root, "TableContainerPara"
+                        temp_output_root, 'TableContainerPara'
                     )
                     TableContainerPara.append(indesign_table)
                     # if a tables first row has all cell have the <em> element then promote to header
                     try:
-                        cols = int(indesign_table.get(QName(AID, "tcols")))
+                        cols = int(indesign_table.get(QName(AID, 'tcols')))
 
                         cells_that_should_be_headers = indesign_table.xpath(
-                            f"Cell[position() <= {cols}][em]"
+                            f'Cell[position() <= {cols}][em]'
                         )
                         if len(cells_that_should_be_headers) == cols:
                             for cell in cells_that_should_be_headers:
-                                cell.set(QName(AID, "theader"), "")
+                                cell.set(QName(AID, 'theader'), '')
                     except ValueError:
                         pass
 
                     continue
 
                 # get the style attribute if it exists
-                item_style = item.get("style", "").rstrip(
-                    ";"
+                item_style = item.get('style', '').rstrip(
+                    ';'
                 )  # sometimes there is an unwanted `;`
 
                 # decide what tag we need to give it
-                number_ele = vote_item.find("Number")
-                vote_entry_type = vote_item.find("VoteEntryType")
+                number_ele = vote_item.find('Number')
+                vote_entry_type = vote_item.find('VoteEntryType')
                 if i == 0 and number_ele is not None and number_ele.text:
-                    item.tag = "BusinessItemHeadingNumbered"
+                    item.tag = 'BusinessItemHeadingNumbered'
                     if restart_numbers is True:
-                        item.tag = "BusinessItemHeadingNumberedRestart"
+                        item.tag = 'BusinessItemHeadingNumberedRestart'
                         restart_numbers = False
 
-                elif item.get("class", "") == "HalfLine":
-                    item.tag = "HalfLine"
+                elif item.get('class', '') == 'HalfLine':
+                    item.tag = 'HalfLine'
 
-                elif (
-                    item_style == "text-align: right"
-                ):
+                elif item_style == 'text-align: right':
                     # apply the special style to the speaker or chairs name
                     if next_item_text.upper().strip() in chair_titles:
                         # We need to remove the speakers signature as it is
                         # not needed for the journal
-                        # print(f"\n{etree.tostring(date_ele)}")
-                        # print(f"{next_item_text=}")
-                        # print(etree.tostring(item))
                         continue
-                        # item.getparent().remove(item)
-                        # item.tag = 'SpeakerName'
                     if item_text.upper().strip() in chair_titles:
                         continue
 
                     # other wise right align
-                    item.tag = "RightAlign"
+                    item.tag = 'RightAlign'
 
                 # some elements are headings and take particular styles
-                elif iselement(vote_entry_type) and vote_entry_type.text == "Heading":
-                    item.tag = "OPHeading2"
+                elif iselement(vote_entry_type) and vote_entry_type.text == 'Heading':
+                    item.tag = 'OPHeading2'
                     if item_text.upper().strip() in chair_titles:
-                        # print(f"{etree.tostring(vote_entry_type)}")
-                        # print(f"{vote_entry_type.text=}")
-                        # print(etree.tostring(item))
                         continue
-                        # item.getparent().remove(item)
-                        # item.tag = 'RightAlign'
 
                     # put The House met at in the center
-                    if re.search(r"^The House met at", item_text) is not None:
-                        item.tag = "NormalCentred"
-                    if item_text.upper() == "PRAYERS":
+                    if re.search(r'^The House met at', item_text) is not None:
+                        item.tag = 'NormalCentred'
+                    if item_text.upper() == 'PRAYERS':
                         # changed for Journal
                         # item.tag = "MotionText"
-                        item.tag = "Prayers"
+                        item.tag = 'Prayers'
                     if item_text.casefold().strip() in speaker_certificates:
-                        item.tag = "SpeakersCertificates"
+                        item.tag = 'SpeakersCertificates'
 
-                elif item_style == "text-align: center":
-                    item.tag = "NormalCentred"
-                    if item.text and item.text.casefold().strip() in speaker_certificates:
-                        item.tag = "SpeakersCertificates"
+                elif item_style == 'text-align: center':
+                    item.tag = 'NormalCentred'
+                    if (
+                        item.text
+                        and item.text.casefold().strip() in speaker_certificates
+                    ):
+                        item.tag = 'SpeakersCertificates'
 
-                elif item_style == "padding-left: 30px":
-                    item.tag = "Indent1"
-                elif item_style == "padding-left: 60px":
-                    item.tag = "Indent2"
-                elif item_style == "padding-left: 90px":
-                    item.tag = "Indent3"
-                elif item_style == "padding-left: 120px":
-                    item.tag = "Indent4"
-                elif item_style == "padding-left: 150px":
-                    item.tag = "Indent5"
+                elif item_style == 'padding-left: 30px':
+                    item.tag = 'Indent1'
+                elif item_style == 'padding-left: 60px':
+                    item.tag = 'Indent2'
+                elif item_style == 'padding-left: 90px':
+                    item.tag = 'Indent3'
+                elif item_style == 'padding-left: 120px':
+                    item.tag = 'Indent4'
+                elif item_style == 'padding-left: 150px':
+                    item.tag = 'Indent5'
                 else:
-                    item.tag = "MotionText"
-
+                    item.tag = 'MotionText'
 
                 # item.text = re.sub(r"[ \u00A0]+", " ", item.text.strip())
 
-                item.tail = "\n"
+                item.tail = '\n'
                 temp_output_root.append(deepcopy(item))
 
             output_root.append(temp_output_root)
 
     output_root = journal_mods(output_root)
-
-    # write out the file
-    if output_file is None:
-        output_file = Path(DEFAULT_OUTPUT_FILENAME)
-    elif output_file.is_dir():
-        output_file = output_file.resolve()
-        output_file.mkdir(parents=True, exist_ok=True)
-        output_file = output_file / f"session_{session}_for_id.xml"
-    else:
-        output_file.parent.mkdir(parents=True, exist_ok=True)
-        output_file = output_file.resolve()
-
-    et = etree.ElementTree(output_root)
-
-    et.write(str(output_file), encoding="utf-8", xml_declaration=True)
-    print(f"\nTransformed XML (for InDesign) is at:\n{output_file.resolve()}")
+    output_file_path = get_output_path(output_file_or_folder, session or 'unknown')
+    write_to_file(output_root, output_file_path)
     return 0
 
 
-def journal_mods(output_root: _Element) -> _Element:
+def get_output_path(output_file_or_folder: Path | None, session: str) -> Path:
+    """Determine the output file path for the generated XML.
 
-    allowed_empty_paras = ("DaySep", "ThinLine", "TableContainerPara")
+    Args:
+        output_file_or_folder: Optional path to output file or directory.
+            If None, uses default filename in current directory.
+            If directory, creates session-named file within it.
+            If file, uses that path directly.
+        session: Parliamentary session identifier (e.g., '2017-19'), used
+            for generating default filename when output is a directory.
+
+    Returns:
+        Resolved absolute path where the XML output should be written.
+
+    Raises:
+        ValueError: If output_file_or_folder exists but is neither a file nor directory.
+    """
+    if output_file_or_folder is None:
+        output_file = Path(DEFAULT_OUTPUT_FILENAME)
+    elif output_file_or_folder.is_dir():
+        output_folder = output_file_or_folder.resolve()
+        output_folder.mkdir(parents=True, exist_ok=True)
+        output_file = output_folder / f'session_{session}_for_id.xml'
+    elif output_file_or_folder.is_file():
+        output_file_or_folder.parent.mkdir(parents=True, exist_ok=True)
+        output_file = output_file_or_folder.resolve()
+    else:
+        raise ValueError('output_file_or_folder must be a file or folder path')
+
+    return output_file
+
+
+def write_to_file(output_root: Element, output_file: Path):
+    et = etree.ElementTree(output_root)
+
+    et.write(str(output_file), encoding='utf-8', xml_declaration=True)
+    msg = f'\nTransformed XML (for InDesign) saved:\n{output_file.resolve()}'
+    logger.info(msg)
+    print(msg)
+
+
+def journal_mods(output_root: _Element) -> _Element:
+    allowed_empty_paras = ('DaySep', 'ThinLine', 'TableContainerPara')
 
     for item in output_root.findall('./day/*'):
-
-
-
         if item.text and len(item) == 0:
             item.text = item.text.strip()
 
-
         # remove the bold on e.g. (2) the Prime Minister
         try:
-            is_para = item.tag in ("MotionText", "Indent1")
-            strong_child = item[0].tag == "strong"
+            is_para = item.tag in ('MotionText', 'Indent1')
+            strong_child = item[0].tag == 'strong'
             no_other_children = len(item) == 1
-            starts_with_number = re.match(r'\(\d+\)\s', item[0].text.strip()) is not None
+            starts_with_number = (
+                re.match(r'\(\d+\)\s', item[0].text.strip()) is not None
+            )
 
             if is_para and strong_child and no_other_children and starts_with_number:
                 if item.text and item[0].text:
-                    item.text += " " + item[0].text
+                    item.text += ' ' + item[0].text
                 elif item[0].text:
                     item.text = item[0].text
 
@@ -570,15 +698,15 @@ def journal_mods(output_root: _Element) -> _Element:
             pass
 
         # Ayes and Noes:
-        if item.tag in ("MotionText", "Indent1") and item.text:
-            match = re.match(r"(ayes|noes):\s\d", item.text.casefold().strip())
+        if item.tag in ('MotionText', 'Indent1') and item.text:
+            match = re.match(r'(ayes|noes):\s\d', item.text.casefold().strip())
             if match is not None:
-                item.tag = "AyesAndNoes"
+                item.tag = 'AyesAndNoes'
                 # replace first and second space with a tab character
-                item.text = item.text.replace(" ", "\t", 2)
+                item.text = item.text.replace(' ', '\t', 2)
 
-                if re.search(r"\d\.?$", item.text):
-                    item.text = item.text + "\t"
+                if re.search(r'\d\.?$', item.text):
+                    item.text = item.text + '\t'
 
         # convert loads of underscores to a thin line
         if item.text and item.text.strip() == '_' * len(item.text.strip()):
@@ -588,17 +716,16 @@ def journal_mods(output_root: _Element) -> _Element:
         # in the journal we use a thin line above to separate things and
         # but it needs to be a separate elements so that is is kept with
         # the last paragraph
-        if item.tag == "OPHeading1":
-            item.tag = "HeadingItalicAfterLine"
-            thin_line = etree.Element("ThinLine")
-            thin_line.tail = "\n"
+        if item.tag == 'OPHeading1':
+            item.tag = 'HeadingItalicAfterLine'
+            thin_line = etree.Element('ThinLine')
+            thin_line.tail = '\n'
             item.addprevious(thin_line)
 
         # TODO: members names in brackets keep with previous
         # TODO: remove none breaking spaces
         if item.text:
-            item.text = item.text.replace("\u00A0", " ")
-
+            item.text = item.text.replace('\u00a0', ' ')
 
         # if item.getparent().get('date', '') == '2018-03-14':
         #     print(f"{item.tag} {repr(item.text)} {repr(item.tail)}")
@@ -611,29 +738,38 @@ def journal_mods(output_root: _Element) -> _Element:
         #     print(f"{not_in_empty_pars=} {no_item_text=} {no_children=} {no_item_tail=}")
 
         # TODO: remove empty paragraphs
-        if item.tag not in allowed_empty_paras and item.text is not None and item.text.strip() == '' and len(item) == 0 and item.tail and item.tail.strip() == '':
+        if (
+            item.tag not in allowed_empty_paras
+            and item.text is not None
+            and item.text.strip() == ''
+            and len(item) == 0
+            and item.tail
+            and item.tail.strip() == ''
+        ):
             item.getparent().remove(item)
             # print('item removed')
         # TODO: fix tables
 
-        if item.tag == "FullLine" and item.getnext() is not None and item.getnext().tag == "SpeakersCertificates":
+        if (
+            item.tag == 'FullLine'
+            and item.getnext() is not None
+            and item.getnext().tag == 'SpeakersCertificates'
+        ):
             item.getparent().remove(item)
 
-
-
-
     return output_root
+
 
 def json_from_uri(
     uri: str, default: Optional[T] = None, showerror=True
 ) -> Union[T, Any]:
-    headers = {"Content-Type": "application/json"}
+    headers = {'Content-Type': 'application/json'}
     try:
         response = httpx.get(uri, headers=headers)
         json_obj = response.json()
     except Exception as e:
         if showerror:
-            print(f"Error getting data from:\n{uri}\n{e}")
+            print(f'Error getting data from:\n{uri}\n{e}')
         return default
     else:
         return json_obj
@@ -657,25 +793,22 @@ def get_sitting_dates_in_range(
 
     sitting_dates = []
     for d in dates:
-
         next_sitting_date_str = json_from_uri(
-            CAL_API_URL_TEMPLATE.format(d.strftime("%Y-%m-%d"))
+            CAL_API_URL_TEMPLATE.format(d.strftime('%Y-%m-%d'))
         )
 
         if not next_sitting_date_str:
             continue
 
-        next_sitting_date = datetime.strptime(
-            next_sitting_date_str[:10], "%Y-%m-%d"
-        )
+        next_sitting_date = datetime.strptime(next_sitting_date_str[:10], '%Y-%m-%d')
 
         if next_sitting_date not in sitting_dates:
             sitting_dates.append(next_sitting_date)
 
-    print(f"{[sd.strftime('%y-%m-%d') for sd in sitting_dates]}")
+    print(f'{[sd.strftime("%y-%m-%d") for sd in sitting_dates]}')
 
     return sitting_dates
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     cli()

@@ -1,25 +1,60 @@
 from copy import deepcopy
 from typing import Optional
 
-from lxml import etree  # type: ignore
-from lxml.etree import QName  # type: ignore
-from lxml.html.clean import Cleaner  # type: ignore
+from lxml import etree
+from lxml.etree import QName
+from lxml.html import HtmlElement
+
+from journal.logger import logger
 
 # xml namespaces used
 AID = 'http://ns.adobe.com/AdobeInDesign/4.0/'
 AID5 = 'http://ns.adobe.com/AdobeInDesign/5.0/'
 
 
-cleaner = Cleaner(page_structure=False, links=False, remove_unknown_tags=False,
-                  safe_attrs_only=False, inline_style=True,
-                  remove_tags=['tr', 'thead', 'tbody', 'tfoot', 'caption'],
-                  kill_tags=['colgroup', 'col'])
+def clean_table(html_table_element: HtmlElement):
+    """
+    Clean the table element. This is needed to remove any extra tags that
+    are not needed in the final InDesign table and unnecessary style attributes.
+    """
+
+    # remove any style attributes
+    etree.strip_attributes(html_table_element, 'style')
+
+    tags_to_remove = ['tr', 'thead', 'tbody', 'tfoot', 'caption']
+    tags_to_kill = ['colgroup', 'col']
+
+    elements_to_drop_tag: list[HtmlElement] = []
+    elements_to_drop_tree: list[HtmlElement] = []
+
+    for element in html_table_element.iter():
+        if element.tag in tags_to_remove:
+            elements_to_drop_tag.append(element)
+        if element.tag in tags_to_kill:
+            elements_to_drop_tree.append(element)
+
+    for element in elements_to_drop_tag:
+        # this usually works even if the element is not in the tree
+        try:
+            element.drop_tag()
+        except Exception as e:
+            logger.error(f'Error while dropping tag: {e}')
+
+    for element in elements_to_drop_tree:
+        # this usually works even if the element is not in the tree
+        try:
+            element.drop_tree()
+        except Exception as e:
+            logger.error(f'Error while dropping tree: {e}')
+
+    return html_table_element
 
 
-def html_table_to_indesign(html_table_element,
-                           max_table_width: int = 233,  # this is measured in points
-                           tablestyle: Optional[str] = None
-                           ):
+def html_table_to_indesign(
+    html_table_element,
+    max_table_width: int = 233,  # this is measured in points
+    tablestyle: Optional[str] = None,
+):
     """
     Convert an HTML table element into an InDesign XML table element.
     The html_table_element must not be an inner element of another table.
@@ -38,7 +73,6 @@ def html_table_to_indesign(html_table_element,
 
     # go through the tables backwards because there could be tables in tables...
     for table in reversed(tables):
-
         # is the table an inner table
         ancestor_tables = table.xpath('//ancestor-or-self::table')
         inner_table = False
@@ -82,10 +116,8 @@ def html_table_to_indesign(html_table_element,
                 cell.set(QName(AID, 'ccolwidth'), str(col_width))
                 # print(f'{col_width=}')
 
-
         # convert cells to InDesign cells
         for cell in table.xpath('.//th|.//td'):
-
             # convert headers cells to indesign headers
             if cell.tag == 'th':  # th indicates header
                 cell.set(QName(AID, 'theader'), '')
@@ -118,6 +150,7 @@ def html_table_to_indesign(html_table_element,
                 if last_child.tail:
                     last_child.tail = last_child.tail.strip()
 
+            # Not sure about the below optional bit
             # optionally put all the cell content into a <TableBodyPara> element as
             # this is easier to style in InDesign
             if cell.text or cell.tail or len(cell):
@@ -132,7 +165,6 @@ def html_table_to_indesign(html_table_element,
                 # move the children of the cell to the para
                 para.extend(list(cell))
 
-
         # delete all table rows but keep children
         for row in table_rows:
             if row.tail:
@@ -143,18 +175,9 @@ def html_table_to_indesign(html_table_element,
         if table.text:
             table.text = table.text.strip()
 
-        # ensure newline at the end of a table
-        # if not table.tail:
-        #     table.tail = '\n'
-        # elif table.tail.endswith('\n'):
-        #     table.tail = table.tail + '\n'
+    return clean_table(html_table_element)
 
-
-    return cleaner.clean_html(html_table_element)
-    # return html_table_element
-
-
-# def drop_tag(element):
+    # def drop_tag(element):
     """
     Remove the tag, but not its children or text.  The children and text
     are merged into the parent.
