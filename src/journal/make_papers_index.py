@@ -6,24 +6,22 @@
 # Ideas for improvement are welcome
 
 # python standard library imports
-from datetime import datetime, date, timedelta
-from functools import cached_property
-from pathlib import Path
+import os
 import re
 import sys
-from typing import cast, Union
-import os
+from datetime import date, datetime, timedelta
+from functools import cached_property
+from pathlib import Path
+from typing import Union, cast
 
-from cache_to_disk import cache_to_disk
 import click
-from lxml import etree
-from lxml.etree import _Element
-from lxml.etree import iselement
-import requests
+import httpx
+from cache_to_disk import cache_to_disk
 
 # 1st party imports
-from package.utilities import get_dates_from_session
-
+from jounal.utilities import get_dates_from_session
+from lxml import etree
+from lxml.etree import _Element, iselement
 
 OUTPUT_XML_NAME = "for-id7.xml"
 
@@ -406,7 +404,7 @@ def filter_papers(papers_xml: Union[_Element, list[_Element]]) -> list[_Element]
 
 
 
-def request_papers_data(date_from: datetime, date_to: datetime) -> requests.Response:
+def request_papers_data(date_from: datetime, date_to: datetime) -> httpx.Response:
     """Query the papers laid API for papers laid in the date range."""
 
     session_from_str = date_from.strftime("%Y-%m-%d")
@@ -417,7 +415,7 @@ def request_papers_data(date_from: datetime, date_to: datetime) -> requests.Resp
         f"?fromDate={session_from_str}&toDate={session_to_str}&house=commons"
     )
 
-    response = requests.get(url)
+    response = httpx.get(url)
 
     return response
 
@@ -637,7 +635,7 @@ def get_sitting_date(date_: datetime) -> datetime:
 
     url = url_template.format(one_day_ago.strftime("%Y-%m-%d"))
 
-    response = requests.get(url)
+    response = httpx.get(url)
 
     return datetime.strptime(response.json(), "%Y-%m-%dT%H:%M:%S")
 

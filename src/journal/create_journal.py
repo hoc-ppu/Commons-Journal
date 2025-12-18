@@ -1,7 +1,6 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
-# std library imports
-import re  # regex
+import re
 import ssl
 import sys
 from concurrent.futures import ThreadPoolExecutor
@@ -14,20 +13,15 @@ from typing import Any, Dict, Iterable, List, Optional, Tuple, TypeVar, Union, c
 
 # 3rd party imports
 import click
-import requests
+import httpx
+from httpx import Response
 from lxml import etree
 from lxml import html as lhtml
 from lxml.etree import Element, QName, SubElement, _Element, iselement
-from requests import Response
 
 # 1st party imports
-from package.utilities import get_dates_from_session
-
-# local imports
-try:
-    import Python_Resources.tables as tables
-except ModuleNotFoundError:
-    from . import tables  # type: ignore
+import journal.tables as tables
+from journal.utilities import get_dates_from_session
 
 T = TypeVar("T")
 
@@ -67,7 +61,6 @@ def cli():
     the from-folder subcomand. You can get additional help by typing --help
     after the subcommands, e.g. create_journal.py from-api --help"""
     pass
-
 
 @cli.command()
 @click.argument(
@@ -155,7 +148,7 @@ def request_vnp_data(
     sitting_date: datetime,
     save_to_disk: bool = True,
     save_to_folder: Path = Path(DEFAULT_RAW_XML_FOLDER)
-) -> Tuple[requests.Response, datetime]:
+) -> Tuple[Response, datetime]:
 
     """Query the VnP API for papers laid in the date range."""
 
@@ -163,7 +156,7 @@ def request_vnp_data(
 
     url = f'{BASE_URL}/{formatted_sitting_date}.xml'
 
-    response = requests.get(url)
+    response = httpx.get(url)
 
     if save_to_disk:
 
@@ -636,7 +629,7 @@ def json_from_uri(
 ) -> Union[T, Any]:
     headers = {"Content-Type": "application/json"}
     try:
-        response = requests.get(uri, headers=headers)
+        response = httpx.get(uri, headers=headers)
         json_obj = response.json()
     except Exception as e:
         if showerror:

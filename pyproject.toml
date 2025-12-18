@@ -1,0 +1,33 @@
+[project]
+name = "commons-journal"
+license = "MIT"
+description = "Tools to create House of Commons Journal body and papers index."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "cache-to-disk",
+    "click>=8.3.1",
+    "httpx",
+    "lxml",
+]
+
+dynamic = ["version"]
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project.scripts]
+create_journal = "journal.create_journal:cli"
+make_papers_index = "journal.make_papers_index:cli"
+
+[tool.ruff.format]
+quote-style = "single"
+
+[tool.setuptools.dynamic]
+version = {attr = "journal.__version__"}
+
+[dependency-groups]
+dev = [
+    "types-lxml>=2025.11.25",
+]
