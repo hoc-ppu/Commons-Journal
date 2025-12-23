@@ -160,10 +160,10 @@ def html_table_to_indesign(
                 # remove the text and tail from the cell
                 cell.text = None
                 cell.tail = None
-                # add the para to the cell
-                cell.append(para)
                 # move the children of the cell to the para
                 para.extend(list(cell))
+                # add the para to the cell
+                cell.append(para)
 
         # delete all table rows but keep children
         for row in table_rows:
