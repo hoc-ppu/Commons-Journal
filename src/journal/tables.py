@@ -52,7 +52,7 @@ def clean_table(html_table_element: HtmlElement):
 
 def html_table_to_indesign(
     html_table_element,
-    max_table_width: int = 233,  # this is measured in points
+    max_table_width: int = 244,  # this is measured in points
     tablestyle: Optional[str] = None,
 ):
     """

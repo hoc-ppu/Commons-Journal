@@ -17,20 +17,20 @@ from typing import Union, cast
 import click
 import httpx
 from cache_to_disk import cache_to_disk
-
-# 1st party imports
-from jounal.utilities import get_dates_from_session
 from lxml import etree
 from lxml.etree import _Element, iselement
 
-OUTPUT_XML_NAME = "for-id7.xml"
+# 1st party imports
+from journal.utilities import get_dates_from_session
 
-DEFAULT_RAW_XML_TEMPLATE = "as_downloaded_papers_{session}.xml"
+OUTPUT_XML_NAME = 'for-id7.xml'
 
-NS_MAP = {"xsi": "http://www.w3.org/2001/XMLSchema-instance"}
+DEFAULT_RAW_XML_TEMPLATE = 'as_downloaded_papers_{session}.xml'
 
-WORD_FOR_PATTERN = re.compile(r"([12]\d\d\d(?:-\d\d)? ?(?:\([A-Za-z0-9 ]*\))?)$")
-LAID_PATTERN = re.compile(r" ?\(laid \d\d? [A-Za-z]{3,11} ?[0-9]{0,5}\)")
+NS_MAP = {'xsi': 'http://www.w3.org/2001/XMLSchema-instance'}
+
+WORD_FOR_PATTERN = re.compile(r'([12]\d\d\d(?:-\d\d)? ?(?:\([A-Za-z0-9 ]*\))?)$')
+LAID_PATTERN = re.compile(r' ?\(laid \d\d? [A-Za-z]{3,11} ?[0-9]{0,5}\)')
 
 # WITHDRAWAL_PREFIX = "[Withdrawal] "
 # RELAY_PREFIX = "[Relay] "
@@ -39,21 +39,21 @@ LAID_PATTERN = re.compile(r" ?\(laid \d\d? [A-Za-z]{3,11} ?[0-9]{0,5}\)")
 class Paper:
     @staticmethod
     def clean(string: str) -> str:
-        return re.sub(r" +", " ", string.strip())
+        return re.sub(r' +', ' ', string.strip())
 
     def __init__(self, element: _Element):
-        self.side_title = self.clean(element.findtext("SideTitle", ""))
-        self._raw_title = self.clean(element.findtext("Title", ""))
-        self.is_draft = self.clean(element.findtext("Draft", ""))
+        self.side_title = self.clean(element.findtext('SideTitle', ''))
+        self._raw_title = self.clean(element.findtext('Title', ''))
+        self.is_draft = self.clean(element.findtext('Draft', ''))
         # we will replace any hyphens in the year with the en-dash later
         # as for now we need to keep hyphens
-        self.year = self.clean(element.findtext("Year", "")).replace("\u2013", "-")
+        self.year = self.clean(element.findtext('Year', '')).replace('\u2013', '-')
         # papers don't always have a subject heading.
-        self.subject_heading = self.clean(element.findtext("SubjectHeading", ""))
+        self.subject_heading = self.clean(element.findtext('SubjectHeading', ''))
 
-        self._input_date_laid: str = self.clean(element.findtext("DateLaidCommons", ""))
+        self._input_date_laid: str = self.clean(element.findtext('DateLaidCommons', ''))
         self._input_date_withdrawn: str = self.clean(
-            element.findtext("DateWithdrawn", "")
+            element.findtext('DateWithdrawn', '')
         )
 
         self.date_laid, self.date_withdrawn = self.__process_dates()
@@ -66,30 +66,29 @@ class Paper:
     def __process_dates(self) -> tuple[str, str]:
         try:
             laid_sitting_date = get_sitting_date(
-                datetime.strptime(self._input_date_laid[0:10], "%Y-%m-%d")
+                datetime.strptime(self._input_date_laid[0:10], '%Y-%m-%d')
             )
             laid_sitting_date_str = format_date(laid_sitting_date)
         except Exception:
-            laid_sitting_date_str = ""
+            laid_sitting_date_str = ''
 
-        date_withdrawn = ""
+        date_withdrawn = ''
         try:
             withdrawn_sitting_date = get_sitting_date(
-                datetime.strptime(self._input_date_withdrawn[0:10], "%Y-%m-%d")
+                datetime.strptime(self._input_date_withdrawn[0:10], '%Y-%m-%d')
             )
-            date_withdrawn = f"[withdrawn, {format_date(withdrawn_sitting_date)}]"
+            date_withdrawn = f'[withdrawn, {format_date(withdrawn_sitting_date)}]'
         except Exception:
-            date_withdrawn = ""
+            date_withdrawn = ''
 
         return laid_sitting_date_str, date_withdrawn
 
     @property
     def index_entry(self):
-        entry = f"{self.title.strip()}, {self.date_laid} {self.date_withdrawn}".strip(
-            ", "
+        entry = f'{self.title.strip()}, {self.date_laid} {self.date_withdrawn}'.strip(
+            ', '
         )
-        return re.sub(r"(?<=\d)-(?=\d)", "\u2013", entry)
-
+        return re.sub(r'(?<=\d)-(?=\d)', '\u2013', entry)
 
     # for sorting
     @cached_property
@@ -98,16 +97,16 @@ class Paper:
         # some papers are withdrawn and then relayed and these two entries
         # should appear together see fix_relayed().
 
-        title_no_laid = re.sub(LAID_PATTERN, "", self.title.casefold().strip())
+        title_no_laid = re.sub(LAID_PATTERN, '', self.title.casefold().strip())
         index_entry = (
-            f"{title_no_laid}, {self._input_date_laid} {self.date_withdrawn}".strip(
-                ", "
+            f'{title_no_laid}, {self._input_date_laid} {self.date_withdrawn}'.strip(
+                ', '
             )
         )
 
         # some things should not be included in the sort
         # (e.g. the word `the` at the beginning)
-        index_entry = index_entry.removeprefix("the ")
+        index_entry = index_entry.removeprefix('the ')
         # index_entry = index_entry.removeprefix(WITHDRAWAL_PREFIX.casefold())
         # index_entry = index_entry.removeprefix(RELAY_PREFIX.casefold())
 
@@ -134,70 +133,70 @@ Papers_Structure = dict[Side_Title, dict[Group, list[Paper]]]
 PAPERS_GROUPING = [
     # the order here matters
     {
-        "pattern": re.compile(r"Regulations ? ?\d?\d?\d?\d?$", flags=re.I),
-        "base_key": "Regulations: ",
+        'pattern': re.compile(r'Regulations ? ?\d?\d?\d?\d?$', flags=re.I),
+        'base_key': 'Regulations: ',
     },
     # {'pattern': re.compile(r'Regulations\(Northern Ireland\)$', flags=re.I),
     #     'base_key': 'Regulations (Northern Ireland): '},
     {
-        "pattern": re.compile(r"^Report of the Law Commission (on )?", flags=re.I),
-        "base_key": "Report of the Law Commission: ",
+        'pattern': re.compile(r'^Report of the Law Commission (on )?', flags=re.I),
+        'base_key': 'Report of the Law Commission: ',
     },
     {
-        "pattern": re.compile(r"Order ? ?\d?\d?\d?\d?$", flags=re.I),
-        "base_key": "Order: ",
+        'pattern': re.compile(r'Order ? ?\d?\d?\d?\d?$', flags=re.I),
+        'base_key': 'Order: ',
     },
     {
-        "pattern": re.compile(r"Order of Council ? ?\d?\d?\d?\d?$", flags=re.I),
-        "base_key": "Order of Council: ",
+        'pattern': re.compile(r'Order of Council ? ?\d?\d?\d?\d?$', flags=re.I),
+        'base_key': 'Order of Council: ',
     },
     {
-        "pattern": re.compile(r"^Report and Accounts of ", flags=re.I),
-        "base_key": "Reports and Accounts, ",
+        'pattern': re.compile(r'^Report and Accounts of ', flags=re.I),
+        'base_key': 'Reports and Accounts, ',
     },
     {
         # "pattern": re.compile(r"Rules ? ?\d?\d?\d?\d?$", flags=re.I),  too  loose
-        "pattern": re.compile(r"Rules ? ?\d\d\d\d$", flags=re.I),
-        "base_key": "Rules: ",
+        'pattern': re.compile(r'Rules ? ?\d\d\d\d$', flags=re.I),
+        'base_key': 'Rules: ',
     },
     {
-        "pattern": re.compile(r"^Accounts of ", flags=re.I),
-        "base_key": "Accounts, ",
+        'pattern': re.compile(r'^Accounts of ', flags=re.I),
+        'base_key': 'Accounts, ',
     },
     {
-        "pattern": re.compile(r"^Account of (the)?", flags=re.I),
-        "base_key": "Account, ",
+        'pattern': re.compile(r'^Account of (the)?', flags=re.I),
+        'base_key': 'Account, ',
     },
     {
-        "pattern": re.compile(
-            r"^Report of the Independent Chief Inspector of Borders and Immigration: ",
+        'pattern': re.compile(
+            r'^Report of the Independent Chief Inspector of Borders and Immigration: ',
             flags=re.I,
         ),
-        "base_key": "Report of the Independent Chief Inspector of Borders and Immigration: ",
+        'base_key': 'Report of the Independent Chief Inspector of Borders and Immigration: ',
     },
     {
-        "pattern": re.compile(
-            r"^Report by the Comptroller and Auditor General on ", flags=re.I
+        'pattern': re.compile(
+            r'^Report by the Comptroller and Auditor General on ', flags=re.I
         ),
-        "base_key": "Report by the Comptroller and Auditor General: ",
+        'base_key': 'Report by the Comptroller and Auditor General: ',
     },
 ]
 
 PLURALS: list[tuple[str, str]] = [
-    ("^Draft Order: ", "Draft Orders: "),
-    ("^Order: ", "Orders: "),
-    ("^Order of Council", "Orders of Council"),
+    ('^Draft Order: ', 'Draft Orders: '),
+    ('^Order: ', 'Orders: '),
+    ('^Order of Council', 'Orders of Council'),
     (
-        "^Report of the Independent Chief Inspector of Borders and Immigration",
-        "Reports of the Independent Chief Inspector of Borders and Immigration",
+        '^Report of the Independent Chief Inspector of Borders and Immigration',
+        'Reports of the Independent Chief Inspector of Borders and Immigration',
     ),
     (
-        "^Report by the Comptroller and Auditor General",
-        "Reports by the Comptroller and Auditor General",
+        '^Report by the Comptroller and Auditor General',
+        'Reports by the Comptroller and Auditor General',
     ),
     (
-        "^Report of the Law Commission",
-        "Reports of the Law Commission",
+        '^Report of the Law Commission',
+        'Reports of the Law Commission',
     ),
 ]
 
@@ -223,17 +222,18 @@ def main(
             session_start, session_end = get_dates_from_session(session)
         except Exception as e:
             print(e)
-            print("Could not get session data from whats on.")
+            print('Could not get session data from whats on.')
             sys.exit(1)
         try:
             # Query papers laid API
-            print("Getting data from papers laid")
+            print('Getting data from papers laid')
             response = request_papers_data(session_start, session_end)
+
         except Exception as e:
             print(e)
             print(
-                "\nCould not get XML from the papers laid API. "
-                "Check that you are connected to the parliament network."
+                '\nCould not get XML from the papers laid API. '
+                'Check that you are connected to the parliament network.'
             )
             sys.exit(1)
 
@@ -246,18 +246,23 @@ def main(
             else:
                 # assume file instead of dir
                 output_path = Path(output_file_or_dir.parent, as_downloaded_file_name)
-            with open(output_path, "wb") as f:
+            with open(output_path, 'wb') as f:
                 f.write(response.content)
-                print(f"Downloaded: {output_path.absolute()}")
+                print(f'Downloaded: {output_path.absolute()}')
 
-        papers_xml = etree.fromstring(response.content)
+        try:
+            papers_xml = etree.fromstring(response.content)
+        except Exception as e:
+            print(e)
+            print('Could not parse XML from the papers laid API.')
+            sys.exit(1)
     else:
-        print("Error: Must have either an XML file or a session.")
+        print('Error: Must have either an XML file or a session.')
         sys.exit(1)
 
     filtered_papers = filter_papers(papers_xml)
 
-    print(f"After filtering, there are {len(filtered_papers)} papers.")
+    print(f'After filtering, there are {len(filtered_papers)} papers.')
 
     papers_data = populate_papers_data(filtered_papers)
 
@@ -282,12 +287,12 @@ def cli():
 
 @cli.command()
 @click.argument(
-    "input_path", type=click.Path(exists=True, dir_okay=False, path_type=Path)
+    'input_path', type=click.Path(exists=True, dir_okay=False, path_type=Path)
 )
 @click.option(
-    "--output",
-    "-o",
-    help="Optionally provide the directory or file path for the output XML",
+    '--output',
+    '-o',
+    help='Optionally provide the directory or file path for the output XML',
     type=click.Path(writable=True, path_type=Path),
 )
 def from_file(input_path: Path, output: Union[Path, None] = None):
@@ -300,17 +305,17 @@ def from_file(input_path: Path, output: Union[Path, None] = None):
 
 
 @cli.command()
-@click.argument("session")
+@click.argument('session')
 @click.option(
-    "--discard-raw-xml",
+    '--discard-raw-xml',
     is_flag=True,
     default=False,
-    help="Use this option to suppress saving the raw XML downloaded from the API",
+    help='Use this option to suppress saving the raw XML downloaded from the API',
 )
 @click.option(
-    "--output",
-    "-o",
-    help="Optionally provide the directory or file path for the output XML",
+    '--output',
+    '-o',
+    help='Optionally provide the directory or file path for the output XML',
     type=click.Path(writable=True, path_type=Path),
 )
 def from_api(session: str, discard_raw_xml: bool, output: Union[Path, None] = None):
@@ -351,24 +356,24 @@ def sort_papers(papers_data: Papers_Structure) -> Papers_Structure:
 def group_sort(item: str) -> tuple[int, str]:
     """Helper to sort groups as specified"""
 
-    if item.startswith("Draft Order"):
+    if item.startswith('Draft Order'):
         return 1, item
-    if item.startswith("Order of Council") or item.startswith("Orders of Council"):
+    if item.startswith('Order of Council') or item.startswith('Orders of Council'):
         return 3, item
-    if item.startswith("Order"):
+    if item.startswith('Order'):
         # note this comes before the above
         return 2, item
-    if item.startswith("Draft Regulations"):
+    if item.startswith('Draft Regulations'):
         return 4, item
-    if item.startswith("Regulations (Northern Ireland)"):
+    if item.startswith('Regulations (Northern Ireland)'):
         return 6, item
-    if item.startswith("Regulations"):
+    if item.startswith('Regulations'):
         return 5, item
-    if item.startswith("Rules"):
+    if item.startswith('Rules'):
         return 7, item
-    if item.startswith("Accounts"):
+    if item.startswith('Accounts'):
         return 8, item
-    if item.startswith("Report and Accounts"):
+    if item.startswith('Report and Accounts'):
         return 9, item
     else:
         # We want these at the back of each section
@@ -381,9 +386,9 @@ def filter_papers(papers_xml: Union[_Element, list[_Element]]) -> list[_Element]
     if iselement(papers_xml):
         papers_xpath_result = papers_xml.xpath(
             # get all papers
-            "/ArrayOfDailyPapers/DailyPapers/*/Paper"
+            '/ArrayOfDailyPapers/DailyPapers/*/Paper'
             #  remove any not laid in the commons
-            "[DateLaidCommons[text()]]",
+            '[DateLaidCommons[text()]]',
             namespaces=NS_MAP,
         )
     else:
@@ -394,7 +399,7 @@ def filter_papers(papers_xml: Union[_Element, list[_Element]]) -> list[_Element]
     papers_of_interest = []
     for paper in reversed(papers_xpath_result):
         # get the papers Id, ** I am assuming that these are unique to each paper **
-        paper_id = paper.findtext("Id")
+        paper_id = paper.findtext('Id')
 
         if paper_id not in paper_ids:
             paper_ids.add(paper_id)
@@ -403,19 +408,20 @@ def filter_papers(papers_xml: Union[_Element, list[_Element]]) -> list[_Element]
     return papers_of_interest
 
 
-
 def request_papers_data(date_from: datetime, date_to: datetime) -> httpx.Response:
     """Query the papers laid API for papers laid in the date range."""
 
-    session_from_str = date_from.strftime("%Y-%m-%d")
-    session_to_str = date_to.strftime("%Y-%m-%d")
+    session_from_str = date_from.strftime('%Y-%m-%d')
+    session_to_str = date_to.strftime('%Y-%m-%d')
 
     url = (
-        "http://services.paperslaid.parliament.uk/papers/list/daily.xml"
-        f"?fromDate={session_from_str}&toDate={session_to_str}&house=commons"
+        'https://services.paperslaid.parliament.uk/papers/list/daily.xml'
+        f'?fromDate={session_from_str}&toDate={session_to_str}&house=commons'
     )
 
-    response = httpx.get(url)
+    # Sometimes the papers laid API can be slow to respond
+    response = httpx.get(url, timeout=300)
+    response.raise_for_status()
 
     return response
 
@@ -423,39 +429,38 @@ def request_papers_data(date_from: datetime, date_to: datetime) -> httpx.Respons
 def convert_to_xml(papers_data: Papers_Structure) -> _Element:
     """create a lxml.etree._Element from Papers structure"""
 
-    output_root = etree.Element("PapersIndex")
+    output_root = etree.Element('PapersIndex')
 
     for side_t in papers_data:
-        etree.SubElement(output_root, "SideTitle").text = side_t
+        etree.SubElement(output_root, 'SideTitle').text = side_t
 
         # entries_under_side_title = []
 
         for key, value in papers_data[side_t].items():
-            if key == "[other papers]":
+            if key == '[other papers]':
                 # paper that are not grouped
                 # entries_under_side_title += value
                 # entries_under_side_title += f'{value}.'
                 for paper in value:
                     etree.SubElement(
-                        output_root, "Paper"
-                    ).text = f"{paper.index_entry}."
+                        output_root, 'Paper'
+                    ).text = f'{paper.index_entry}.'
             elif len(value) > 0:
-                key = re.sub(r"(?<=\d)-(?=\d)", "\u2013", key)
+                key = re.sub(r'(?<=\d)-(?=\d)', '\u2013', key)
                 if len(value) > 1:
                     key = fix_plurals(key)
                 etree.SubElement(
-                    output_root, "Paper"
+                    output_root, 'Paper'
                 ).text = f'{key}{"; ".join(paper.index_entry for paper in value)}.'
 
     # for every element in output_root add a new line after
     for ele in output_root:
-        ele.tail = "\n"
+        ele.tail = '\n'
 
     return output_root
 
 
 def write_xml(xml_root: _Element, output_file_or_dir: Union[Path, None] = None):
-
     """Write XML to file. If output_file_or_dir is not passed use global
     constant OUTPUT_XML_NAME instead"""
 
@@ -468,17 +473,17 @@ def write_xml(xml_root: _Element, output_file_or_dir: Union[Path, None] = None):
 
     outputTree = etree.ElementTree(xml_root)
     try:
-        outputTree.write(str(xml_file_Path), encoding="UTF-8", xml_declaration=True)
+        outputTree.write(str(xml_file_Path), encoding='UTF-8', xml_declaration=True)
     except Exception as e:
         print(e)
         print(
             f"Warning: Can't print to {xml_file_Path}. "
-            f"Trying {OUTPUT_XML_NAME} instead."
+            f'Trying {OUTPUT_XML_NAME} instead.'
         )
         xml_file_Path = Path(OUTPUT_XML_NAME)
-        outputTree.write(str(xml_file_Path), encoding="UTF-8", xml_declaration=True)
+        outputTree.write(str(xml_file_Path), encoding='UTF-8', xml_declaration=True)
 
-    print(f"Created: {xml_file_Path.absolute()}")
+    print(f'Created: {xml_file_Path.absolute()}')
 
 
 def fix_plurals(possible_plural: str) -> str:
@@ -507,35 +512,32 @@ def populate_papers_data(
             # PAPERS_DATA[side_title] = deepcopy(default_side_title_obj)
             papers_data[paper.side_title] = {}
 
-        key = "[other papers]"  # key for ungrouped paper
+        key = '[other papers]'  # key for ungrouped paper
         for group_obj in PAPERS_GROUPING:
-
             # special cases for things not to be grouped
-            if paper.title.startswith((
-                "Explanatory Memorandum", "Impact Assessment")
-            ):
+            if paper.title.startswith(('Explanatory Memorandum', 'Impact Assessment')):
                 continue
 
             # Nortern Ireland Regulations are special
-            NI_re = r"(Regulations \(Northern Ireland\)) ([12]\d\d\d)"
+            NI_re = r'(Regulations \(Northern Ireland\)) ([12]\d\d\d)'
             match = re.search(NI_re, paper.title)
             if match:
-                key = f"{match.group(1)}: {match.group(2)}: "
-                paper.title = re.sub(NI_re, "", paper.title).strip()
+                key = f'{match.group(1)}: {match.group(2)}: '
+                paper.title = re.sub(NI_re, '', paper.title).strip()
                 break
 
-            if not re.search(group_obj["pattern"], paper.title):
+            if not re.search(group_obj['pattern'], paper.title):
                 continue
 
             # set the key up
-            key = group_obj["base_key"]
-            if paper.is_draft == "true":
-                key = "Draft " + key
+            key = group_obj['base_key']
+            if paper.is_draft == 'true':
+                key = 'Draft ' + key
             if paper.year:
-                key = f"{key}{paper.year}: "  # key for special paper
+                key = f'{key}{paper.year}: '  # key for special paper
 
             # amend the title
-            paper.title = re.sub(group_obj["pattern"], "", paper.title).strip()
+            paper.title = re.sub(group_obj['pattern'], '', paper.title).strip()
 
             # Remove the year from the paper title
             # (this is since we started using <SubjectHeading>)
@@ -610,18 +612,17 @@ def add_word_for(paper: Paper):
     # get false positives...
 
     if paper._raw_title != paper.subject_heading:
-
         match = re.search(WORD_FOR_PATTERN, paper.title)
         if match and match.group(0) not in paper._raw_title:
             # here we are guarding against the situation where the raw title has
             # the pattern in. I.e. where there are numbers in the raw_title
-            paper.title = re.sub(WORD_FOR_PATTERN, r"for \1", paper.title)
+            paper.title = re.sub(WORD_FOR_PATTERN, r'for \1', paper.title)
 
 
 def format_date(date_: date) -> str:
     """Convert a date object to a string formatted for the Journal."""
 
-    return date_.strftime("%d %b %Y").lstrip("0")
+    return date_.strftime('%d %b %Y').lstrip('0')
 
 
 @cache_to_disk(1)
@@ -629,16 +630,16 @@ def get_sitting_date(date_: datetime) -> datetime:
     """If input date is a sitting date return the input date
     else return the next sitting date"""
 
-    url_template = "https://whatson-api.parliament.uk/calendar/proceduraldates/Commons/nextsittingdate.json?dateToCheck={}"
+    url_template = 'https://whatson-api.parliament.uk/calendar/proceduraldates/Commons/nextsittingdate.json?dateToCheck={}'
 
     one_day_ago = date_ - timedelta(days=1)
 
-    url = url_template.format(one_day_ago.strftime("%Y-%m-%d"))
+    url = url_template.format(one_day_ago.strftime('%Y-%m-%d'))
 
     response = httpx.get(url)
 
-    return datetime.strptime(response.json(), "%Y-%m-%dT%H:%M:%S")
+    return datetime.strptime(response.json(), '%Y-%m-%dT%H:%M:%S')
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     cli()
