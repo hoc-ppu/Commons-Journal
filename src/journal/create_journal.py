@@ -412,7 +412,7 @@ def request_vnp_data(
 
     url = f'{BASE_URL}/{formatted_sitting_date}.xml'
 
-    response = httpx.get(url)
+    response = httpx.get(url, follow_redirects=True, timeout=30)
 
     if save_to_disk:
         if not save_to_folder.exists():
